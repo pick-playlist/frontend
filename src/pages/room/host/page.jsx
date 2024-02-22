@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function HostPage() {
+export default function RoomHostPage() {
   return <div>HostPage</div>;
 }
