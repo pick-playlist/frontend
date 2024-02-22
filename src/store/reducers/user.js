@@ -5,13 +5,14 @@ const initialState = {
 };
 
 const userSlice = createSlice({
-  name: "isLoggedIn",
+  name: "user",
   initialState: initialState,
-  reducer: {
-    setIsLoggedInTrue(state) {
+  reducers: {
+    setIsLoggedInTrue(state, action) {
+      console.log("true");
       state.isLoggedIn = true;
     },
-    setIsLoggedInFalse(state) {
+    setIsLoggedInFalse(state, action) {
       state.isLoggedIn = false;
     },
   },
