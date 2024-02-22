@@ -48,16 +48,16 @@ export const mainRouter = [
         element: <MainPage />,
       },
       {
-        path: "code",
+        path: "/code",
         element: <CodePage />,
       },
       {
-        path: "host",
+        path: "/host",
         index: true,
         element: <CodeHostPage />,
       },
       {
-        path: "party",
+        path: "/party",
         index: true,
         element: <CodePartyPage />,
       },
@@ -66,17 +66,17 @@ export const mainRouter = [
         element: <RoomPage />,
       },
       {
-        path: "host",
+        path: "/host",
         index: true,
         element: <RoomHostPage />,
       },
       {
-        path: "party",
+        path: "/party",
         index: true,
         element: <RoomPartyPage />,
       },
       {
-        path: "finish",
+        path: "/finish",
         index: true,
         element: <FinishPage />,
       },
