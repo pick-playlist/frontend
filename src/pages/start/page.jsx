@@ -1,8 +1,10 @@
 import React from "react";
 import logo from "../../assets/react.svg";
 import { Button, Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 export default function StartPage() {
+  const navigate = useNavigate();
   return (
     <Container fluid className="d-flex justify-content-center min-vh-100">
       <div
@@ -23,20 +25,23 @@ export default function StartPage() {
           style={{ width: 250, height: 250, marginBottom: "10vh" }}
         />
         <Button
+          onClick={() => navigate("/login")}
           variant="outline-dark"
-          style={{ width: "20vw", height: "7vh", margin: 5 }}
+          style={{ width: "16vw", height: "7vh", margin: 5 }}
         >
           로그인
         </Button>
         <Button
+          onClick={() => navigate("/signup")}
           variant="outline-dark"
-          style={{ width: "20vw", height: "7vh", margin: 5 }}
+          style={{ width: "16vw", height: "7vh", margin: 5 }}
         >
           회원가입
         </Button>
         <Button
+          onClick={() => navigate("/guest")}
           variant="outline-dark"
-          style={{ width: "20vw", height: "7vh", margin: 5 }}
+          style={{ width: "16vw", height: "7vh", margin: 5 }}
         >
           비회원으로 이용하기
         </Button>
