@@ -20,3 +20,13 @@ export async function getRoomInfoWithId(roomId) {
     console.log(err);
   }
 }
+
+export async function getRoomInfoWithCode(roomCode) {
+  try {
+    const response = await axios.get("/api/room/info/code/" + roomCode);
+
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
