@@ -83,6 +83,7 @@ const NeedNumberCode = () => {
           key={index}
           id={`input${index}`}
           type="text"
+          maxLength={1}
           value={num}
           onChange={(e) => onChangeInputCode(index, e.target.value)}
           ref={refInput[index]}
