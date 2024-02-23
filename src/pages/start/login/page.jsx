@@ -3,6 +3,7 @@ import logo from "../../../assets/react.svg";
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { ButtonInPages } from "~/components/styled/globalComponent";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -36,7 +37,8 @@ export default function LoginPage() {
             }}
             placeholder="이메일을 입력해주세요."
             style={{
-              width: "20vw",
+              fontFamily: "IBMPlexSansKR-Regular",
+              width: "200px",
               height: "6vh",
               backgroundColor: "#F7DFFF",
               borderWidth: 0,
@@ -51,7 +53,8 @@ export default function LoginPage() {
             }}
             placeholder="비밀번호를 입력해주세요."
             style={{
-              width: "20vw",
+              fontFamily: "IBMPlexSansKR-Regular",
+              width: "200px",
               height: "6vh",
               backgroundColor: "#F7DFFF",
               borderWidth: 0,
@@ -59,15 +62,13 @@ export default function LoginPage() {
             }}
           />
         </Form>
-        <Button
-          onClick={() => navigate("/main")}
-          variant="outline-dark"
-          style={{ width: "16vw", height: "6vh", margin: 5 }}
-        >
-          LOGIN
-        </Button>
+        <ButtonInPages onClick={() => navigate("/main")}>LOGIN</ButtonInPages>
         <p
-          style={{ textDecoration: "underline", cursor: "pointer" }}
+          style={{
+            textDecoration: "underline",
+            cursor: "pointer",
+            fontFamily: "IBMPlexSansKR-Regular",
+          }}
           onClick={() => navigate("/signup")}
         >
           회원가입

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import logo from "../../../assets/react.svg";
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { ButtonInPages } from "~/components/styled/globalComponent";
 
 export default function SignupPage() {
   const navigate = useNavigate();
@@ -33,11 +34,12 @@ export default function SignupPage() {
             }}
             placeholder="닉네임을 입력해주세요."
             style={{
-              width: "20vw",
+              width: "200px",
               height: "6vh",
               backgroundColor: "#F7DFFF",
               borderWidth: 0,
               margin: 20,
+              fontFamily: "IBMPlexSansKR-Regular",
             }}
           />
           <Form.Control
@@ -48,11 +50,12 @@ export default function SignupPage() {
             }}
             placeholder="이메일을 입력해주세요."
             style={{
-              width: "20vw",
+              width: "200px",
               height: "6vh",
               backgroundColor: "#F7DFFF",
               borderWidth: 0,
               margin: 20,
+              fontFamily: "IBMPlexSansKR-Regular",
             }}
           />
           <Form.Control
@@ -63,27 +66,16 @@ export default function SignupPage() {
             }}
             placeholder="비밀번호를 입력해주세요."
             style={{
-              width: "20vw",
+              width: "200px",
               height: "6vh",
               backgroundColor: "#F7DFFF",
               borderWidth: 0,
               margin: 20,
+              fontFamily: "IBMPlexSansKR-Regular",
             }}
           />
         </Form>
-        <Button
-          onClick={() => navigate("/main")}
-          variant="outline-dark"
-          style={{ width: "16vw", height: "6vh", margin: 5 }}
-        >
-          SIGN UP
-        </Button>
-        <p
-          style={{ textDecoration: "underline", cursor: "pointer" }}
-          onClick={() => navigate("/signup")}
-        >
-          회원가입
-        </p>
+        <ButtonInPages onClick={() => navigate("/main")}>SIGN UP</ButtonInPages>
       </div>
     </Container>
   );

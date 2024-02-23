@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import logo from "../../../assets/react.svg";
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { ButtonInPages } from "~/components/styled/globalComponent";
 
 export default function GuestPage() {
   const [nickname, setNickname] = useState("");
@@ -34,21 +35,18 @@ export default function GuestPage() {
             }}
             placeholder="닉네임을 입력해주세요."
             style={{
-              width: "20vw",
+              width: "200px",
               height: "6vh",
               backgroundColor: "#F7DFFF",
               borderWidth: 0,
               margin: 20,
+              fontFamily: "IBMPlexSansKR-Regular",
             }}
           />
         </Form>
-        <Button
-          onClick={() => navigate("/main")}
-          variant="outline-dark"
-          style={{ width: "16vw", height: "6vh", margin: 5 }}
-        >
+        <ButtonInPages onClick={() => navigate("/main")}>
           비회원 로그인
-        </Button>
+        </ButtonInPages>
       </div>
     </Container>
   );
