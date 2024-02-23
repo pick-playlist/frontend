@@ -8,14 +8,13 @@ import LoginPage from "~/pages/start/login/page";
 import SignupPage from "~/pages/start/signup/page";
 import MainPage from "~/pages/main/page";
 import CodePage from "~/pages/code/page";
-import CodeHostPage from "~/pages/code/host/page";
-import CodePartyPage from "~/pages/code/party/page";
-import RoomPage from "~/pages/room/page";
+
 import RoomHostPage from "~/pages/room/host/page";
 import RoomPartyPage from "~/pages/room/party/page";
 import FinishPage from "~/pages/room/finish/page";
 import ProfilePage from "~/pages/profile/page";
 import MainLayout from "~/pages/layout";
+import TestPage from "~/pages/test/page";
 
 export const mainRouter = [
   {
@@ -72,6 +71,11 @@ export const mainRouter = [
         path: "/profile",
         index: true,
         element: <ProfilePage />,
+      },
+      {
+        path: "/test",
+        index: true,
+        element: <TestPage />,
       },
     ],
   },
