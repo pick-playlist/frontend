@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/react.svg";
+import { ButtonInPages } from "~/components/styled/globalComponent";
 
 export default function CodePage() {
   const location = useLocation();
@@ -47,22 +48,15 @@ export default function CodePage() {
             </>
           )}
         </div>
-        <Button
+        <ButtonInPages
           onClick={() => {
             location.state.isCreateRoom
               ? navigate("/room/host")
               : navigate("/room/party");
           }}
-          variant="outline-dark"
-          style={{
-            width: "200px",
-            height: "6vh",
-            margin: "5vh",
-            fontFamily: "IBMPlexSansKR-Regular",
-          }}
         >
           READY!
-        </Button>
+        </ButtonInPages>
       </div>
     </Container>
   );

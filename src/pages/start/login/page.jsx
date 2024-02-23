@@ -3,6 +3,7 @@ import logo from "../../../assets/react.svg";
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { ButtonInPages } from "~/components/styled/globalComponent";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -61,18 +62,7 @@ export default function LoginPage() {
             }}
           />
         </Form>
-        <Button
-          onClick={() => navigate("/main")}
-          variant="outline-dark"
-          style={{
-            width: "200px",
-            height: "6vh",
-            margin: 5,
-            fontFamily: "IBMPlexSansKR-Regular",
-          }}
-        >
-          LOGIN
-        </Button>
+        <ButtonInPages onClick={() => navigate("/main")}>LOGIN</ButtonInPages>
         <p
           style={{
             textDecoration: "underline",

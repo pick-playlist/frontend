@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import logo from "../../../assets/react.svg";
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { ButtonInPages } from "~/components/styled/globalComponent";
 
 export default function SignupPage() {
   const navigate = useNavigate();
@@ -74,18 +75,7 @@ export default function SignupPage() {
             }}
           />
         </Form>
-        <Button
-          onClick={() => navigate("/main")}
-          variant="outline-dark"
-          style={{
-            width: "200px",
-            height: "6vh",
-            margin: 5,
-            fontFamily: "IBMPlexSansKR-Regular",
-          }}
-        >
-          SIGN UP
-        </Button>
+        <ButtonInPages onClick={() => navigate("/main")}>SIGN UP</ButtonInPages>
       </div>
     </Container>
   );

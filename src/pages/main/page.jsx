@@ -4,6 +4,7 @@ import logo from "../../assets/react.svg";
 import { List } from "react-bootstrap-icons";
 import Sidebar from "~/components/sidebar/Sidebar";
 import { useNavigate } from "react-router-dom";
+import { ButtonInPages } from "~/components/styled/globalComponent";
 
 export default function MainPage() {
   const navigate = useNavigate();
@@ -40,32 +41,18 @@ export default function MainPage() {
         >
           <img src={logo} style={{ width: 250, height: 250 }} />
           <h1>PICKPL</h1>
-          <Button
+          <ButtonInPages
             onClick={() => navigate("/code", { state: { isCreateRoom: true } })}
-            variant="outline-dark"
-            style={{
-              width: "200px",
-              height: "6vh",
-              marginTop: "5vh",
-              fontFamily: "IBMPlexSansKR-Regular",
-            }}
           >
             방 만들기
-          </Button>
-          <Button
+          </ButtonInPages>
+          <ButtonInPages
             onClick={() =>
               navigate("/code", { state: { isCreateRoom: false } })
             }
-            variant="outline-dark"
-            style={{
-              width: "200px",
-              height: "6vh",
-              margin: "5vh",
-              fontFamily: "IBMPlexSansKR-Regular",
-            }}
           >
             참여하기
-          </Button>
+          </ButtonInPages>
         </div>
       </Container>
     </div>

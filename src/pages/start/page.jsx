@@ -2,6 +2,7 @@ import React from "react";
 import logo from "../../assets/react.svg";
 import { Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { ButtonInPages } from "~/components/styled/globalComponent";
 
 export default function StartPage() {
   const navigate = useNavigate();
@@ -24,42 +25,13 @@ export default function StartPage() {
           src={logo}
           style={{ width: 250, height: 250, marginBottom: "10vh" }}
         />
-        <Button
-          onClick={() => navigate("/login")}
-          variant="outline-dark"
-          style={{
-            width: "200px",
-            height: "7vh",
-            margin: 5,
-            fontFamily: "IBMPlexSansKR-Regular",
-          }}
-        >
-          로그인
-        </Button>
-        <Button
-          onClick={() => navigate("/signup")}
-          variant="outline-dark"
-          style={{
-            width: "200px",
-            height: "7vh",
-            margin: 5,
-            fontFamily: "IBMPlexSansKR-Regular",
-          }}
-        >
+        <ButtonInPages onClick={() => navigate("/login")}>로그인</ButtonInPages>
+        <ButtonInPages onClick={() => navigate("/signup")}>
           회원가입
-        </Button>
-        <Button
-          onClick={() => navigate("/guest")}
-          variant="outline-dark"
-          style={{
-            width: "200px",
-            height: "7vh",
-            margin: 5,
-            fontFamily: "IBMPlexSansKR-Regular",
-          }}
-        >
+        </ButtonInPages>
+        <ButtonInPages onClick={() => navigate("/guest")}>
           비회원으로 이용하기
-        </Button>
+        </ButtonInPages>
       </div>
     </Container>
   );
