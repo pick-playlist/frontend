@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function postMusic(title, artist, comment, userId, link) {
+export async function createMusic(title, artist, comment, userId, link) {
   try {
     const data = { title, artist, comment, userId, link };
     const response = await axios.post("/api/music", data);
@@ -21,7 +21,7 @@ export async function getMusicInfo(musicId) {
   }
 }
 
-export async function putVote(musicId, isAgreed) {
+export async function updateVote(musicId, isAgreed) {
   try {
     const data = { musicId, isAgreed };
     const response = await axios.put("/api/music/vote", data);
