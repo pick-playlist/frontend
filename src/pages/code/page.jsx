@@ -1,10 +1,11 @@
 import React, { useRef, useState } from "react";
 import { Button, Container } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/react.svg";
 
 export default function CodePage() {
   const location = useLocation();
+  const navigate = useNavigate();
   console.log(location.state);
   return (
     <Container
@@ -47,7 +48,11 @@ export default function CodePage() {
           )}
         </div>
         <Button
-          onClick={() => navigate("/main")}
+          onClick={() => {
+            location.state.isCreateRoom
+              ? navigate("/room/host")
+              : navigate("/room/party");
+          }}
           variant="outline-dark"
           style={{ width: "16vw", height: "6vh", margin: "5vh" }}
         >
