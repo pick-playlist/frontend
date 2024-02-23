@@ -66,7 +66,7 @@ export const mainRouter = [
         element: <RoomPage />,
       },
       {
-        path: "/host",
+        path: "/room/host",
         index: true,
         element: <RoomHostPage />,
       },

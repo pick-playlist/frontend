@@ -47,7 +47,7 @@ export default function CodePage() {
           )}
         </div>
         <Button
-          onClick={() => navigate("/main")}
+          onClick={() => (window.location.href = "/room/host")}
           variant="outline-dark"
           style={{ width: "16vw", height: "6vh", margin: "5vh" }}
         >
