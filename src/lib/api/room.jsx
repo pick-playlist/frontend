@@ -30,3 +30,25 @@ export async function getRoomInfoWithCode(roomCode) {
     console.log(err);
   }
 }
+
+export async function addUserInRoom(userId, roomId) {
+  try {
+    const data = { userId, roomId, isAdd: true };
+    const response = await axios.put("/api/room/user", data);
+
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function deleteUserInRoom(userId, roomId) {
+  try {
+    const data = { userId, roomId, isAdd: false };
+    const response = await axios.put("/api/room/user", data);
+
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
