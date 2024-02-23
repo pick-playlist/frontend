@@ -1,0 +1,22 @@
+.titleText {
+  font-family: "OAGothic-ExtraBold";
+}
+h5,
+p {
+  font-family: "IBMPlexSansKR-Regular";
+}
+
+.partyUserIcon {
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  background-image: linear-gradient(#3d7fff, #4b5dff);
+  border: 1px solid #3961d9;
+  border-radius: 100%;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(74, 58, 255, 0.26);
+}

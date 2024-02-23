@@ -1,5 +1,6 @@
 import React from "react";
 import YoutubePlayer from "~/components/youtubePlayer/YoutubePlayer";
+import "./styles.css";
 
 export default function RoomHostPage() {
   const video = {
@@ -22,12 +23,12 @@ export default function RoomHostPage() {
           padding: 15,
         }}
       >
-        <h3>승택님의 잼잼잼잼~~~~</h3>
+        <h3 class="titleText">승택님의 잼</h3>
         <div>
-          <h5>현재 재생중인 음악 🎶</h5>
-          <p>비비 - 밤양갱</p>
+          <h5>현재 재생중인 음악</h5>
+          <p>비비 - 밤양갱 🎶</p>
         </div>
-        <div>현재 3명이 참여중</div>
+        <p>현재 3명이 참여중 </p>
         <div
           style={{
             display: "flex",
@@ -35,38 +36,16 @@ export default function RoomHostPage() {
           }}
         >
           <div
+            class="partyUserIcon"
             style={{
-              color: "#fff",
-              width: "40px",
-              height: "40px",
-              backgroundImage: "linear-gradient(#3d7fff, #4b5dff)",
-              border: "1px solid #3961d9",
-              borderRadius: "100%",
-              justifyContent: "center",
-              alignItems: "center",
-              fontWeight: 700,
-              display: "flex",
-              overflow: "hidden",
-              boxShadow: "0 1px 4px rgba(74, 58, 255, .26)",
               zIndex: 2,
             }}
           >
             YR
           </div>
           <div
+            class="partyUserIcon"
             style={{
-              color: "#fff",
-              width: "40px",
-              height: "40px",
-              backgroundImage: "linear-gradient(#3d7fff, #4b5dff)",
-              border: "1px solid #3961d9",
-              borderRadius: "100%",
-              justifyContent: "center",
-              alignItems: "center",
-              fontWeight: 700,
-              display: "flex",
-              overflow: "hidden",
-              boxShadow: "0 1px 4px rgba(74, 58, 255, .26)",
               position: "absolute", // 겹치는 div에 position: absolute; 추가
               top: 0, // 원하는 위치로 조정
               left: "30px", // 원하는 위치로 조정
@@ -76,19 +55,8 @@ export default function RoomHostPage() {
             YH
           </div>
           <div
+            class="partyUserIcon"
             style={{
-              color: "#fff",
-              width: "40px",
-              height: "40px",
-              backgroundImage: "linear-gradient(#3d7fff, #4b5dff)",
-              border: "1px solid #3961d9",
-              borderRadius: "100%",
-              justifyContent: "center",
-              alignItems: "center",
-              fontWeight: 700,
-              display: "flex",
-              overflow: "hidden",
-              boxShadow: "0 1px 4px rgba(74, 58, 255, .26)",
               position: "absolute", // 겹치는 div에 position: absolute; 추가
               top: 0, // 원하는 위치로 조정
               left: "60px", // 원하는 위치로 조정
