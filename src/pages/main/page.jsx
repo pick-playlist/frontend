@@ -3,8 +3,10 @@ import { Button, Container } from "react-bootstrap";
 import logo from "../../assets/react.svg";
 import { List } from "react-bootstrap-icons";
 import Sidebar from "~/components/sidebar/Sidebar";
+import { useNavigate } from "react-router-dom";
 
 export default function MainPage() {
+  const navigate = useNavigate();
   const [sidebarVisible, setSidebarVisible] = useState(false);
   return (
     <div>
@@ -39,14 +41,16 @@ export default function MainPage() {
           <img src={logo} style={{ width: 250, height: 250 }} />
           <h1>PICKPL</h1>
           <Button
-            onClick={() => navigate("/main")}
+            onClick={() => navigate("/code", { state: { isCreateRoom: true } })}
             variant="outline-dark"
             style={{ width: "16vw", height: "6vh", marginTop: "5vh" }}
           >
             방 만들기
           </Button>
           <Button
-            onClick={() => navigate("/main")}
+            onClick={() =>
+              navigate("/code", { state: { isCreateRoom: false } })
+            }
             variant="outline-dark"
             style={{ width: "16vw", height: "6vh", margin: "5vh" }}
           >
