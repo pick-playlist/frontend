@@ -49,21 +49,8 @@ export const mainRouter = [
       },
       {
         path: "/code",
+        index: true,
         element: <CodePage />,
-      },
-      {
-        path: "/host",
-        index: true,
-        element: <CodeHostPage />,
-      },
-      {
-        path: "/party",
-        index: true,
-        element: <CodePartyPage />,
-      },
-      {
-        path: "/room",
-        element: <RoomPage />,
       },
       {
         path: "/room/host",
@@ -71,15 +58,16 @@ export const mainRouter = [
         element: <RoomHostPage />,
       },
       {
-        path: "/party",
+        path: "/room/party",
         index: true,
         element: <RoomPartyPage />,
       },
       {
-        path: "/finish",
+        path: "/room/finish",
         index: true,
         element: <FinishPage />,
       },
+
       {
         path: "/profile",
         index: true,
