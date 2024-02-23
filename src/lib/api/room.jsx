@@ -10,3 +10,13 @@ export async function createRoom(userId) {
     console.log(err);
   }
 }
+
+export async function getRoomInfoWithId(roomId) {
+  try {
+    const response = await axios.get("/api/room/info/id/" + roomId);
+
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
