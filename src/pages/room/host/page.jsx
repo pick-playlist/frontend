@@ -1,4 +1,5 @@
 import React from "react";
+import { Container } from "react-bootstrap";
 import YoutubePlayer from "~/components/youtubePlayer/YoutubePlayer";
 
 export default function RoomHostPage() {
@@ -6,9 +7,15 @@ export default function RoomHostPage() {
     key: "dD88Hr9lDZU",
   };
   return (
-    <>
-      <h1>Room Host</h1>
-      <YoutubePlayer video={video}></YoutubePlayer>
-    </>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+      }}
+    >
+      <YoutubePlayer video={video} />
+    </div>
   );
 }
