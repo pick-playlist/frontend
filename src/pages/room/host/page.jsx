@@ -39,6 +39,7 @@ export default function RoomHostPage() {
             class="partyUserIcon"
             style={{
               zIndex: 2,
+              backgroundColor: "#3C308C",
             }}
           >
             YR
@@ -50,6 +51,7 @@ export default function RoomHostPage() {
               top: 0, // 원하는 위치로 조정
               left: "30px", // 원하는 위치로 조정
               zIndex: 1,
+              backgroundColor: "#332973",
             }}
           >
             YH
@@ -60,6 +62,7 @@ export default function RoomHostPage() {
               position: "absolute", // 겹치는 div에 position: absolute; 추가
               top: 0, // 원하는 위치로 조정
               left: "60px", // 원하는 위치로 조정
+              backgroundColor: "#2F2359",
             }}
           >
             ST
