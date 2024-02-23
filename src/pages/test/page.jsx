@@ -22,7 +22,7 @@ import { useState, useEffect } from "react";
 
 export default function page() {
   useEffect(() => {
-    getLinkInfo("https://www.youtube.com/watch?v=smdmEhkIRVc").then((resp) => {
+    getLinkInfo("https://www.youtube.com/watch?v=JleoAppaxi0").then((resp) => {
       console.log("resp: ", resp);
     });
   }, []);
