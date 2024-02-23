@@ -5,14 +5,12 @@ import {
   addMusicInPlaylist,
   deleteMusicInPlaylist,
 } from "~/lib/api/playlist";
+import { createRoom } from "~/lib/api/room";
 import { useState, useEffect } from "react";
 
 export default function page() {
   useEffect(() => {
-    deleteMusicInPlaylist(
-      "65d806a0b329663c00715624",
-      "65d6e1eccc7eab58fc815299"
-    ).then((resp) => {
+    createRoom("65d6f115b32758d2cd0559fd").then((resp) => {
       console.log("resp: ", resp);
     });
   }, []);
