@@ -49,37 +49,31 @@ export const mainRouter = [
       },
       {
         path: "/code",
+        index: true,
         element: <CodePage />,
-      },
-      {
-        path: "/host",
-        index: true,
-        element: <CodeHostPage />,
-      },
-      {
-        path: "/party",
-        index: true,
-        element: <CodePartyPage />,
       },
       {
         path: "/room",
         element: <RoomPage />,
+        children: [
+          {
+            path: "/host",
+            index: true,
+            element: <RoomHostPage />,
+          },
+          {
+            path: "/party",
+            index: true,
+            element: <RoomPartyPage />,
+          },
+          {
+            path: "/finish",
+            index: true,
+            element: <FinishPage />,
+          },
+        ],
       },
-      {
-        path: "/host",
-        index: true,
-        element: <RoomHostPage />,
-      },
-      {
-        path: "/party",
-        index: true,
-        element: <RoomPartyPage />,
-      },
-      {
-        path: "/finish",
-        index: true,
-        element: <FinishPage />,
-      },
+
       {
         path: "/profile",
         index: true,
