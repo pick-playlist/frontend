@@ -17,11 +17,12 @@ import {
   addUserInRoom,
   deleteUserInRoom,
 } from "~/lib/api/room";
+import { getLinkInfo } from "~/lib/api/search";
 import { useState, useEffect } from "react";
 
 export default function page() {
   useEffect(() => {
-    increaseReject("65d80680b329663c00715622").then((resp) => {
+    getLinkInfo("https://www.youtube.com/watch?v=smdmEhkIRVc").then((resp) => {
       console.log("resp: ", resp);
     });
   }, []);
