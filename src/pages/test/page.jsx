@@ -1,5 +1,10 @@
 import React from "react";
-import { createMusic, getMusicInfo, updateVote } from "~/lib/api/music";
+import {
+  createMusic,
+  getMusicInfo,
+  increaseAgree,
+  increaseReject,
+} from "~/lib/api/music";
 import {
   getPlaylistInfo,
   addMusicInPlaylist,
@@ -16,10 +21,7 @@ import { useState, useEffect } from "react";
 
 export default function page() {
   useEffect(() => {
-    deleteUserInRoom(
-      "65d6f6598a9174603ee342ac",
-      "65d82a72a2544e972c41e304"
-    ).then((resp) => {
+    increaseReject("65d80680b329663c00715622").then((resp) => {
       console.log("resp: ", resp);
     });
   }, []);

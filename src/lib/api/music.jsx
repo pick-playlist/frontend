@@ -21,9 +21,20 @@ export async function getMusicInfo(musicId) {
   }
 }
 
-export async function updateVote(musicId, isAgreed) {
+export async function increaseAgree(musicId) {
   try {
-    const data = { musicId, isAgreed };
+    const data = { musicId, isAgreed: true };
+    const response = await axios.put("/api/music/vote", data);
+
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function increaseReject(musicId) {
+  try {
+    const data = { musicId, isAgreed: false };
     const response = await axios.put("/api/music/vote", data);
 
     return response.data;
