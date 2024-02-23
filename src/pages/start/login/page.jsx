@@ -36,7 +36,8 @@ export default function LoginPage() {
             }}
             placeholder="이메일을 입력해주세요."
             style={{
-              width: "20vw",
+              fontFamily: "IBMPlexSansKR-Regular",
+              width: "200px",
               height: "6vh",
               backgroundColor: "#F7DFFF",
               borderWidth: 0,
@@ -51,7 +52,8 @@ export default function LoginPage() {
             }}
             placeholder="비밀번호를 입력해주세요."
             style={{
-              width: "20vw",
+              fontFamily: "IBMPlexSansKR-Regular",
+              width: "200px",
               height: "6vh",
               backgroundColor: "#F7DFFF",
               borderWidth: 0,
@@ -62,12 +64,21 @@ export default function LoginPage() {
         <Button
           onClick={() => navigate("/main")}
           variant="outline-dark"
-          style={{ width: "16vw", height: "6vh", margin: 5 }}
+          style={{
+            width: "200px",
+            height: "6vh",
+            margin: 5,
+            fontFamily: "IBMPlexSansKR-Regular",
+          }}
         >
           LOGIN
         </Button>
         <p
-          style={{ textDecoration: "underline", cursor: "pointer" }}
+          style={{
+            textDecoration: "underline",
+            cursor: "pointer",
+            fontFamily: "IBMPlexSansKR-Regular",
+          }}
           onClick={() => navigate("/signup")}
         >
           회원가입

@@ -54,7 +54,12 @@ export default function CodePage() {
               : navigate("/room/party");
           }}
           variant="outline-dark"
-          style={{ width: "16vw", height: "6vh", margin: "5vh" }}
+          style={{
+            width: "200px",
+            height: "6vh",
+            margin: "5vh",
+            fontFamily: "IBMPlexSansKR-Regular",
+          }}
         >
           READY!
         </Button>
@@ -95,7 +100,7 @@ const NeedNumberCode = () => {
           style={{
             border: "none",
             borderBottom: "4px solid black",
-            width: "5vw",
+            width: "50px",
             height: "7vh",
             textAlign: "center",
             margin: 10,
@@ -109,7 +114,9 @@ const NeedNumberCode = () => {
 const ShowNumberCode = () => {
   return (
     <div>
-      <h1>1 2 3 4 5 6</h1>
+      <h2 style={{ fontFamily: "IBMPlexSansKR-Regular", fontWeight: "bold" }}>
+        1 2 3 4 5 6
+      </h2>
     </div>
   );
 };

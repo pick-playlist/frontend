@@ -33,11 +33,12 @@ export default function SignupPage() {
             }}
             placeholder="닉네임을 입력해주세요."
             style={{
-              width: "20vw",
+              width: "200px",
               height: "6vh",
               backgroundColor: "#F7DFFF",
               borderWidth: 0,
               margin: 20,
+              fontFamily: "IBMPlexSansKR-Regular",
             }}
           />
           <Form.Control
@@ -48,11 +49,12 @@ export default function SignupPage() {
             }}
             placeholder="이메일을 입력해주세요."
             style={{
-              width: "20vw",
+              width: "200px",
               height: "6vh",
               backgroundColor: "#F7DFFF",
               borderWidth: 0,
               margin: 20,
+              fontFamily: "IBMPlexSansKR-Regular",
             }}
           />
           <Form.Control
@@ -63,27 +65,27 @@ export default function SignupPage() {
             }}
             placeholder="비밀번호를 입력해주세요."
             style={{
-              width: "20vw",
+              width: "200px",
               height: "6vh",
               backgroundColor: "#F7DFFF",
               borderWidth: 0,
               margin: 20,
+              fontFamily: "IBMPlexSansKR-Regular",
             }}
           />
         </Form>
         <Button
           onClick={() => navigate("/main")}
           variant="outline-dark"
-          style={{ width: "16vw", height: "6vh", margin: 5 }}
+          style={{
+            width: "200px",
+            height: "6vh",
+            margin: 5,
+            fontFamily: "IBMPlexSansKR-Regular",
+          }}
         >
           SIGN UP
         </Button>
-        <p
-          style={{ textDecoration: "underline", cursor: "pointer" }}
-          onClick={() => navigate("/signup")}
-        >
-          회원가입
-        </p>
       </div>
     </Container>
   );

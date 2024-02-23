@@ -43,7 +43,12 @@ export default function MainPage() {
           <Button
             onClick={() => navigate("/code", { state: { isCreateRoom: true } })}
             variant="outline-dark"
-            style={{ width: "16vw", height: "6vh", marginTop: "5vh" }}
+            style={{
+              width: "200px",
+              height: "6vh",
+              marginTop: "5vh",
+              fontFamily: "IBMPlexSansKR-Regular",
+            }}
           >
             방 만들기
           </Button>
@@ -52,7 +57,12 @@ export default function MainPage() {
               navigate("/code", { state: { isCreateRoom: false } })
             }
             variant="outline-dark"
-            style={{ width: "16vw", height: "6vh", margin: "5vh" }}
+            style={{
+              width: "200px",
+              height: "6vh",
+              margin: "5vh",
+              fontFamily: "IBMPlexSansKR-Regular",
+            }}
           >
             참여하기
           </Button>

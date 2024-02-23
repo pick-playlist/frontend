@@ -27,21 +27,36 @@ export default function StartPage() {
         <Button
           onClick={() => navigate("/login")}
           variant="outline-dark"
-          style={{ width: "16vw", height: "7vh", margin: 5 }}
+          style={{
+            width: "200px",
+            height: "7vh",
+            margin: 5,
+            fontFamily: "IBMPlexSansKR-Regular",
+          }}
         >
           로그인
         </Button>
         <Button
           onClick={() => navigate("/signup")}
           variant="outline-dark"
-          style={{ width: "16vw", height: "7vh", margin: 5 }}
+          style={{
+            width: "200px",
+            height: "7vh",
+            margin: 5,
+            fontFamily: "IBMPlexSansKR-Regular",
+          }}
         >
           회원가입
         </Button>
         <Button
           onClick={() => navigate("/guest")}
           variant="outline-dark"
-          style={{ width: "16vw", height: "7vh", margin: 5 }}
+          style={{
+            width: "200px",
+            height: "7vh",
+            margin: 5,
+            fontFamily: "IBMPlexSansKR-Regular",
+          }}
         >
           비회원으로 이용하기
         </Button>
