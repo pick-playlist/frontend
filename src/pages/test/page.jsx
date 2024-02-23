@@ -1,13 +1,11 @@
 import React from "react";
 import { postMusic, getMusicInfo, putVote } from "~/lib/api/music";
+import { getPlaylistInfo } from "~/lib/api/playlist";
 import { useState, useEffect } from "react";
 
 export default function page() {
-  const [result, setResult] = useState("");
-
   useEffect(() => {
-    putVote("65d80680b329663c00715622", true).then((resp) => {
-      setResult(resp);
+    getPlaylistInfo("65d6e1eccc7eab58fc815299").then((resp) => {
       console.log("resp: ", resp);
     });
   }, []);
