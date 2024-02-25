@@ -14,11 +14,14 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
 
   const onClickLogIn = () => {
-    const action = logIn({ email, password });
-    dispatch(action);
-    navigate("/main");
+    try {
+      const action = logIn({ email, password });
+      dispatch(action);
+      navigate("/main");
+    } catch (error) {
+      // login failed
+    }
   };
-
   return (
     <Container
       fluid
