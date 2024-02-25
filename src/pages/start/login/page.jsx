@@ -4,11 +4,21 @@ import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ButtonInPages } from "~/components/styled/globalComponent";
+import { logIn } from "~/store/reducers/user";
+import { useDispatch } from "react-redux";
 
 export default function LoginPage() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const onClickLogIn = () => {
+    const action = logIn({ email, password });
+    dispatch(action);
+    navigate("/main");
+  };
+
   return (
     <Container fluid className="d-flex justify-content-center min-vh-100">
       <div
@@ -62,7 +72,7 @@ export default function LoginPage() {
             }}
           />
         </Form>
-        <ButtonInPages onClick={() => navigate("/main")}>LOGIN</ButtonInPages>
+        <ButtonInPages onClick={() => onClickLogIn()}>LOGIN</ButtonInPages>
         <p
           style={{
             textDecoration: "underline",
