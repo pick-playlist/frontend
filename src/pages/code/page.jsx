@@ -3,7 +3,9 @@ import { Button, Container } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/react.svg";
 import { ButtonInPages } from "~/components/styled/globalComponent";
-
+import girl from "../../assets/girl-dynamic-color.png";
+import boy from "../../assets/boy-dynamic-color.png";
+import chat from "../../assets/chat-bubble-dynamic-color.png";
 export default function CodePage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -11,22 +13,39 @@ export default function CodePage() {
   return (
     <Container
       fluid
-      className="d-flex flex-column align-items-center min-vh-100"
+      className="d-flex flex-column justify-content-center align-items-center min-vh-100"
     >
       <div
         style={{
-          backgroundColor: "white",
-          height: "100%",
-          marginTop: "10vh",
-          width: "60vw",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "flex-end",
           alignItems: "center",
         }}
       >
-        <img src={logo} style={{ width: 250, height: 250 }} />
-        <h1>PICKPL</h1>
+        {location.state.isCreateRoom ? (
+          <div
+            style={{
+              display: "flex",
+              position: "relative",
+              marginBottom: "20px",
+            }}
+          >
+            <img
+              src={chat}
+              style={{
+                position: "absolute",
+                top: -95,
+                left: 75,
+                width: 150,
+                height: 150,
+              }}
+            />
+            <img src={girl} style={{ width: 150, height: 150 }} />
+            <img src={boy} style={{ width: 150, height: 150 }} />
+          </div>
+        ) : null}
+
+        <h1 style={{ fontSize: "40px" }}>PICKPL</h1>
         <div
           style={{
             display: "flex",
@@ -49,6 +68,7 @@ export default function CodePage() {
           )}
         </div>
         <ButtonInPages
+          style={{ marginTop: "40px" }}
           onClick={() => {
             location.state.isCreateRoom
               ? navigate("/room/host")

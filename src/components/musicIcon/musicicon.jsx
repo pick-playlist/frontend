@@ -21,7 +21,18 @@ const FloatingIcon = styled.img`
 `;
 
 const FloatingIconComponent = () => {
-  return <FloatingIcon src={music} alt="Floating Icon" />;
+  return (
+    <div
+      style={{
+        marginTop: "4vh",
+        width: "280px",
+        height: "250px",
+        marginBottom: "4vh",
+      }}
+    >
+      <FloatingIcon src={music} alt="Floating Icon" />
+    </div>
+  );
 };
 
 export default FloatingIconComponent;

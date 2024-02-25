@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import logo from "../../../assets/react.svg";
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ButtonInPages } from "~/components/styled/globalComponent";
-
+import FloatingIconComponent from "~/components/musicIcon/musicIcon";
 export default function SignupPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -23,8 +22,11 @@ export default function SignupPage() {
           alignItems: "center",
         }}
       >
-        <h1>PICKPL</h1>
-        <img src={logo} style={{ width: 250, height: 250 }} />
+        <h1 style={{ fontSize: "40px" }}>PICKPL</h1>
+        <span style={{ fontSize: "15px", fontFamily: "IBMPlexSansKR-Regular" }}>
+          모두 함께 만드는 공유 플레이리스트 🎶
+        </span>
+        <FloatingIconComponent />
         <Form>
           <Form.Control
             type="text"
@@ -34,11 +36,12 @@ export default function SignupPage() {
             }}
             placeholder="닉네임을 입력해주세요."
             style={{
+              fontSize: "13px",
               width: "200px",
               height: "6vh",
               backgroundColor: "#F7DFFF",
               borderWidth: 0,
-              margin: 20,
+              margin: 10,
               fontFamily: "IBMPlexSansKR-Regular",
             }}
           />
@@ -50,11 +53,12 @@ export default function SignupPage() {
             }}
             placeholder="이메일을 입력해주세요."
             style={{
+              fontSize: "13px",
               width: "200px",
               height: "6vh",
               backgroundColor: "#F7DFFF",
               borderWidth: 0,
-              margin: 20,
+              margin: 10,
               fontFamily: "IBMPlexSansKR-Regular",
             }}
           />
@@ -66,11 +70,12 @@ export default function SignupPage() {
             }}
             placeholder="비밀번호를 입력해주세요."
             style={{
+              fontSize: "13px",
               width: "200px",
               height: "6vh",
               backgroundColor: "#F7DFFF",
               borderWidth: 0,
-              margin: 20,
+              margin: 10,
               fontFamily: "IBMPlexSansKR-Regular",
             }}
           />
