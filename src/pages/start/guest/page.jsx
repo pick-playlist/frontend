@@ -9,16 +9,15 @@ export default function GuestPage() {
   const [nickname, setNickname] = useState("");
   const navigate = useNavigate();
   return (
-    <Container fluid className="d-flex justify-content-center min-vh-100">
+    <Container
+      fluid
+      className="d-flex align-items-center justify-content-center min-vh-100"
+    >
       <div
         style={{
-          backgroundColor: "white",
-          marginTop: "10vh",
-          height: "100%",
-          width: "60vw",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "flex-end",
+          justifyContent: "center",
           alignItems: "center",
         }}
       >

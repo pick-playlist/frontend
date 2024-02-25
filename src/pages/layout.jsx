@@ -6,21 +6,31 @@ export default function MainLayout() {
   return (
     <div
       style={{
-        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
-      <NavBar />
-      <Container
-        // className="min-vh-100"
+      <div
         style={{
-          height: "90vh",
-          display: "flex",
-          alignItems: "center",
-          maxWidth: "450px",
+          height: "100vh",
+          width: "450px",
+          overflowY: "auto",
+          overflowX: "hidden",
         }}
       >
-        <Outlet />
-      </Container>
+        <NavBar />
+        <Container
+          style={{
+            height: "90vh",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <Outlet />
+        </Container>
+      </div>
     </div>
   );
 }
