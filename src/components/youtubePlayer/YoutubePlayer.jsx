@@ -9,7 +9,7 @@ export default function YoutubePlayer({ video }) {
       //opts(옵션들): 플레이어의 크기나 다양한 플레이어 매개 변수를 사용할 수 있음.
       //밑에서 더 설명하겠습니다.
       opts={{
-        width: window.innerWidth,
+        width: "450px",
         height: window.innerHeight * 0.5,
         playerVars: {
           mute: 1,

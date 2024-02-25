@@ -19,8 +19,8 @@ export default function NavBar() {
         style={{
           cursor: "pointer",
           color: "white",
-          fontWeight: 500,
           fontSize: "17px",
+          fontFamily: "IBMPlexSansKR-Regular",
         }}
         onClick={() => navigate("/login")}
       >

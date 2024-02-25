@@ -17,7 +17,7 @@ export default function SignupPage() {
         style={{
           display: "flex",
           flexDirection: "column",
-          justifyContent: "flex-end",
+          justifyContent: "center",
           alignItems: "center",
         }}
       >
