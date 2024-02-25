@@ -12,6 +12,7 @@ export default defineConfig({
   resolve: {
     alias: [
       //절대 경로로 접근하기
+      { find: "~/assets", replacement: "/src/assets" },
       { find: "~/components", replacement: "/src/components" },
       { find: "~/lib", replacement: "/src/lib" },
       { find: "~/routers", replacement: "/src/routers" },
