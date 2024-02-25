@@ -2,23 +2,74 @@ import React, { useState, useEffect } from "react";
 import { Accordion, Container } from "react-bootstrap";
 import styled, { keyframes } from "styled-components";
 import userIcon from "../../assets/user.png";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from "~/lib/api/user";
+import { getUser } from "~/store/reducers/user";
+
+const EMPTY_PLAYLIST = "플레이리스트가 비어 있습니다.";
 
 export default function ProfilePage() {
+  const user = useSelector((state) => state.user.data);
+  const dispatch = useDispatch();
+
+  const [profilePhoto, setProfilePhoto] = useState(userIcon);
+  const [nickname, setNickname] = useState("");
+  const [email, setEmail] = useState("");
+  const [playlist, setPlaylist] = useState([]);
+  const [acceptPlaylist, setAcceptPlaylist] = useState([]);
+  const [rejectPlaylist, setRejectPlaylist] = useState([]);
   const [percentage, setPercentage] = useState(0);
+  const [acceptRateOfMusic, setAcceptRateOfMusic] = useState(0);
+
+  const calculateAcceptRateOfMusic = (acceptCnt, rejectCnt) => {
+    if (acceptCnt + rejectCnt === 0) return 0;
+    return (acceptCnt / (acceptCnt + rejectCnt)) * 100;
+  };
+
+  useEffect(() => {
+    console.log("get user");
+    const action = getUser({ userId: user._id });
+    console.log(action);
+    dispatch(action);
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      console.log("User data:", user);
+
+      setProfilePhoto(user.profilePhoto);
+      setEmail(user.email);
+      setNickname(user.nickname);
+      setPlaylist(user.playlist.musics);
+      setAcceptPlaylist(user.acceptPlaylist.musics);
+      setRejectPlaylist(user.rejectPlaylist.musics);
+
+      console.log(acceptPlaylist.length, rejectPlaylist.length);
+
+      setAcceptRateOfMusic(
+        calculateAcceptRateOfMusic(acceptPlaylist.length, rejectPlaylist.length)
+      );
+    }
+  }, [dispatch, user]);
+
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setPercentage((prevProgress) => prevProgress + 10); // 10씩 증가하며 100까지 증가
+      setPercentage((prevProgress) => {
+        const nextProgress = prevProgress + 10;
+        console.log(nextProgress);
+        return nextProgress;
+      }); // 10씩 증가하며 100까지 증가
     }, 100); // 1초마다 업데이트
 
-    console.log(percentage);
-    if (percentage > 78) {
+    if (percentage >= acceptRateOfMusic) {
       clearInterval(intervalId);
     }
 
     return () => {
       clearInterval(intervalId); // 컴포넌트가 언마운트되면 타이머 해제
     };
-  }, [percentage]);
+  }, [percentage, acceptRateOfMusic]);
+
   return (
     <Container fluid className="d-flex justify-content-center min-vh-100">
       <div
@@ -30,11 +81,11 @@ export default function ProfilePage() {
         }}
       >
         <img
-          src={userIcon}
+          src={profilePhoto}
           style={{ width: "150px", height: "150px", marginBottom: "5px" }}
         />
-        <h2 style={{ fontFamily: "OAGothic-ExtraBold" }}>SEUNGTOKTOK</h2>
-        <p style={{ fontFamily: "IBMPlexSansKR-Regular" }}>user@gmail.com</p>
+        <h2 style={{ fontFamily: "OAGothic-ExtraBold" }}>{nickname}</h2>
+        <p style={{ fontFamily: "IBMPlexSansKR-Regular" }}>{email}</p>
         <div
           style={{
             display: "flex",
@@ -57,7 +108,7 @@ export default function ProfilePage() {
               fontFamily: "IBMPlexSansKR-Regular",
             }}
           >
-            78%
+            {acceptRateOfMusic}%
           </span>
           <div
             style={{
@@ -86,7 +137,15 @@ export default function ProfilePage() {
                 나의 플레이리스트
               </Accordion.Header>
               <Accordion.Body style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
-                나의 플레이리스트구만요
+                {playlist.length == 0
+                  ? EMPTY_PLAYLIST
+                  : playlist.map((music) => {
+                      return (
+                        <div key={music._id}>
+                          {music.title} - {music.artist}
+                        </div>
+                      );
+                    })}
               </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="1">
@@ -94,7 +153,15 @@ export default function ProfilePage() {
                 수락된 플레이리스트
               </Accordion.Header>
               <Accordion.Body style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
-                수락된 플레이리스트구만요~
+                {acceptPlaylist.length == 0
+                  ? EMPTY_PLAYLIST
+                  : acceptPlaylist.map((music) => {
+                      return (
+                        <div key={music._id}>
+                          {music.title} - {music.artist}
+                        </div>
+                      );
+                    })}
               </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="2">
@@ -102,7 +169,15 @@ export default function ProfilePage() {
                 거절된 플레이리스트
               </Accordion.Header>
               <Accordion.Body style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
-                거절된 플레이리스트야!
+                {rejectPlaylist.length == 0
+                  ? EMPTY_PLAYLIST
+                  : rejectPlaylist.map((music) => {
+                      return (
+                        <div key={music._id}>
+                          {music.title} - {music.artist}
+                        </div>
+                      );
+                    })}
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
