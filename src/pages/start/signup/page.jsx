@@ -1,14 +1,25 @@
 import React, { useState } from "react";
-import logo from "../../../assets/react.svg";
+import logo from "~/assets/react.svg";
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ButtonInPages } from "~/components/styled/globalComponent";
+import { signUp } from "~/store/reducers/user";
+import { useDispatch } from "react-redux";
 
 export default function SignupPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
+
+  const onClickSignUp = () => {
+    const action = signUp({ email, password, nickname });
+    dispatch(action);
+    navigate("/login");
+  };
+
   return (
     <Container fluid className="d-flex justify-content-center min-vh-100">
       <div
@@ -75,7 +86,7 @@ export default function SignupPage() {
             }}
           />
         </Form>
-        <ButtonInPages onClick={() => navigate("/main")}>SIGN UP</ButtonInPages>
+        <ButtonInPages onClick={() => onClickSignUp()}>SIGN UP</ButtonInPages>
       </div>
     </Container>
   );
