@@ -1,11 +1,11 @@
 import React from "react";
-import logo from "../../../assets/react.svg";
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ButtonInPages } from "~/components/styled/globalComponent";
 import { logIn } from "~/store/reducers/user";
 import { useDispatch } from "react-redux";
+import FloatingIconComponent from "~/components/musicIcon/musicicon";
 
 export default function LoginPage() {
   const dispatch = useDispatch();
@@ -20,24 +20,23 @@ export default function LoginPage() {
   };
 
   return (
-    <Container fluid className="d-flex justify-content-center min-vh-100">
+    <Container
+      fluid
+      className="d-flex flex-column justify-content-center min-vh-100"
+    >
       <div
         style={{
-          backgroundColor: "white",
-          marginTop: "10vh",
-          height: "100%",
-          width: "60vw",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "flex-end",
+          justifyContent: "center",
           alignItems: "center",
         }}
       >
-        <h1>PICKPL</h1>
-        <img
-          src={logo}
-          style={{ width: 250, height: 250, marginBottom: "10vh" }}
-        />
+        <h1 style={{ fontSize: "40px" }}>PICKPL</h1>
+        <span style={{ fontSize: "15px", fontFamily: "IBMPlexSansKR-Regular" }}>
+          모두 함께 만드는 공유 플레이리스트 🎶
+        </span>
+        <FloatingIconComponent />
         <Form>
           <Form.Control
             type="text"
@@ -47,12 +46,13 @@ export default function LoginPage() {
             }}
             placeholder="이메일을 입력해주세요."
             style={{
+              fontSize: "13px",
               fontFamily: "IBMPlexSansKR-Regular",
               width: "200px",
               height: "6vh",
               backgroundColor: "#F7DFFF",
               borderWidth: 0,
-              margin: 20,
+              margin: 10,
             }}
           />
           <Form.Control
@@ -63,12 +63,13 @@ export default function LoginPage() {
             }}
             placeholder="비밀번호를 입력해주세요."
             style={{
+              fontSize: "13px",
               fontFamily: "IBMPlexSansKR-Regular",
               width: "200px",
               height: "6vh",
               backgroundColor: "#F7DFFF",
               borderWidth: 0,
-              margin: 20,
+              margin: 10,
             }}
           />
         </Form>

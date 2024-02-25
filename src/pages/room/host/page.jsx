@@ -13,13 +13,12 @@ export default function RoomHostPage() {
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
-        width: "100%",
       }}
     >
       <YoutubePlayer video={video} />
       <div
         style={{
-          width: "100vw",
+          width: "100%",
           padding: 15,
         }}
       >
