@@ -28,3 +28,8 @@ export async function fetchGuestLogIn(nickname) {
   const response = await instance.post("/user/guest-login", data);
   return response;
 }
+
+export async function fetchUser(userId) {
+  const response = await instance.get(`/user/${userId}`);
+  return response;
+}
