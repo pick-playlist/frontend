@@ -23,8 +23,9 @@ export default function NavBar() {
           src={userObj.data.profilePhoto ? userObj.data.profilePhoto : userIcon}
           style={{
             width: "25px",
+            height: "25px",
             backgroundColor: "white",
-            borderRadius: 20,
+            borderRadius: 100,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",

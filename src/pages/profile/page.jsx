@@ -69,7 +69,6 @@ export default function ProfilePage() {
       clearInterval(intervalId); // 컴포넌트가 언마운트되면 타이머 해제
     };
   }, [percentage, acceptRateOfMusic]);
-
   return (
     <Container fluid className="d-flex justify-content-center min-vh-100">
       <div
@@ -77,12 +76,17 @@ export default function ProfilePage() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          marginTop: "60px", // 이렇게 하면 안될것같은디 -yeri
+          marginTop: "60px",
         }}
       >
         <img
           src={profilePhoto}
-          style={{ width: "150px", height: "150px", marginBottom: "5px" }}
+          style={{
+            width: "150px",
+            height: "150px",
+            marginBottom: "5px",
+            borderRadius: 100,
+          }}
         />
         <h2 style={{ fontFamily: "OAGothic-ExtraBold" }}>{nickname}</h2>
         <p style={{ fontFamily: "IBMPlexSansKR-Regular" }}>{email}</p>

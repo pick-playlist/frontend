@@ -14,13 +14,9 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
 
   const onClickLogIn = () => {
-    try {
-      const action = logIn({ email, password });
-      dispatch(action);
-      navigate("/main");
-    } catch (error) {
-      // login failed
-    }
+    const action = logIn({ email, password });
+    dispatch(action);
+    navigate("/main");
   };
   return (
     <Container

@@ -13,7 +13,7 @@ const initialState = {
 const signUp = createAsyncThunk(
   "user/signUp",
   async ({ email, nickname, password }, thunkAPI) => {
-    const response = fetchSignUp(email, nickname, password);
+    const response = await fetchSignUp(email, nickname, password);
     return response;
   }
 );
@@ -21,7 +21,7 @@ const signUp = createAsyncThunk(
 const logIn = createAsyncThunk(
   "user/logIn",
   async ({ email, password }, thunkAPI) => {
-    const response = fetchLogIn(email, password);
+    const response = await fetchLogIn(email, password);
     return response;
   }
 );
@@ -29,7 +29,7 @@ const logIn = createAsyncThunk(
 const guestLogIn = createAsyncThunk(
   "user/guestLogIn",
   async ({ nickname }, thunkAPI) => {
-    const response = fetchGuestLogIn(nickname);
+    const response = await fetchGuestLogIn(nickname);
     return response;
   }
 );
@@ -37,7 +37,7 @@ const guestLogIn = createAsyncThunk(
 const getUser = createAsyncThunk(
   "user/getUser",
   async ({ userId }, thunkAPI) => {
-    const response = fetchUser(userId);
+    const response = await fetchUser(userId);
     return response;
   }
 );
