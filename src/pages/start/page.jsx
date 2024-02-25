@@ -3,7 +3,7 @@ import music from "../../assets/music-dynamic-gradient.png";
 import { Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ButtonInPages } from "~/components/styled/globalComponent";
-import FloatingIconComponent from "~/components/musicIcon/musicIcon";
+import FloatingIconComponent from "~/components/musicIcon/musicicon";
 export default function StartPage() {
   const navigate = useNavigate();
   return (
