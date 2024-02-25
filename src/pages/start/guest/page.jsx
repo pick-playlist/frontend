@@ -3,10 +3,20 @@ import logo from "../../../assets/react.svg";
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ButtonInPages } from "~/components/styled/globalComponent";
+import { guestLogIn } from "~/store/reducers/user";
+import { useDispatch } from "react-redux";
 
 export default function GuestPage() {
   const [nickname, setNickname] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const onClickGuestLogIn = () => {
+    const action = guestLogIn({ nickname });
+    dispatch(action);
+    navigate("/main");
+  };
+
   return (
     <Container fluid className="d-flex justify-content-center min-vh-100">
       <div
@@ -44,7 +54,7 @@ export default function GuestPage() {
             }}
           />
         </Form>
-        <ButtonInPages onClick={() => navigate("/main")}>
+        <ButtonInPages onClick={() => onClickGuestLogIn()}>
           비회원 로그인
         </ButtonInPages>
       </div>

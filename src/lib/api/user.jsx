@@ -19,3 +19,12 @@ export async function fetchLogIn(email, password) {
   const response = await instance.post("/user/login", data);
   return response;
 }
+
+export async function fetchGuestLogIn(nickname) {
+  const data = {
+    nickname,
+  };
+
+  const response = await instance.post("/user/guest-login", data);
+  return response;
+}

@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchLogIn, fetchSignUp } from "~/lib/api/user";
+import { fetchGuestLogIn, fetchLogIn, fetchSignUp } from "~/lib/api/user";
 const initialState = {
   isLoggedIn: false,
-  userData: null,
+  data: null,
 };
 
 const signUp = createAsyncThunk(
@@ -17,6 +17,14 @@ const logIn = createAsyncThunk(
   "user/logIn",
   async ({ email, password }, thunkAPI) => {
     const response = fetchLogIn(email, password);
+    return response;
+  }
+);
+
+const guestLogIn = createAsyncThunk(
+  "user/guestLogIn",
+  async ({ nickname }, thunkAPI) => {
+    const response = fetchGuestLogIn(nickname);
     return response;
   }
 );
@@ -53,7 +61,7 @@ const userSlice = createSlice({
       console.log("fulfilled login");
       console.log(action);
 
-      state.userData = action.payload;
+      state.data = action.payload;
     });
 
     builder
@@ -65,9 +73,26 @@ const userSlice = createSlice({
         console.log("rejected login");
         console.log(action);
       });
+
+    builder.addCase(guestLogIn.fulfilled, (state, action) => {
+      console.log("fulfilled guestLogIn");
+      console.log(action);
+
+      state.data = action.payload;
+    });
+
+    builder
+      .addCase(guestLogIn.pending, (state, action) => {
+        console.log("pending guestLogIn");
+        console.log(action);
+      })
+      .addCase(guestLogIn.rejected, (state, action) => {
+        console.log("rejected guestLogIn");
+        console.log(action);
+      });
   },
 });
 
 export const { setIsLoggedInTrue, setIsLoggedInFalse } = userSlice.actions;
-export { signUp, logIn };
+export { signUp, logIn, guestLogIn };
 export default userSlice.reducer;
