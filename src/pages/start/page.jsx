@@ -26,9 +26,9 @@ export default function StartPage() {
         <FloatingIconComponent />
 
         {/* <ButtonInPages onClick={() => navigate("/login")}>로그인</ButtonInPages> */}
-        <ButtonInPages onClick={() => navigate("/signup")}>
+        {/* <ButtonInPages onClick={() => navigate("/signup")}>
           회원가입
-        </ButtonInPages>
+        </ButtonInPages> */}
         <ButtonInPages onClick={() => navigate("/guest")}>
           비회원으로 이용하기
         </ButtonInPages>
