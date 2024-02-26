@@ -56,8 +56,8 @@ export default function RoomInfo({ isHost }) {
   }
 
   useEffect(() => {
-    socket.on("update", (data) => {
-      console.log("updated, data: ", data);
+    socket.on("room_updated", (data) => {
+      console.log("room_updated, data: ", data);
       updateRoom();
     });
   }, []);
