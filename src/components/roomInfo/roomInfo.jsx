@@ -189,6 +189,7 @@ export default function RoomInfo({ isHost }) {
           {userList.map((u, i) => {
             return (
               <PartyUserIcon
+                key={u._id}
                 userNickName={u.nickname}
                 color={COLOR_LIST[i % COLOR_LIST.length]}
               />
