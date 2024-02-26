@@ -11,7 +11,9 @@ import { useDispatch, useSelector } from "react-redux";
 export default function CodePage() {
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location.state);
+  const user = useSelector((state) => state.user.data);
+  const room = useSelector((state) => state.room.data);
+
   return (
     <Container
       fluid
@@ -60,7 +62,7 @@ export default function CodePage() {
           {location.state.isCreateRoom ? (
             <>
               <h3>참여코드를 공유해주세요!</h3>
-              <ShowNumberCode />
+              <ShowNumberCode user={user} room={room} />
             </>
           ) : (
             <>
@@ -73,7 +75,7 @@ export default function CodePage() {
           style={{ marginTop: "40px" }}
           onClick={() => {
             location.state.isCreateRoom
-              ? navigate("/room/host")
+              ? navigate("/room/host", { state: { code: room.code } })
               : navigate("/room/party");
           }}
         >
@@ -128,19 +130,16 @@ const NeedNumberCode = () => {
   );
 };
 
-const ShowNumberCode = () => {
+const ShowNumberCode = (props) => {
   const [code, setCode] = useState("0000");
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.data);
-  const room = useSelector((state) => state.room.data);
 
   useEffect(() => {
-    if (user) {
-      const action = createRoom({ userId: user._id });
+    if (props.user) {
+      const action = createRoom({ userId: props.user._id });
       console.log(action);
       dispatch(action);
-      console.log(room);
-      setCode(room.code);
+      setCode(props.room.code);
     }
   }, []);
 

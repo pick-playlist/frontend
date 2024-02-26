@@ -3,8 +3,10 @@ import YoutubePlayer from "~/components/youtubePlayer/YoutubePlayer";
 import "./styles.css";
 import { MusicNoteList } from "react-bootstrap-icons";
 import { Accordion } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 
 export default function RoomHostPage() {
+  const location = useLocation();
   const video = {
     key: "mFbILexYSQg",
   };
@@ -29,7 +31,7 @@ export default function RoomHostPage() {
       >
         <h3 class="titleText">승택님의 잼 🎶</h3>
         <div style={{ alignSelf: "flex-end" }}>
-          <span>공유 코드 123456</span>
+          <span>공유 코드 {location.state.code}</span>
         </div>
         <div>
           <h5>현재 재생중인 음악</h5>
