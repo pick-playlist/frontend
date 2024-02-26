@@ -6,11 +6,10 @@ import { Form } from "react-bootstrap";
 import { ButtonInPages } from "~/components/styled/globalComponent";
 import styled, { keyframes } from "styled-components";
 import PartyUserIcon from "../partyUserIcon/partyUserIcon";
-import { useSearchParams } from "react-router-dom";
-import { getRoomInfoWithCode } from "~/store/reducers/room";
 import { getLinkInfo } from "~/lib/api/search";
 import { createMusic } from "~/lib/api/music";
 import { addMusicInPlaylist } from "~/lib/api/playlist";
+import { updateRoom } from "~/lib/util/room";
 
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:3000");
@@ -22,9 +21,6 @@ export default function RoomInfo({ isHost }) {
   const room = useSelector((state) => state.room.data);
 
   const dispatch = useDispatch();
-
-  const [searchParams] = useSearchParams();
-  const code = searchParams.get("code");
 
   const [link, setLink] = useState("");
   const [comment, setComment] = useState("");
@@ -52,7 +48,7 @@ export default function RoomInfo({ isHost }) {
 
     const playlistResp = await addMusicInPlaylist(createdMusicId, playlistId);
 
-    updateRoom();
+    updateRoom(room.code, dispatch);
     console.log("playlistResp: ", playlistResp);
 
     socket.emit("room_updated", playlistId);
@@ -71,18 +67,13 @@ export default function RoomInfo({ isHost }) {
       if (isHost) {
         setHostNickName(user.nickname);
       }
+
+      updateRoom(room.code, dispatch);
     }
   }, [room]);
 
-  const updateRoom = () => {
-    const action = getRoomInfoWithCode({ roomCode: code });
-    dispatch(action);
-  };
-
   useEffect(() => {
-    if (!room) {
-      updateRoom();
-    } else {
+    if (room) {
       setUserList(room.users);
       setRemainPlayList(room.remainPlaylist.musics);
     }
@@ -192,6 +183,7 @@ export default function RoomInfo({ isHost }) {
                 key={u._id}
                 userNickName={u.nickname}
                 color={COLOR_LIST[i % COLOR_LIST.length]}
+                index={i}
               />
             );
           })}

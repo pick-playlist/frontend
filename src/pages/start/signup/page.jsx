@@ -14,10 +14,16 @@ export default function SignupPage() {
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
 
-  const onClickSignUp = () => {
+  const onClickSignUp = async () => {
     const action = signUp({ email, password, nickname });
-    dispatch(action);
-    navigate("/login");
+    const resultAction = await dispatch(action);
+    if (signUp.fulfilled.match(resultAction)) {
+      navigate("/login");
+    } else {
+      alert(
+        "회원가입에 실패했습니다. \n 닉네임, 이메일, 비밀번호를 확인 후 다시 시도해주세요."
+      );
+    }
   };
 
   return (
