@@ -30,21 +30,27 @@ export default function RoomInfo({ isHost }) {
   const [userList, setUserList] = useState([]);
   const [remainPlaylist, setRemainPlayList] = useState([]);
 
-  const clickAddButton = async (link, playlistId) => {
+  async function clickAddButton(link, playlistId) {
     const linkInfoResp = await getLinkInfo(link);
 
     const title = linkInfoResp.title;
-    const artist = "none";
-    // 아래 넣어주세용
+    const thumbnail = linkInfoResp.thumbnails.default.url;
     const userId = user._id;
-    const musicResp = await createMusic(title, artist, comment, userId, link);
+
+    const musicResp = await createMusic(
+      title,
+      thumbnail,
+      comment,
+      userId,
+      link
+    );
     const createdMusicId = musicResp._id;
 
     const playlistResp = await addMusicInPlaylist(createdMusicId, playlistId);
 
     updateRoom();
     return playlistResp;
-  };
+  }
 
   useEffect(() => {
     if (user && room) {
