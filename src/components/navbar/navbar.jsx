@@ -4,9 +4,8 @@ import { useNavigate } from "react-router-dom";
 import userIcon from "../../assets/user.png";
 
 export default function NavBar() {
-  const user = useSelector((state) => state.user.data);
   const navigate = useNavigate();
-  const userObj = useSelector((state) => state.user);
+  const userObj = useSelector((state) => state.user.data);
   return (
     <div
       style={{
@@ -19,13 +18,11 @@ export default function NavBar() {
         justifyContent: "flex-end",
       }}
     >
-      {userObj.data.isMember ? (
+      {userObj.isMember ? (
         <div style={{ color: "white", display: "flex" }}>
-          {user.nickname}님
+          {userObj.nickname}님
           <img
-            src={
-              userObj.data.profilePhoto ? userObj.data.profilePhoto : userIcon
-            }
+            src={userObj.profilePhoto ? userObj.profilePhoto : userIcon}
             style={{
               marginLeft: "5px",
               width: "25px",

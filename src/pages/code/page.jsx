@@ -139,6 +139,7 @@ const ShowNumberCode = () => {
       const action = createRoom({ userId: user._id });
       console.log(action);
       dispatch(action);
+      console.log(room);
       setCode(room.code);
     }
   }, []);
