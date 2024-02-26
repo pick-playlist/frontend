@@ -12,6 +12,9 @@ import { getLinkInfo } from "~/lib/api/search";
 import { createMusic } from "~/lib/api/music";
 import { addMusicInPlaylist } from "~/lib/api/playlist";
 
+import io from "socket.io-client";
+const socket = io.connect("http://localhost:3000");
+
 const COLOR_LIST = ["#3C308C", "#332973", "#2F2359"];
 
 export default function RoomInfo({ isHost }) {
@@ -44,11 +47,33 @@ export default function RoomInfo({ isHost }) {
       userId,
       link
     );
+    console.log("musicResp: ", musicResp);
     const createdMusicId = musicResp._id;
 
     const playlistResp = await addMusicInPlaylist(createdMusicId, playlistId);
+
+    console.log("playlistResp: ", playlistResp);
+
+    socket.emit("room_updated", playlistId);
     return playlistResp;
   }
+
+  function initRoom() {
+    if (!room) {
+      const action = getRoomInfoWithCode({ roomCode: code });
+      dispatch(action);
+    } else {
+      setUserList(room.users);
+      setRemainPlayList(room.remainPlaylist.musics);
+    }
+  }
+
+  useEffect(() => {
+    socket.on("update", (data) => {
+      console.log("updated, data: ", data);
+      initRoom();
+    });
+  }, []);
 
   useEffect(() => {
     if (user && room) {
@@ -59,13 +84,14 @@ export default function RoomInfo({ isHost }) {
   }, [room]);
 
   useEffect(() => {
-    if (!room) {
-      const action = getRoomInfoWithCode({ roomCode: code });
-      dispatch(action);
-    } else {
-      setUserList(room.users);
-      setRemainPlayList(room.remainPlaylist.musics);
-    }
+    // if (!room) {
+    //   const action = getRoomInfoWithCode({ roomCode: code });
+    //   dispatch(action);
+    // } else {
+    //   setUserList(room.users);
+    //   setRemainPlayList(room.remainPlaylist.musics);
+    // }
+    initRoom();
   }, [room]);
 
   return (
