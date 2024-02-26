@@ -8,6 +8,9 @@ import styled, { keyframes } from "styled-components";
 import PartyUserIcon from "../partyUserIcon/partyUserIcon";
 import { useSearchParams } from "react-router-dom";
 import { getRoomInfoWithCode } from "~/store/reducers/room";
+import { getLinkInfo } from "~/lib/api/search";
+import { createMusic } from "~/lib/api/music";
+import { addMusicInPlaylist } from "~/lib/api/playlist";
 
 const COLOR_LIST = ["#3C308C", "#332973", "#2F2359"];
 
@@ -27,20 +30,25 @@ export default function RoomInfo({ isHost }) {
   const [userList, setUserList] = useState([]);
   const [remainPlaylist, setRemainPlayList] = useState([]);
 
-  const clickAddButton = async (link, playlistId) => {
+  async function clickAddButton(link, playlistId) {
     const linkInfoResp = await getLinkInfo(link);
 
     const title = linkInfoResp.title;
-    const artist = "none";
-    // 아래 넣어주세용
+    const thumbnail = linkInfoResp.thumbnails.default.url;
     const userId = user._id;
 
-    const musicResp = await createMusic(title, artist, comment, userId, link);
+    const musicResp = await createMusic(
+      title,
+      thumbnail,
+      comment,
+      userId,
+      link
+    );
     const createdMusicId = musicResp._id;
 
     const playlistResp = await addMusicInPlaylist(createdMusicId, playlistId);
     return playlistResp;
-  };
+  }
 
   useEffect(() => {
     if (user && room) {
