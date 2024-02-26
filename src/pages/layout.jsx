@@ -26,6 +26,7 @@ export default function MainLayout() {
           style={{
             height: "90vh",
             display: "flex",
+            justifyContent: "center",
             alignItems: "center",
           }}
         >
