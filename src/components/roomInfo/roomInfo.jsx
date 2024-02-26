@@ -1,16 +1,64 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Accordion } from "react-bootstrap";
 import { MusicNoteList, PlusCircleFill, XLg } from "react-bootstrap-icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Form } from "react-bootstrap";
 import { ButtonInPages } from "~/components/styled/globalComponent";
 import styled, { keyframes } from "styled-components";
+import PartyUserIcon from "../partyUserIcon/partyUserIcon";
+import { useSearchParams } from "react-router-dom";
+import { getRoomInfoWithCode } from "~/store/reducers/room";
 
-export default function RoomInfo() {
+const COLOR_LIST = ["#3C308C", "#332973", "#2F2359"];
+
+export default function RoomInfo({ isHost }) {
+  const user = useSelector((state) => state.user.data);
   const room = useSelector((state) => state.room.data);
+
+  const dispatch = useDispatch();
+
+  const [searchParams] = useSearchParams();
+  const code = searchParams.get("code");
+
   const [link, setLink] = useState("");
   const [comment, setComment] = useState("");
   const [isPlusBtnClicked, setIsPlusBtnClicked] = useState(false);
+  const [hostNickName, setHostNickName] = useState("");
+  const [userList, setUserList] = useState([]);
+  const [remainPlaylist, setRemainPlayList] = useState([]);
+
+  const clickAddButton = async (link, playlistId) => {
+    const linkInfoResp = await getLinkInfo(link);
+
+    const title = linkInfoResp.title;
+    const artist = "none";
+    // 아래 넣어주세용
+    const userId = user._id;
+
+    const musicResp = await createMusic(title, artist, comment, userId, link);
+    const createdMusicId = musicResp._id;
+
+    const playlistResp = await addMusicInPlaylist(createdMusicId, playlistId);
+    return playlistResp;
+  };
+
+  useEffect(() => {
+    if (user && room) {
+      if (isHost) {
+        setHostNickName(user.nickname);
+      }
+    }
+  }, [room]);
+
+  useEffect(() => {
+    if (!room) {
+      const action = getRoomInfoWithCode({ roomCode: code });
+      dispatch(action);
+    } else {
+      setUserList(room.users);
+      setRemainPlayList(room.remainPlaylist.musics);
+    }
+  }, [room]);
 
   return (
     <div
@@ -83,13 +131,18 @@ export default function RoomInfo() {
                 }}
               />
             </Form>
-            <ButtonInPages onClick={() => setIsPlusBtnClicked(false)}>
+            <ButtonInPages
+              onClick={() => {
+                setIsPlusBtnClicked(false);
+                clickAddButton(link, room.remainPlaylist._id);
+              }}
+            >
               추가하기
             </ButtonInPages>
           </div>
         </StyledModalContent>
       ) : null}
-      <h3 class="titleText">승택님의 잼 🎶</h3>
+      <h3 className="titleText">{hostNickName}님의 잼 🎶</h3>
       <div style={{ alignSelf: "flex-end" }}>
         {room ? <span>공유 코드 {room.code}</span> : null}
       </div>
@@ -98,45 +151,21 @@ export default function RoomInfo() {
         <span>비비 - 밤양갱</span>
       </div>
       <div style={{ marginTop: "10px" }}>
-        <span>현재 3명이 참여중 </span>
+        <span>현재 {userList.length}명이 참여중 </span>
         <div
           style={{
             display: "flex",
             position: "relative",
           }}
         >
-          <div
-            class="partyUserIcon"
-            style={{
-              zIndex: 2,
-              backgroundColor: "#3C308C",
-            }}
-          >
-            YR
-          </div>
-          <div
-            class="partyUserIcon"
-            style={{
-              position: "absolute", // 겹치는 div에 position: absolute; 추가
-              top: 0, // 원하는 위치로 조정
-              left: "30px", // 원하는 위치로 조정
-              zIndex: 1,
-              backgroundColor: "#332973",
-            }}
-          >
-            YH
-          </div>
-          <div
-            class="partyUserIcon"
-            style={{
-              position: "absolute", // 겹치는 div에 position: absolute; 추가
-              top: 0, // 원하는 위치로 조정
-              left: "60px", // 원하는 위치로 조정
-              backgroundColor: "#2F2359",
-            }}
-          >
-            ST
-          </div>
+          {userList.map((u, i) => {
+            return (
+              <PartyUserIcon
+                userNickName={u.nickname}
+                color={COLOR_LIST[i % COLOR_LIST.length]}
+              />
+            );
+          })}
         </div>
       </div>
       <div
@@ -148,7 +177,6 @@ export default function RoomInfo() {
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
           }}
         >
           <div>
@@ -166,9 +194,22 @@ export default function RoomInfo() {
               <Accordion.Header style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
                 대기 중인 플레이리스트
               </Accordion.Header>
-              <Accordion.Body style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
-                아직 대기 중인 플레이리스트가 없습니다.
-              </Accordion.Body>
+
+              {remainPlaylist.length == 0 ? (
+                <Accordion.Body style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
+                  아직 대기 중인 플레이리스트가 없습니다.
+                </Accordion.Body>
+              ) : (
+                remainPlaylist.map((music) => {
+                  console.log(music);
+
+                  return (
+                    <Accordion.Body
+                      style={{ fontFamily: "IBMPlexSansKR-Regular" }}
+                    ></Accordion.Body>
+                  );
+                })
+              )}
             </Accordion.Item>
           </Accordion>
         </div>

@@ -48,7 +48,7 @@ const roomSlice = createSlice({
     builder.addCase(getRoomInfoWithCode.fulfilled, (state, action) => {
       console.log("fulfilled getRoomInfoWithCode");
       console.log(action);
-      state.data = action;
+      state.data = action.payload;
     });
 
     builder

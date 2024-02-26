@@ -20,14 +20,20 @@ export default function CodePage() {
 
   const onClickReady = async () => {
     if (location.state.isCreateRoom) {
-      navigate({ pathname: "/room/host", search: `?code=${code}` });
+      navigate(
+        { pathname: "/room/host", search: `?code=${code}` },
+        { state: { isCreateRoom: true } }
+      );
     } else {
       try {
         const action = getRoomInfoWithCode({ roomCode: code });
         console.log(action);
         const resultAction = await dispatch(action);
         if (getRoomInfoWithCode.fulfilled.match(resultAction)) {
-          navigate({ pathname: "/room/party", search: `?code=${code}` });
+          navigate(
+            { pathname: "/room/party", search: `?code=${code}` },
+            { state: { isCreateRoom: false } }
+          );
         } else {
           alert("방을 찾을 수 없습니다. 다시 입력해주세요.");
         }
@@ -95,6 +101,7 @@ export default function CodePage() {
             </>
           )}
         </div>
+
         <ButtonInPages
           style={{ marginTop: "40px" }}
           onClick={() => onClickReady()}
