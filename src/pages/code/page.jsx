@@ -5,13 +5,39 @@ import { ButtonInPages } from "~/components/styled/globalComponent";
 import girl from "~/assets/girl-dynamic-color.png";
 import boy from "~/assets/boy-dynamic-color.png";
 import chat from "~/assets/chat-bubble-dynamic-color.png";
-import { createRoom } from "~/store/reducers/room";
+import { createRoom, getRoomInfoWithCode } from "~/store/reducers/room";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function CodePage() {
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location.state);
+  const dispatch = useDispatch();
+  const [code, setCode] = useState();
+
+  useEffect(() => {
+    console.log("code: ", code);
+  }, [code]);
+
+  const onClickReady = async () => {
+    if (location.state.isCreateRoom) {
+      navigate({ pathname: "/room/host", search: `?code=${code}` });
+    } else {
+      try {
+        const action = getRoomInfoWithCode({ roomCode: code });
+        console.log(action);
+        const resultAction = await dispatch(action);
+        if (getRoomInfoWithCode.fulfilled.match(resultAction)) {
+          navigate({ pathname: "/room/party", search: `?code=${code}` });
+        } else {
+          alert("방을 찾을 수 없습니다. 다시 입력해주세요.");
+        }
+      } catch (error) {
+        console.error("Error while getting room info:", error);
+        alert("방을 찾는 중 오류가 발생했습니다. 다시 입력해주세요.");
+      }
+    }
+  };
+
   return (
     <Container
       fluid
@@ -60,22 +86,18 @@ export default function CodePage() {
           {location.state.isCreateRoom ? (
             <>
               <h3>참여코드를 공유해주세요!</h3>
-              <ShowNumberCode />
+              <ShowNumberCode setParentCode={setCode} />
             </>
           ) : (
             <>
               <h3>참여코드를 입력해주세요!</h3>
-              <NeedNumberCode />
+              <NeedNumberCode setParentCode={setCode} />
             </>
           )}
         </div>
         <ButtonInPages
           style={{ marginTop: "40px" }}
-          onClick={() => {
-            location.state.isCreateRoom
-              ? navigate("/room/host")
-              : navigate("/room/party");
-          }}
+          onClick={() => onClickReady()}
         >
           READY!
         </ButtonInPages>
@@ -84,7 +106,7 @@ export default function CodePage() {
   );
 }
 
-const NeedNumberCode = () => {
+const NeedNumberCode = ({ setParentCode }) => {
   const [code, setCode] = useState(["", "", "", ""]);
   const refInput = [useRef(), useRef(), useRef(), useRef()];
 
@@ -93,16 +115,19 @@ const NeedNumberCode = () => {
     if (index < 3 && isInserted) {
       const nextInput = document.getElementById(`input${index + 1}`);
       if (nextInput) nextInput.focus();
-      // refInput[index + 1].current.focus();
     }
 
-    setCode((prevState) => {
-      const newState = [...prevState];
+    setCode((prevCode) => {
+      const newState = [...prevCode];
       newState[index] = value;
       return newState;
     });
   };
-
+  // 최종 코드 확인 및 부모 컴포넌트로 전달
+  useEffect(() => {
+    const finalCode = code.join(""); // 배열의 요소를 문자열로 합치기
+    if (finalCode.length == 4) setParentCode(finalCode);
+  }, [code, setParentCode]);
   return (
     <div>
       {code.map((num, index) => (
@@ -128,7 +153,7 @@ const NeedNumberCode = () => {
   );
 };
 
-const ShowNumberCode = () => {
+const ShowNumberCode = ({ setParentCode }) => {
   const [code, setCode] = useState("0000");
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.data);
@@ -140,6 +165,7 @@ const ShowNumberCode = () => {
       console.log(action);
       dispatch(action);
       setCode(room.code);
+      setParentCode(room.code);
     }
   }, []);
 

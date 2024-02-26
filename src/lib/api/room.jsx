@@ -22,13 +22,8 @@ export async function getRoomInfoWithId(roomId) {
 }
 
 export async function getRoomInfoWithCode(roomCode) {
-  try {
-    const response = await axios.get("/api/room/info/code/" + roomCode);
-
-    return response.data;
-  } catch (err) {
-    console.log(err);
-  }
+  const response = await axios.get("/api/room/info/code/" + roomCode);
+  return response.data;
 }
 
 export async function addUserInRoom(userId, roomId) {
