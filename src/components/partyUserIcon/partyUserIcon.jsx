@@ -3,7 +3,7 @@ import React from "react";
 export default function PartyUserIcon({ userNickName, color, index }) {
   return (
     <div
-      class="partyUserIcon"
+      className="partyUserIcon"
       style={{
         zIndex: 2,
         backgroundColor: color,
