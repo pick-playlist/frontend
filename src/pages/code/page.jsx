@@ -7,33 +7,38 @@ import boy from "~/assets/boy-dynamic-color.png";
 import chat from "~/assets/chat-bubble-dynamic-color.png";
 import { createRoom, getRoomInfoWithCode } from "~/store/reducers/room";
 import { useDispatch, useSelector } from "react-redux";
+import { addUserInRoom } from "~/lib/api/room";
+import { updateRoom } from "~/lib/util/room";
 
 export default function CodePage() {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [code, setCode] = useState();
-
-  useEffect(() => {
-    console.log("code: ", code);
-  }, [code]);
+  const room = useSelector((state) => state.room.data);
+  const user = useSelector((state) => state.user.data);
 
   const onClickReady = async () => {
     if (location.state.isCreateRoom) {
-      navigate(
-        { pathname: "/room/host", search: `?code=${code}` },
-        { state: { isCreateRoom: true } }
-      );
+      navigate({ pathname: "/room/host" }, { state: { isCreateRoom: true } });
     } else {
       try {
         const action = getRoomInfoWithCode({ roomCode: code });
         console.log(action);
         const resultAction = await dispatch(action);
         if (getRoomInfoWithCode.fulfilled.match(resultAction)) {
-          navigate(
-            { pathname: "/room/party", search: `?code=${code}` },
-            { state: { isCreateRoom: false } }
-          );
+          try {
+            // 접속
+            addUserInRoom(user._id, room._id);
+            // 페이지 이동
+            navigate(
+              { pathname: "/room/party" },
+              { state: { isCreateRoom: false } }
+            );
+          } catch (error) {
+            console.error("Error while entering room info: ", error);
+            alert("접속에 실패했습니다. 다시 접속해주세요.");
+          }
         } else {
           alert("방을 찾을 수 없습니다. 다시 입력해주세요.");
         }
@@ -175,7 +180,7 @@ const ShowNumberCode = ({ setParentCode }) => {
       setCode(room.code);
       setParentCode(room.code);
     }
-  }, [user, room]);
+  }, [room]);
 
   return (
     <div>
