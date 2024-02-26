@@ -1,5 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import userReducer from "./reducers/user";
+import roomReducer from "./reducers/room";
+
 import {
   FLUSH,
   PAUSE,
@@ -23,6 +25,7 @@ const rootReducer = persistReducer(
   rootPersistConfig,
   combineReducers({
     user: userReducer,
+    room: roomReducer,
   })
 );
 
