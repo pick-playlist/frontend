@@ -157,7 +157,11 @@ export default function RoomInfo({ isHost }) {
       ) : null}
       <h3 className="titleText">{hostNickName}님의 방 🎶</h3>
       <div style={{ alignSelf: "flex-end" }}>
-        {room ? <span>공유 코드 {room.code}</span> : null}
+        {room ? (
+          <span style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
+            공유 코드 {room.code}
+          </span>
+        ) : null}
       </div>
       <div>
         <h5>현재 재생중인 음악</h5>
@@ -190,9 +194,10 @@ export default function RoomInfo({ isHost }) {
           style={{
             display: "flex",
             alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
-          <div>
+          <div style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
             <MusicNoteList style={{ marginRight: "5px", width: "20px" }} />
             대기 중인 플레이리스트
           </div>
