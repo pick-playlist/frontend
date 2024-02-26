@@ -18,7 +18,6 @@ export default function LoginPage() {
     dispatch(action);
     navigate("/main");
   };
-
   return (
     <Container
       fluid

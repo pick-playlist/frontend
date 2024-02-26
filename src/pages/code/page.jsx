@@ -156,12 +156,10 @@ const NeedNumberCode = ({ setParentCode }) => {
 const ShowNumberCode = ({ setParentCode }) => {
   const [code, setCode] = useState("0000");
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.data);
-  const room = useSelector((state) => state.room.data);
 
   useEffect(() => {
-    if (user) {
-      const action = createRoom({ userId: user._id });
+    if (props.user) {
+      const action = createRoom({ userId: props.user._id });
       console.log(action);
       dispatch(action);
       setCode(room.code);

@@ -32,7 +32,6 @@ const roomSlice = createSlice({
     builder.addCase(createRoom.fulfilled, (state, action) => {
       console.log("fulfilled createRoom");
       console.log(action);
-
       state.data = action.payload;
     });
 
