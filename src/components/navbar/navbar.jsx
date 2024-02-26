@@ -1,7 +1,9 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
+  const user = useSelector((state) => state.user.data);
   const navigate = useNavigate();
   return (
     <div
@@ -24,7 +26,7 @@ export default function NavBar() {
         }}
         onClick={() => navigate("/login")}
       >
-        로그인
+        {user.nickname}님 로그인
       </div>
     </div>
   );
