@@ -13,10 +13,17 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const onClickLogIn = () => {
+  const onClickLogIn = async () => {
     const action = logIn({ email, password });
-    dispatch(action);
-    navigate("/main");
+    const resultAction = await dispatch(action);
+
+    if (logIn.fulfilled.match(resultAction)) {
+      navigate("/main");
+    } else {
+      alert(
+        "로그인에 실패하였습니다. \n 아이디, 비밀번호를 확인 후 다시 시도해주세요."
+      );
+    }
   };
   return (
     <Container

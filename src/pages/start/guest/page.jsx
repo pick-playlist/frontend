@@ -11,10 +11,14 @@ export default function GuestPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onClickGuestLogIn = () => {
+  const onClickGuestLogIn = async () => {
     const action = guestLogIn({ nickname });
-    dispatch(action);
-    navigate("/main");
+    const resultAction = await dispatch(action);
+    if (guestLogIn.fulfilled.match(resultAction)) {
+      navigate("/main");
+    } else {
+      alert("로그인에 실패하였습니다. \n 닉네임 확인 후 다시 시도해주세요.");
+    }
   };
 
   return (
