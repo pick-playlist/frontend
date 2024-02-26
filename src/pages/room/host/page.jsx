@@ -13,6 +13,7 @@ import { addMusicInPlaylist } from "~/lib/api/playlist";
 import RoomInfo from "~/components/roomInfo/roomInfo";
 
 export default function RoomHostPage() {
+  const location = useLocation();
   const video = {
     key: "mFbILexYSQg",
   };
@@ -20,7 +21,7 @@ export default function RoomHostPage() {
   return (
     <div>
       <YoutubePlayer video={video} />
-      <RoomInfo />
+      <RoomInfo isHost={location.state.isCreateRoom} />
     </div>
   );
 }
