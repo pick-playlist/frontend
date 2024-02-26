@@ -11,6 +11,7 @@ import styled, { keyframes } from "styled-components";
 export default function RoomHostPage() {
   const location = useLocation();
   const [link, setLink] = useState("");
+  const [comment, setComment] = useState("");
   const [isPlusBtnClicked, setIsPlusBtnClicked] = useState(false);
   const video = {
     key: "mFbILexYSQg",
@@ -55,6 +56,26 @@ export default function RoomHostPage() {
                   setLink(e.target.value);
                 }}
                 placeholder="유튜브 링크 주소를 입력해주세요."
+                style={{
+                  fontSize: "13px",
+                  fontFamily: "IBMPlexSansKR-Regular",
+                  width: "300px",
+                  height: "50px",
+                  backgroundColor: "#BDCAF2",
+                  borderWidth: 0,
+                  margin: 10,
+                }}
+              />
+            </Form>
+            <Form>
+              <h3>코멘트</h3>
+              <Form.Control
+                type="text"
+                value={comment}
+                onChange={(e) => {
+                  setComment(e.target.value);
+                }}
+                placeholder="코멘트를 입력해주세요."
                 style={{
                   fontSize: "13px",
                   fontFamily: "IBMPlexSansKR-Regular",
