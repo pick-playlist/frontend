@@ -102,6 +102,7 @@ const NeedNumberCode = () => {
       return newState;
     });
   };
+
   return (
     <div>
       {code.map((num, index) => (
@@ -131,14 +132,14 @@ const ShowNumberCode = () => {
   const [code, setCode] = useState("0000");
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.data);
-  const room = useSelector((state) => state.room.code);
+  const room = useSelector((state) => state.room.data);
 
   useEffect(() => {
     if (user) {
       const action = createRoom({ userId: user._id });
       console.log(action);
       dispatch(action);
-      setCode(room);
+      setCode(room.code);
     }
   }, []);
 

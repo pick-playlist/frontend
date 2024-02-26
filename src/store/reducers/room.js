@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { createRoom as reqCreateRoom } from "~/lib/api/room";
 
 const initialState = {
-  code: null,
+  data: null,
 };
 
 const createRoom = createAsyncThunk(
@@ -22,7 +22,7 @@ const roomSlice = createSlice({
       console.log("fulfilled createRoom");
       console.log(action);
 
-      state.code = action.payload.code;
+      state.data = action.payload;
     });
 
     builder
