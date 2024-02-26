@@ -9,7 +9,7 @@ export default function PartyUserIcon({ userNickName, color }) {
         backgroundColor: color,
       }}
     >
-      {userNickName[0] ? userNickName[0] : "u"}
+      {userNickName ? userNickName[0] : "u"}
     </div>
   );
 }
