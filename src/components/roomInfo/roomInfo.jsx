@@ -83,7 +83,12 @@ export default function RoomInfo() {
                 }}
               />
             </Form>
-            <ButtonInPages onClick={() => setIsPlusBtnClicked(false)}>
+            <ButtonInPages
+              onClick={() => {
+                setIsPlusBtnClicked(false);
+                clickAddButton(link, "65dc26df200600064a9e5a07");
+              }}
+            >
               추가하기
             </ButtonInPages>
           </div>
