@@ -1,11 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
-import logo from "../../assets/react.svg";
 import { ButtonInPages } from "~/components/styled/globalComponent";
-import girl from "../../assets/girl-dynamic-color.png";
-import boy from "../../assets/boy-dynamic-color.png";
-import chat from "../../assets/chat-bubble-dynamic-color.png";
+import girl from "~/assets/girl-dynamic-color.png";
+import boy from "~/assets/boy-dynamic-color.png";
+import chat from "~/assets/chat-bubble-dynamic-color.png";
+import { createRoom } from "~/store/reducers/room";
+import { useDispatch, useSelector } from "react-redux";
+
 export default function CodePage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -126,10 +128,24 @@ const NeedNumberCode = () => {
 };
 
 const ShowNumberCode = () => {
+  const [code, setCode] = useState("0000");
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.data);
+  const room = useSelector((state) => state.room.code);
+
+  useEffect(() => {
+    if (user) {
+      const action = createRoom({ userId: user._id });
+      console.log(action);
+      dispatch(action);
+      setCode(room);
+    }
+  }, []);
+
   return (
     <div>
       <h2 style={{ fontFamily: "IBMPlexSansKR-Regular", fontWeight: "bold" }}>
-        1 2 3 4 5 6
+        {code}
       </h2>
     </div>
   );

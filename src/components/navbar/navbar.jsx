@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import userIcon from "../../assets/user.png";
 
 export default function NavBar() {
+  const user = useSelector((state) => state.user.data);
   const navigate = useNavigate();
   const userObj = useSelector((state) => state.user);
   return (
@@ -19,20 +20,26 @@ export default function NavBar() {
       }}
     >
       {userObj.data.isMember ? (
-        <img
-          src={userObj.data.profilePhoto ? userObj.data.profilePhoto : userIcon}
-          style={{
-            width: "25px",
-            height: "25px",
-            backgroundColor: "white",
-            borderRadius: 100,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            cursor: "pointer",
-          }}
-          onClick={() => navigate("/profile")}
-        />
+        <div style={{ color: "white", display: "flex" }}>
+          {user.nickname}님
+          <img
+            src={
+              userObj.data.profilePhoto ? userObj.data.profilePhoto : userIcon
+            }
+            style={{
+              marginLeft: "5px",
+              width: "25px",
+              height: "25px",
+              backgroundColor: "white",
+              borderRadius: 100,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              cursor: "pointer",
+            }}
+            onClick={() => navigate("/profile")}
+          />
+        </div>
       ) : (
         <div
           style={{
