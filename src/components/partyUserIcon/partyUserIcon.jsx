@@ -12,7 +12,7 @@ export default function PartyUserIcon({ userNickName, color, index }) {
         left: `${index * 30}px`,
       }}
     >
-      {userNickName ? userNickName[0] : ""}
+      {userNickName[0] ? userNickName[0] : "u"}
     </div>
   );
 }
