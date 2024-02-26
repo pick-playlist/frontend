@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import YoutubePlayer from "~/components/youtubePlayer/YoutubePlayer";
 import "./styles.css";
-import { MusicNoteList } from "react-bootstrap-icons";
+import { MusicNoteList, PlusCircleFill, XLg } from "react-bootstrap-icons";
 import { Accordion } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
+import { Form } from "react-bootstrap";
+import { ButtonInPages } from "~/components/styled/globalComponent";
+import styled, { keyframes } from "styled-components";
 
 export default function RoomHostPage() {
   const location = useLocation();
+  const [link, setLink] = useState("");
+  const [isPlusBtnClicked, setIsPlusBtnClicked] = useState(false);
   const video = {
     key: "mFbILexYSQg",
   };
@@ -21,6 +26,52 @@ export default function RoomHostPage() {
         width: "100%",
       }}
     >
+      {isPlusBtnClicked ? (
+        <StyledModalContent>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <XLg
+              onClick={() => setIsPlusBtnClicked(false)}
+              style={{
+                cursor: "pointer",
+                position: "absolute",
+                right: 18,
+                top: 18,
+                width: "20px",
+                height: "20px",
+              }}
+            />
+            <h3 style={{ alignSelf: "flex-start" }}>추가 할 유튜브 링크</h3>
+            <Form>
+              <Form.Control
+                type="text"
+                value={link}
+                onChange={(e) => {
+                  setLink(e.target.value);
+                }}
+                placeholder="유튜브 링크 주소를 입력해주세요."
+                style={{
+                  fontSize: "13px",
+                  fontFamily: "IBMPlexSansKR-Regular",
+                  width: "300px",
+                  height: "50px",
+                  backgroundColor: "#BDCAF2",
+                  borderWidth: 0,
+                  margin: 10,
+                }}
+              />
+            </Form>
+            <ButtonInPages onClick={() => setIsPlusBtnClicked(false)}>
+              추가하기
+            </ButtonInPages>
+          </div>
+        </StyledModalContent>
+      ) : null}
       <YoutubePlayer video={video} />
       <div
         style={{
@@ -84,9 +135,21 @@ export default function RoomHostPage() {
             marginTop: "10px",
           }}
         >
-          <h3 style={{ display: "flex", alignItems: "center" }}>
-            <MusicNoteList style={{ marginRight: "5px", width: "20px" }} />
-            대기 중인 플레이리스트
+          <h3
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <div>
+              <MusicNoteList style={{ marginRight: "5px", width: "20px" }} />
+              대기 중인 플레이리스트
+            </div>
+            <PlusCircleFill
+              style={{ cursor: "pointer" }}
+              onClick={() => setIsPlusBtnClicked(true)}
+            />
           </h3>
           <div style={{ marginTop: "10px", marginBottom: "50px" }}>
             <Accordion defaultActiveKey="0" alwaysOpen>
@@ -107,3 +170,25 @@ export default function RoomHostPage() {
     </div>
   );
 }
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+const StyledModalContent = styled.div`
+  maxwidth: 370px;
+  width: 370px;
+  position: fixed;
+  top: 30%;
+  z-index: 5;
+  border-radius: 20px;
+  padding: 20px;
+  border: 3px solid #332973;
+  background-color: white;
+  animation: ${fadeIn} 0.5s forwards; // 모달이 나타날 때의 애니메이션
+`;
