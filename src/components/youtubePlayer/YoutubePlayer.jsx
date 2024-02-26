@@ -10,7 +10,7 @@ export default function YoutubePlayer({ video }) {
       //밑에서 더 설명하겠습니다.
       opts={{
         width: "450px",
-        height: window.innerHeight * 0.5,
+        height: window.innerHeight * 0.45,
         playerVars: {
           mute: 1,
           autoplay: 1, //자동재생 O

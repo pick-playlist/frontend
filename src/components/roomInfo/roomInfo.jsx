@@ -32,12 +32,18 @@ export default function RoomInfo({ isHost }) {
 
   const clickAddButton = async (link, playlistId) => {
     const linkInfoResp = await getLinkInfo(link);
-
     const title = linkInfoResp.title;
-    const artist = "none";
+    const thumbnail = linkInfoResp.thumbnails.default.url;
     // 아래 넣어주세용
     const userId = user._id;
-    const musicResp = await createMusic(title, artist, comment, userId, link);
+    const musicResp = await createMusic(
+      title,
+      thumbnail,
+      comment,
+      userId,
+      link
+    );
+
     const createdMusicId = musicResp._id;
 
     const playlistResp = await addMusicInPlaylist(createdMusicId, playlistId);
@@ -72,7 +78,6 @@ export default function RoomInfo({ isHost }) {
     <div
       style={{
         display: "flex",
-        alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
         alignSelf: "flex-start",
@@ -150,7 +155,7 @@ export default function RoomInfo({ isHost }) {
           </div>
         </StyledModalContent>
       ) : null}
-      <h3 className="titleText">{hostNickName}님의 잼 🎶</h3>
+      <h3 className="titleText">{hostNickName}님의 방 🎶</h3>
       <div style={{ alignSelf: "flex-end" }}>
         {room ? <span>공유 코드 {room.code}</span> : null}
       </div>
@@ -197,10 +202,10 @@ export default function RoomInfo({ isHost }) {
           />
         </h3>
         <div style={{ marginTop: "10px", marginBottom: "50px" }}>
-          <Accordion defaultActiveKey="0" alwaysOpen>
+          <Accordion>
             <Accordion.Item eventKey="0">
               <Accordion.Header style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
-                대기 중인 플레이리스트
+                Playlist
               </Accordion.Header>
 
               {remainPlaylist.length == 0 ? (
@@ -214,7 +219,25 @@ export default function RoomInfo({ isHost }) {
                     <Accordion.Body
                       style={{ fontFamily: "IBMPlexSansKR-Regular" }}
                     >
-                      {music.title} - {music.artist}
+                      <div
+                        key={music._id}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          width: "100%",
+                          height: "50px",
+                        }}
+                      >
+                        <img
+                          src={music.thumbnail}
+                          style={{
+                            width: "50px",
+                            height: "50px",
+                            marginRight: "10px",
+                          }}
+                        />
+                        {music.title}
+                      </div>
                     </Accordion.Body>
                   );
                 })
