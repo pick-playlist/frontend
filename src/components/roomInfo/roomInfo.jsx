@@ -177,6 +177,7 @@ export default function RoomInfo({ isHost }) {
               <PartyUserIcon
                 userNickName={u.nickname}
                 color={COLOR_LIST[i % COLOR_LIST.length]}
+                index={i}
               />
             );
           })}
