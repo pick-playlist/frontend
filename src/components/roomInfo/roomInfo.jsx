@@ -8,6 +8,9 @@ import styled, { keyframes } from "styled-components";
 import PartyUserIcon from "../partyUserIcon/partyUserIcon";
 import { useSearchParams } from "react-router-dom";
 import { getRoomInfoWithCode } from "~/store/reducers/room";
+import { getLinkInfo } from "~/lib/api/search";
+import { createMusic } from "~/lib/api/music";
+import { addMusicInPlaylist } from "~/lib/api/playlist";
 
 const COLOR_LIST = ["#3C308C", "#332973", "#2F2359"];
 
@@ -34,11 +37,12 @@ export default function RoomInfo({ isHost }) {
     const artist = "none";
     // 아래 넣어주세용
     const userId = user._id;
-
     const musicResp = await createMusic(title, artist, comment, userId, link);
     const createdMusicId = musicResp._id;
 
     const playlistResp = await addMusicInPlaylist(createdMusicId, playlistId);
+
+    updateRoom();
     return playlistResp;
   };
 
@@ -50,10 +54,14 @@ export default function RoomInfo({ isHost }) {
     }
   }, [room]);
 
+  const updateRoom = () => {
+    const action = getRoomInfoWithCode({ roomCode: code });
+    dispatch(action);
+  };
+
   useEffect(() => {
     if (!room) {
-      const action = getRoomInfoWithCode({ roomCode: code });
-      dispatch(action);
+      updateRoom();
     } else {
       setUserList(room.users);
       setRemainPlayList(room.remainPlaylist.musics);
@@ -201,12 +209,13 @@ export default function RoomInfo({ isHost }) {
                 </Accordion.Body>
               ) : (
                 remainPlaylist.map((music) => {
-                  console.log(music);
-
                   return (
+                    // TO DO : music 컴포넌트로 변경하기
                     <Accordion.Body
                       style={{ fontFamily: "IBMPlexSansKR-Regular" }}
-                    ></Accordion.Body>
+                    >
+                      {music.title} - {music.artist}
+                    </Accordion.Body>
                   );
                 })
               )}
