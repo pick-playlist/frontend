@@ -12,6 +12,9 @@ import { getLinkInfo } from "~/lib/api/search";
 import { createMusic } from "~/lib/api/music";
 import { addMusicInPlaylist } from "~/lib/api/playlist";
 
+import io from "socket.io-client";
+const socket = io.connect("http://localhost:3000");
+
 const COLOR_LIST = ["#3C308C", "#332973", "#2F2359"];
 
 export default function RoomInfo({ isHost }) {
@@ -44,13 +47,24 @@ export default function RoomInfo({ isHost }) {
       userId,
       link
     );
+    console.log("musicResp: ", musicResp);
     const createdMusicId = musicResp._id;
 
     const playlistResp = await addMusicInPlaylist(createdMusicId, playlistId);
 
     updateRoom();
+    console.log("playlistResp: ", playlistResp);
+
+    socket.emit("room_updated", playlistId);
     return playlistResp;
   }
+
+  useEffect(() => {
+    socket.on("update", (data) => {
+      console.log("updated, data: ", data);
+      updateRoom();
+    });
+  }, []);
 
   useEffect(() => {
     if (user && room) {
