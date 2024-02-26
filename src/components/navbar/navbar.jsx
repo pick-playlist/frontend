@@ -18,7 +18,7 @@ export default function NavBar() {
         justifyContent: "flex-end",
       }}
     >
-      {userObj.isMember ? (
+      {userObj ? (
         <div style={{ color: "white", display: "flex" }}>
           {userObj.nickname}님
           <img
@@ -34,7 +34,7 @@ export default function NavBar() {
               alignItems: "center",
               cursor: "pointer",
             }}
-            onClick={() => navigate("/profile")}
+            onClick={userObj.isMember ? () => navigate("/profile") : null} // Conditional onClick
           />
         </div>
       ) : (
