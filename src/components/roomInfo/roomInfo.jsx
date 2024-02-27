@@ -48,7 +48,7 @@ export default function RoomInfo({ isHost }) {
 
     const playlistResp = await addMusicInPlaylist(createdMusicId, playlistId);
 
-    updateRoom(room.code);
+    updateRoom(room.code, dispatch);
     console.log("playlistResp: ", playlistResp);
 
     socket.emit("room_updated", room_id);
@@ -78,6 +78,8 @@ export default function RoomInfo({ isHost }) {
       setRemainPlayList(room.remainPlaylist.musics);
     }
   }, [room]);
+
+  async function clickGoodButton() {}
 
   return (
     <div
