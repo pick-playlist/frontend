@@ -40,7 +40,7 @@ export default function RoomInfo({ isHost }) {
   const [currentMusic, setCurrentMusic] = useState("first");
 
   //투표 현황
-  const [canVote, setCanVote] = useState(true);
+  const [canVote, setCanVote] = useState(false);
 
   const playlist = room.remainPlaylist.musics;
 
@@ -49,11 +49,15 @@ export default function RoomInfo({ isHost }) {
       setCurrentMusic(playlist[0]);
     } else if (playlist.length == 0) {
       setCurrentMusic("first");
+      setCanVote(false);
     }
   }, [playlist]);
 
   useEffect(() => {
-    setCanVote(true);
+    if (playlist.length > 0) {
+      setCanVote(true);
+      console.log("make canVote true");
+    }
   }, [currentMusic]);
 
   const clickAddButton = async (link, playlistId) => {
