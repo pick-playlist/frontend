@@ -13,8 +13,8 @@ import { ButtonInPages } from "~/components/styled/globalComponent";
 import styled, { keyframes } from "styled-components";
 import PartyUserIcon from "../partyUserIcon/partyUserIcon";
 import { getLinkInfo } from "~/lib/api/search";
-import { createMusic } from "~/lib/api/music";
-import { addMusicInPlaylist } from "~/lib/api/playlist";
+import { createMusic, increaseAgree, increaseReject } from "~/lib/api/music";
+import { addMusicInPlaylist, deleteMusicInPlaylist } from "~/lib/api/playlist";
 import { updateRoom } from "~/lib/util/room";
 
 import io from "socket.io-client";
@@ -101,10 +101,29 @@ export default function RoomInfo({ isHost }) {
     }
   }, [room]);
 
-  async function clickGoodButton() {
-    console.log("click) currentMusic: ", currentMusic);
+  async function clickAgreeButton() {
+    increaseAgree(currentMusic._id);
+
+    console.log("agree");
+    socket.emit("room_updated", room._id);
   }
-  clickGoodButton();
+
+  async function clickRejectButton() {
+    increaseReject(currentMusic._id);
+
+    if (currentMusic.reject > room.users.length / 2) {
+      addMusicInPlaylist(currentMusic._id, room.rejectPlaylist._id);
+      deleteMusicInPlaylist(currentMusic._id, room.remainPlaylist._id);
+    }
+
+    console.log("reject");
+    socket.emit("room_updated", room._id);
+  }
+
+  async function musicFinished() {
+    addMusicInPlaylist(currentMusic._id, room.acceptPlaylist._id);
+    console.log("music finished.");
+  }
 
   return (
     <div
