@@ -36,10 +36,11 @@ export default function StartPage() {
               textDecoration: "underline",
               cursor: "pointer",
               fontFamily: "IBMPlexSansKR-Regular",
+              marginLeft: "5px",
             }}
             onClick={() => navigate("/signup")}
           >
-            회원 가입
+            회원가입
           </b>
         </p>
       </div>
