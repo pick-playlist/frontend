@@ -19,7 +19,7 @@ import { updateRoom } from "~/lib/util/room";
 import VoteComponent from "../vote/voteComponent";
 
 import io from "socket.io-client";
-import { deleteUserInRoom } from "~/lib/api/room";
+import { deleteUserInRoom, updateRoomTags } from "~/lib/api/room";
 const socket = io.connect("http://localhost:3000");
 
 const COLOR_LIST = ["#3C308C", "#332973", "#2F2359"];
@@ -75,6 +75,8 @@ export default function RoomInfo({ isHost }) {
     const thumbnail = linkInfoResp.thumbnails.default.url;
     // 아래 넣어주세용
     const userId = user._id;
+    const tags = linkInfoResp.tags || []; // 없을 때도 있음
+    const resp = await updateRoomTags(room._id, tags);
     const musicResp = await createMusic(
       title,
       thumbnail,
@@ -86,7 +88,6 @@ export default function RoomInfo({ isHost }) {
     const createdMusicId = musicResp._id;
 
     const playlistResp = await addMusicInPlaylist(createdMusicId, playlistId);
-
     updateRoom(room.code, dispatch);
     console.log("playlistResp: ", playlistResp);
 

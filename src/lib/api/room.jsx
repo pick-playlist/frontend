@@ -46,3 +46,14 @@ export async function deleteUserInRoom(userId, roomId) {
     console.log(err);
   }
 }
+
+export async function updateRoomTags(roomId, tags) {
+  try {
+    const data = { tags: tags };
+    const response = await axios.put("/api/room/info/tags/" + roomId, data);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+  return response.data;
+}
