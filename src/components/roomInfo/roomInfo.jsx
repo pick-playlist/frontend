@@ -36,6 +36,15 @@ export default function RoomInfo({ isHost }) {
   const [userList, setUserList] = useState([]);
   const [remainPlaylist, setRemainPlayList] = useState([]);
   const [isCodeOpen, setIsCodeOpen] = useState(false);
+  const [currentMusic, setCurrentMusic] = useState("first");
+
+  const playlist = room.remainPlaylist.musics;
+
+  useEffect(() => {
+    if (playlist && playlist.length > 0) {
+      setCurrentMusic(playlist[0]);
+    }
+  }, [playlist]);
 
   const clickAddButton = async (link, playlistId) => {
     const linkInfoResp = await getLinkInfo(link);
@@ -90,7 +99,10 @@ export default function RoomInfo({ isHost }) {
     console.log("remainPlaylist", remainPlaylist);
   }, [room]);
 
-  async function clickGoodButton() {}
+  async function clickGoodButton() {
+    console.log("click) currentMusic: ", currentMusic);
+  }
+  clickGoodButton();
 
   return (
     <div
