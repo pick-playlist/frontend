@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Accordion } from "react-bootstrap";
+import { Accordion, Card } from "react-bootstrap";
 import {
   MusicNoteList,
   PlusCircleFill,
@@ -234,11 +234,15 @@ export default function RoomInfo({ isHost }) {
         </StyledModalContent>
       ) : null}
       {canVote ? (
-        <VoteComponent
-          currentMusic={currentMusic}
-          clickAgreeButton={clickAgreeButton}
-          clickRejectButton={clickRejectButton}
-        />
+        <Card className="mb-3">
+          <Card.Body>
+            <VoteComponent
+              currentMusic={currentMusic}
+              clickAgreeButton={clickAgreeButton}
+              clickRejectButton={clickRejectButton}
+            />
+          </Card.Body>
+        </Card>
       ) : null}
       <span
         style={{
@@ -310,7 +314,7 @@ export default function RoomInfo({ isHost }) {
             justifyContent: "space-between",
           }}
         >
-          <div style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
+          <div className="mt-3" style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
             <MusicNoteList style={{ marginRight: "5px", width: "20px" }} />
             대기 중인 플레이리스트
           </div>
