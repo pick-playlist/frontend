@@ -39,7 +39,7 @@ export default function NavBar() {
           marginRight: "auto",
           cursor: "pointer",
         }}
-        onClick={() => navigate("/")}
+        onClick={() => (isLoggedIn ? navigate("/main") : navigate("/"))}
       >
         PICKPL
       </div>
