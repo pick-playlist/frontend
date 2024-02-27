@@ -29,7 +29,7 @@ export default function VoteComponent(props) {
         alignItems: "center",
       }}
     >
-      <div>
+      <div style={{ width: "100%" }}>
         {/* <h5 style={{ fontFamily: "OAGothic-ExtraBold" }}>NOW</h5>
         <span style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
           {props.currentMusic.title}
