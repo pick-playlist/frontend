@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Accordion, Card } from "react-bootstrap";
+import { Accordion, Card, ListGroup } from "react-bootstrap";
 import {
   MusicNoteList,
   PlusCircleFill,
   XLg,
-  DoorOpenFill,
   MusicPlayerFill,
 } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,15 +16,18 @@ import { createMusic, increaseAgree, increaseReject } from "~/lib/api/music";
 import { addMusicInPlaylist, deleteMusicInPlaylist } from "~/lib/api/playlist";
 import { updateRoom } from "~/lib/util/room";
 import VoteComponent from "../vote/voteComponent";
+import YoutubePlayer from "../youtubePlayer/YoutubePlayer";
+import headphone from "../../assets/headphone-dynamic-gradient.png";
 
 import io from "socket.io-client";
 import { deleteUserInRoom, updateRoomTags } from "~/lib/api/room";
 import { setInRoomTrue } from "~/store/reducers/user";
+import PlaylistComponent from "./playlistComponent";
 const socket = io.connect("http://localhost:3000");
 
 const COLOR_LIST = ["#3C308C", "#332973", "#2F2359"];
 
-export default function RoomInfo({ isHost }) {
+export default function RoomInfo(props) {
   const user = useSelector((state) => state.user.data);
   const room = useSelector((state) => state.room.data);
   const roomLoading = useSelector((state) => state.room.loading);
@@ -242,81 +244,115 @@ export default function RoomInfo({ isHost }) {
           </div>
         </StyledModalContent>
       ) : null}
-      {canVote ? (
-        <Card className="mb-3">
-          <Card.Body>
-            <VoteComponent
-              usersLength={room.users.length}
-              currentMusic={currentMusic}
-              clickAgreeButton={clickAgreeButton}
-              clickRejectButton={clickRejectButton}
-            />
-          </Card.Body>
-        </Card>
-      ) : null}
+
       <span
         style={{
           alignSelf: "center",
-          fontFamily: "IBMPlexSansKR-Regular",
-          fontSize: "20px",
+          fontFamily: "OAGothic-ExtraBold",
+          fontSize: "25px",
           display: "flex",
           alignItems: "center",
+          marginTop: "5px",
         }}
       >
-        <MusicPlayerFill style={{ marginRight: "2px" }} />
-        {hostNickName}님의 공유 플레이리스트
+        {/* <MusicPlayerFill style={{ marginRight: "2px" }} /> */}
+        {hostNickName}님의 PICKPL 🎶
       </span>
-      {room ? (
+
+      <div
+        style={{
+          marginTop: "10px",
+          fontFamily: "IBMPlexSansKR-Regular",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
         <div
-          isCodeOpen={isCodeOpen}
           style={{
-            fontFamily: "IBMPlexSansKR-Regular",
+            width: "170px",
             display: "flex",
-            alignItems: "center",
-            alignSelf: "flex-end",
+            flexDirection: "column",
           }}
         >
+          <div style={{ width: "100%" }}>
+            <img src={headphone} style={{ width: "30px", height: "30px" }} />
+            <span>현재 {userList.length}명이 참여중... </span>
+          </div>
           <div
             style={{
               display: "flex",
-              alignItems: "center",
-              cursor: "pointer",
-              marginRight: "3px",
-              color: "#3C308C",
+              position: "relative",
+              maxWidth: "150px",
+              width: "150px",
+              borderRadius: "50px",
+              padding: "5px 10px",
+              backgroundColor: "#BDCAF2",
+              alignSelf: "center",
             }}
-            onClick={() => setIsCodeOpen(!isCodeOpen)}
           >
-            <DoorOpenFill />
-            {isCodeOpen ? room.code : "click!"}
+            {userList.map((u, i) => {
+              return (
+                <PartyUserIcon
+                  key={u._id}
+                  user={u}
+                  color={COLOR_LIST[i % COLOR_LIST.length]}
+                  index={i}
+                />
+              );
+            })}
           </div>
         </div>
-      ) : null}
 
-      <div style={{ marginTop: "10px", fontFamily: "IBMPlexSansKR-Regular" }}>
-        <span>현재 {userList.length}명이 참여중... </span>
-        <div
-          style={{
-            display: "flex",
-            position: "relative",
-          }}
-        >
-          {userList.map((u, i) => {
-            return (
-              <PartyUserIcon
-                key={u._id}
-                user={u}
-                color={COLOR_LIST[i % COLOR_LIST.length]}
-                index={i}
-              />
-            );
-          })}
-        </div>
+        {room ? (
+          // <div
+          //   style={{
+          //     fontFamily: "IBMPlexSansKR-Regular",
+          //     display: "flex",
+          //     alignItems: "center",
+          //     justifyContent: "center",
+          //     border: "2px solid black",
+          //     maxWidth: "100px",
+          //     width: "100px",
+          //     height: "45px",
+          //     borderRadius: "50px",
+          //     padding: "5px",
+          //     marginLeft: "10px",
+          //   }}
+          // >
+          //   {room.code}
+          // </div>
+          <div
+            style={{
+              fontSize: "14px",
+              padding: "5px 20px",
+              borderRadius: "20px",
+              // border: "3px solid #3C308C",
+              alignSelf: "flex-end",
+            }}
+          >
+            입장 코드 : {room.code}
+          </div>
+        ) : null}
       </div>
       <div
         style={{
           marginTop: "10px",
         }}
       >
+        {props.isAnyMusic ? <YoutubePlayer video={props.video} /> : null}
+        {canVote ? (
+          <Card className="mb-3">
+            <Card.Body>
+              <VoteComponent
+                usersLength={room.users.length}
+                currentMusic={currentMusic}
+                clickAgreeButton={clickAgreeButton}
+                clickRejectButton={clickRejectButton}
+              />
+            </Card.Body>
+          </Card>
+        ) : null}
         <h3
           style={{
             display: "flex",
@@ -348,32 +384,33 @@ export default function RoomInfo({ isHost }) {
                 remainPlaylist.map((music) => {
                   return (
                     // TO DO : music 컴포넌트로 변경하기
-                    <Accordion.Body
-                      style={{
-                        fontFamily: "IBMPlexSansKR-Regular",
-                      }}
-                    >
-                      <div
-                        key={music._id}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          width: "100%",
-                          height: "100%",
-                          // maxHeight: "150px",
-                        }}
-                      >
-                        <img
-                          src={music.thumbnail}
-                          style={{
-                            width: "50px",
-                            height: "50px",
-                            marginRight: "10px",
-                          }}
-                        />
-                        {music.title}
-                      </div>
-                    </Accordion.Body>
+                    // <Accordion.Body
+                    //   style={{
+                    //     fontFamily: "IBMPlexSansKR-Regular",
+                    //   }}
+                    // >
+                    //   <div
+                    //     key={music._id}
+                    //     style={{
+                    //       display: "flex",
+                    //       alignItems: "center",
+                    //       width: "100%",
+                    //       height: "100%",
+                    //       // maxHeight: "150px",
+                    //     }}
+                    //   >
+                    //     <img
+                    //       src={music.thumbnail}
+                    //       style={{
+                    //         width: "50px",
+                    //         height: "50px",
+                    //         marginRight: "10px",
+                    //       }}
+                    //     />
+                    //     {music.title}
+                    //   </div>
+                    // </Accordion.Body>
+                    <PlaylistComponent music={music} />
                   );
                 })
               )}
