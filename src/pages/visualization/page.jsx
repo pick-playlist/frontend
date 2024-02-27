@@ -1,15 +1,24 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import ReactWordcloud from "react-wordcloud";
 import { ButtonInPages } from "~/components/styled/globalComponent";
+import { deleteRoom, deleteUserInRoom } from "~/lib/api/room";
+import { setRoomNull } from "~/store/reducers/room";
+import { setIsLoggedInFalse } from "~/store/reducers/user";
 
 export default function Visualization() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const user = useSelector((state) => state.user.data);
+  const isHost = useSelector((state) => state.user.isHost);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const room = useSelector((state) => state.room.data);
 
-  // const tags = room.tags;
-  const tags = ["비비", "비비", "어쩌구", "저쩌구", "빅뱅", "아이유", "IU"];
+  const [words, setWords] = useState([]);
 
   const countTags = async (tags) => {
     let counts = {};
@@ -25,30 +34,41 @@ export default function Visualization() {
     return counts;
   };
 
-  useEffect(async () => {
-    const counts = await countTags(tags);
-    console.log("count", counts);
+  const convertCountsToWords = (counts) => {
+    const words = [];
+    for (const [text, value] of Object.entries(counts)) {
+      words.push({ text, value });
+    }
+    return words;
+  };
 
-    //워드 클라우드 생성
-    //
+  useEffect(() => {
+    const tagToWords = async () => {
+      const counts = await countTags(room.tags);
+      const convertedWords = convertCountsToWords(counts);
+      setWords(convertedWords);
+    };
+    tagToWords();
   }, []);
 
-  const clickGoMainButton = () => {
-    // 리둑스에서 user 삭제
-    const action = setIsLoggedInFalse();
+  const clickGoMainButton = async () => {
+    // 리둑스에서 room 삭제
+    const action = setRoomNull();
     dispatch(action);
 
-    // 리둑스에서 room 삭제
-    //
-
-    // 메인으로 이동
-    navigate("/");
+    if (isLoggedIn) {
+      navigate("/main");
+    } else {
+      navigate("/");
+    }
   };
 
   return (
     <div style={{ alignSelf: "start" }}>
       <h2 style={{ fontFamily: "IBMPlexSansKR-Regular" }}>제안된 음악 태그</h2>
-      <div>{/* word cloud */}</div>
+      <div>
+        <ReactWordcloud words={words} />
+      </div>
 
       <ButtonInPages
         onClick={() => {
