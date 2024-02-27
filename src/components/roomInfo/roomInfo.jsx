@@ -20,6 +20,7 @@ import VoteComponent from "../vote/voteComponent";
 
 import io from "socket.io-client";
 import { deleteUserInRoom, updateRoomTags } from "~/lib/api/room";
+import { setInRoomTrue } from "~/store/reducers/user";
 const socket = io.connect("http://localhost:3000");
 
 const COLOR_LIST = ["#3C308C", "#332973", "#2F2359"];
@@ -102,6 +103,10 @@ export default function RoomInfo({ isHost }) {
         dispatch(updateRoom(room.code));
       }
     });
+
+    // 방 안에 있는지
+    const action = setInRoomTrue();
+    dispatch(action);
   }, []);
 
   useEffect(() => {

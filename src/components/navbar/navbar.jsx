@@ -4,18 +4,46 @@ import { useNavigate } from "react-router-dom";
 import userIcon from "../../assets/user.png";
 import { persistor } from "~/store/store";
 import { Navbar } from "react-bootstrap";
-import { setIsLoggedInFalse } from "~/store/reducers/user";
+import { setInRoomFalse, setIsLoggedInFalse } from "~/store/reducers/user";
 
 export default function NavBar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userObj = useSelector((state) => state.user.data);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const inRoom = useSelector((state) => state.user.inRoom);
+  const exitRoomMsg = "방을 나가시겠습니까?";
+
+  const confirmExitRoom = () => {
+    return confirm(exitRoomMsg);
+  };
 
   const onClickLogOut = () => {
-    const action = setIsLoggedInFalse();
-    dispatch(action);
-    navigate("/");
+    if (inRoom) {
+      const exitRoom = confirmExitRoom(exitRoomMsg);
+      if (exitRoom) {
+        const action = setIsLoggedInFalse();
+        dispatch(action);
+        navigate("/");
+      }
+    } else {
+      const action = setIsLoggedInFalse();
+      dispatch(action);
+      navigate("/");
+    }
+  };
+
+  const onClickPickpl = () => {
+    if (isLoggedIn) {
+      if (inRoom) {
+        const exitRoom = confirmExitRoom(exitRoomMsg);
+        if (exitRoom) {
+          navigate("/main");
+          const action = setInRoomFalse();
+          dispatch(action);
+        }
+      }
+    } else navigate("/");
   };
 
   useEffect(() => {}, [isLoggedIn]);
@@ -39,7 +67,7 @@ export default function NavBar() {
           marginRight: "auto",
           cursor: "pointer",
         }}
-        onClick={() => (isLoggedIn ? navigate("/main") : navigate("/"))}
+        onClick={() => onClickPickpl()}
       >
         PICKPL
       </div>
