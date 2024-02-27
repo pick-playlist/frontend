@@ -39,6 +39,9 @@ export default function RoomInfo({ isHost }) {
   const [isCodeOpen, setIsCodeOpen] = useState(false);
   const [currentMusic, setCurrentMusic] = useState("first");
 
+  //투표 현황
+  const [canVote, setCanVote] = useState(true);
+
   const playlist = room.remainPlaylist.musics;
 
   useEffect(() => {
@@ -104,6 +107,7 @@ export default function RoomInfo({ isHost }) {
 
   function clickAgreeButton() {
     increaseAgree(currentMusic._id);
+    setCanVote(false);
 
     console.log("agree");
     socket.emit("room_updated", room._id);
@@ -111,6 +115,7 @@ export default function RoomInfo({ isHost }) {
 
   function clickRejectButton() {
     increaseReject(currentMusic._id);
+    setCanVote(false);
 
     if (currentMusic.reject > room.users.length / 2) {
       addMusicInPlaylist(currentMusic._id, room.rejectPlaylist._id);
@@ -124,6 +129,8 @@ export default function RoomInfo({ isHost }) {
   function musicFinished() {
     addMusicInPlaylist(currentMusic._id, room.acceptPlaylist._id);
     deleteMusicInPlaylist(currentMusic._id, room.remainPlaylist._id);
+    setCanVote(true);
+
     console.log("music finished.");
   }
 
