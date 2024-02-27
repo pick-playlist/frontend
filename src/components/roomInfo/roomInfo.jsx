@@ -66,9 +66,12 @@ export default function RoomInfo(props) {
 
   useEffect(() => {
     if (currentMusic.reject >= Math.ceil(room.users.length / 2)) {
+      console.log("rejected, ", Math.ceil(room.users.length / 2));
       addMusicInPlaylist(currentMusic._id, room.rejectPlaylist._id);
       addMusicInPlaylist(currentMusic._id, user.rejectPlaylist._id);
       deleteMusicInPlaylist(currentMusic._id, room.remainPlaylist._id);
+
+      socket.emit("room_updated", room._id);
     }
   }, [currentMusic.reject]);
 

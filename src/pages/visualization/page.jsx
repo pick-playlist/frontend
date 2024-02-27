@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ReactWordcloud from "react-wordcloud";
 import { ButtonInPages } from "~/components/styled/globalComponent";
+import { getPlaylistInfo } from "~/lib/api/playlist";
 import { deleteRoom, deleteUserInRoom } from "~/lib/api/room";
 import { setRoomNull } from "~/store/reducers/room";
 import { setIsLoggedInFalse } from "~/store/reducers/user";
@@ -19,6 +20,23 @@ export default function Visualization() {
   const room = useSelector((state) => state.room.data);
 
   const [words, setWords] = useState([]);
+
+  useEffect(() => {
+    makeRank(room);
+    tagToWords();
+  }, []);
+
+  const makeRank = async (room) => {
+    const roomId = room._id;
+    const acceptPlaylistId = room.acceptPlaylist._id;
+    const rejectPlaylistId = room.rejectPlaylist._id;
+
+    console.log("pl ids: ", acceptPlaylistId, " ", rejectPlaylistId);
+
+    getPlaylistInfo("ac: ", acceptPlaylistId);
+
+    getPlaylistInfo("rj: ", rejectPlaylistId);
+  };
 
   const countTags = async (tags) => {
     let counts = {};
@@ -42,14 +60,11 @@ export default function Visualization() {
     return words;
   };
 
-  useEffect(() => {
-    const tagToWords = async () => {
-      const counts = await countTags(room.tags);
-      const convertedWords = convertCountsToWords(counts);
-      setWords(convertedWords);
-    };
-    tagToWords();
-  }, []);
+  const tagToWords = async () => {
+    const counts = await countTags(room.tags);
+    const convertedWords = convertCountsToWords(counts);
+    setWords(convertedWords);
+  };
 
   const clickGoMainButton = async () => {
     // 리둑스에서 room 삭제
