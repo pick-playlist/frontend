@@ -80,9 +80,9 @@ export default function RoomInfo({ isHost }) {
     });
   }, []);
 
-  // useEffect(() => {
-  //   socket.emit("room_updated", room.room_id);
-  // }, []);
+  useEffect(() => {
+    dispatch(updateRoom(room.code));
+  }, []);
 
   useEffect(() => {
     if (user && room) {
