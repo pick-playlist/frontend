@@ -79,12 +79,13 @@ export default function RoomInfo({ isHost }) {
   }, []);
 
   useEffect(() => {
+    socket.emit("room_updated", room.room_id);
+  }, []);
+  useEffect(() => {
     if (user && room) {
       if (isHost) {
         setHostNickName(user.nickname);
       }
-
-      dispatch(updateRoom(room.code));
     }
   }, [room]);
   // room 정보가 업데이트 되면
@@ -95,8 +96,6 @@ export default function RoomInfo({ isHost }) {
       setUserList(room.users);
       setRemainPlayList(room.remainPlaylist.musics);
     }
-    console.log("userlist", userList);
-    console.log("remainPlaylist", remainPlaylist);
   }, [room]);
 
   async function clickGoodButton() {
@@ -346,16 +345,16 @@ const StyledModalContent = styled.div`
 `;
 const slideAnimation = (props) => keyframes`
 from {
-  transform: translateX(${props.isCodeOpen ? "100%" : "90%"});
+  transform: translateX(${props.isCodeOpen ? "100%" : "88%"});
 }
 to {
-  transform: translateX(${props.isCodeOpen ? "90%" : "100%"});
+  transform: translateX(${props.isCodeOpen ? "88%" : "100%"});
 }
 `;
 
 // 슬라이드 요소
 const SlideItem = styled.div`
-  width: 92%;
+  width: 94%;
   height: 100%;
   animation: ${slideAnimation} 1s forwards; // 슬라이드 애니메이션 적용
 `;

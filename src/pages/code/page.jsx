@@ -23,7 +23,7 @@ export default function CodePage() {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [code, setCode] = useState();
+  const [code, setCode] = useState("0000");
   const room = useSelector((state) => state.room.data);
   const roomLoading = useSelector((state) => state.room.loading);
   const user = useSelector((state) => state.user.data);
@@ -198,8 +198,10 @@ const ShowNumberCode = ({ setParentCode }) => {
   }, []);
 
   useEffect(() => {
-    setCode(room.code);
-    setParentCode(room.code);
+    if (room) {
+      setCode(room.code);
+      setParentCode(room.code);
+    }
   }, [room]);
 
   return (
