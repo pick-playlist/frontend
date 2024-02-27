@@ -122,8 +122,11 @@ export default function RoomInfo({ isHost }) {
 
   function musicFinished() {
     addMusicInPlaylist(currentMusic._id, room.acceptPlaylist._id);
+    deleteMusicInPlaylist(currentMusic._id, room.remainPlaylist._id);
     console.log("music finished.");
   }
+
+  function exitRoom() {}
 
   return (
     <div
