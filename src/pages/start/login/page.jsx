@@ -18,31 +18,35 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [ready, setReady] = useState(false); // 로그인 버튼 눌렀다면 true
 
   const user = useSelector((state) => state.user.data);
   const userLoading = useSelector((state) => state.user.loading);
 
   const onClickLogIn = async () => {
+    setReady(true);
     const action = logIn({ email, password });
     dispatch(action);
   };
 
   useEffect(() => {
-    switch (userLoading) {
-      case FULFILLED:
-        const action = setIsLoggedInTrue();
-        dispatch(action);
-        navigate("/main");
-        break;
-      case PENDING:
-        break;
-      case REJECTED:
-        alert(
-          "로그인에 실패하였습니다. \n 아이디, 비밀번호를 확인 후 다시 시도해주세요."
-        );
-        break;
-      default:
-        break;
+    if (ready) {
+      switch (userLoading) {
+        case FULFILLED:
+          const action = setIsLoggedInTrue();
+          dispatch(action);
+          navigate("/main");
+          break;
+        case PENDING:
+          break;
+        case REJECTED:
+          alert(
+            "로그인에 실패하였습니다. \n 아이디, 비밀번호를 확인 후 다시 시도해주세요."
+          );
+          break;
+        default:
+          break;
+      }
     }
   }, [user, userLoading]);
 
