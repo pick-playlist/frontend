@@ -334,16 +334,16 @@ const StyledModalContent = styled.div`
 `;
 const slideAnimation = (props) => keyframes`
 from {
-  transform: translateX(${props.isCodeOpen ? "100%" : "90%"});
+  transform: translateX(${props.isCodeOpen ? "100%" : "88%"});
 }
 to {
-  transform: translateX(${props.isCodeOpen ? "90%" : "100%"});
+  transform: translateX(${props.isCodeOpen ? "88%" : "100%"});
 }
 `;
 
 // 슬라이드 요소
 const SlideItem = styled.div`
-  width: 92%;
+  width: 94%;
   height: 100%;
   animation: ${slideAnimation} 1s forwards; // 슬라이드 애니메이션 적용
 `;

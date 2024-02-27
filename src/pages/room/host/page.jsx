@@ -27,7 +27,7 @@ export default function RoomHostPage() {
   }, [playlist]);
 
   return (
-    <div>
+    <div style={{ width: "100%" }}>
       {currentVideoKey === "first" ? (
         <p>add music !!</p>
       ) : (
