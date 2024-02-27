@@ -27,14 +27,35 @@ export default function RoomHostPage() {
   }, [playlist]);
 
   return (
-    <div style={{ width: "100%" }}>
+    <>
       {currentVideoKey === "first" ? (
-        <p>add music !!</p>
-      ) : (
-        <YoutubePlayer video={video} />
-      )}
+        <div
+          style={{
+            width: "100%",
+            alignSelf: "start",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: window.innerHeight * 0.45,
+            }}
+          >
+            아직 플레이리스트에 음악이 없어요. 음악을 추가해주세요!
+          </div>
 
-      <RoomInfo isHost={location.state.isCreateRoom} />
-    </div>
+          <RoomInfo isHost={location.state.isCreateRoom} />
+        </div>
+      ) : (
+        <div style={{ alignSelf: "start" }}>
+          <YoutubePlayer video={video} />
+          <RoomInfo isHost={location.state.isCreateRoom} />
+        </div>
+      )}
+    </>
   );
 }

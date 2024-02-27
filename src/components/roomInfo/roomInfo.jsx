@@ -192,12 +192,13 @@ export default function RoomInfo({ isHost }) {
         {hostNickName}님의 공유 플레이리스트
       </span>
       {room ? (
-        <SlideItem
+        <div
           isCodeOpen={isCodeOpen}
           style={{
             fontFamily: "IBMPlexSansKR-Regular",
             display: "flex",
             alignItems: "center",
+            alignSelf: "flex-end",
           }}
         >
           <div
@@ -210,12 +211,10 @@ export default function RoomInfo({ isHost }) {
             }}
             onClick={() => setIsCodeOpen(!isCodeOpen)}
           >
-            {/* <DoorOpenFill /> */}
-            click!
+            <DoorOpenFill />
+            {isCodeOpen ? room.code : "click!"}
           </div>
-
-          {room.code}
-        </SlideItem>
+        </div>
       ) : null}
 
       <div style={{ marginTop: "10px", fontFamily: "IBMPlexSansKR-Regular" }}>
@@ -275,7 +274,9 @@ export default function RoomInfo({ isHost }) {
                   return (
                     // TO DO : music 컴포넌트로 변경하기
                     <Accordion.Body
-                      style={{ fontFamily: "IBMPlexSansKR-Regular" }}
+                      style={{
+                        fontFamily: "IBMPlexSansKR-Regular",
+                      }}
                     >
                       <div
                         key={music._id}
@@ -283,7 +284,8 @@ export default function RoomInfo({ isHost }) {
                           display: "flex",
                           alignItems: "center",
                           width: "100%",
-                          height: "50px",
+                          height: "100%",
+                          // maxHeight: "150px",
                         }}
                       >
                         <img
@@ -330,19 +332,4 @@ const StyledModalContent = styled.div`
   background-color: white;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
   animation: ${fadeIn} 0.5s forwards; // 모달이 나타날 때의 애니메이션
-`;
-const slideAnimation = (props) => keyframes`
-from {
-  transform: translateX(${props.isCodeOpen ? "100%" : "88%"});
-}
-to {
-  transform: translateX(${props.isCodeOpen ? "88%" : "100%"});
-}
-`;
-
-// 슬라이드 요소
-const SlideItem = styled.div`
-  width: 94%;
-  height: 100%;
-  animation: ${slideAnimation} 1s forwards; // 슬라이드 애니메이션 적용
 `;
