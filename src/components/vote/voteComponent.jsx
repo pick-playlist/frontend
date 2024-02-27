@@ -120,6 +120,7 @@ export default function VoteComponent(props) {
                 100
               }%`,
               backgroundColor: "#1665DD",
+              transition: "width 1s ease-out",
             }}
           />
           <div
@@ -131,6 +132,7 @@ export default function VoteComponent(props) {
                 100
               }%`,
               backgroundColor: "#FE4D58",
+              transition: "width 1s ease-out",
             }}
           />
         </div>
@@ -153,9 +155,9 @@ export default function VoteComponent(props) {
           />
         )}
       </div>
-      <span>
+      <span style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
         {Math.ceil(props.usersLength / 2) - props.currentMusic.reject} 명 더
-        반대하면 다음 노래
+        반대하면 다음 노래로 !
       </span>
     </div>
   );

@@ -5,6 +5,8 @@ export default function PartyUserIcon({ user, color, index }) {
     <div
       className="partyUserIcon"
       style={{
+        width: "30px",
+        height: "30px",
         zIndex: 2,
         backgroundColor: color,
         position: index !== 0 ? "absolute" : "relative",

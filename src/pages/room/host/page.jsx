@@ -33,7 +33,7 @@ export default function RoomHostPage() {
 
   return (
     <>
-      {playlist.length === 0 ? (
+      {/* {playlist.length === 0 ? (
         <div
           style={{
             width: "100%",
@@ -53,14 +53,18 @@ export default function RoomHostPage() {
             아직 플레이리스트에 음악이 없어요. 음악을 추가해주세요!
           </div>
 
-          <RoomInfo />
+          <RoomInfo isAnyMusic={false} />
         </div>
       ) : (
         <div style={{ alignSelf: "start" }}>
-          <YoutubePlayer video={video} />
-          <RoomInfo />
+          <RoomInfo isAnyMusic={true} video={video} playlistLength={playlist.length}/>
         </div>
-      )}
+      )} */}
+      <RoomInfo
+        // isAnyMusic={true}
+        video={video}
+        playlistLength={playlist.length}
+      />
     </>
   );
 }
