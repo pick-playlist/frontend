@@ -101,14 +101,14 @@ export default function RoomInfo({ isHost }) {
     }
   }, [room]);
 
-  async function clickAgreeButton() {
+  function clickAgreeButton() {
     increaseAgree(currentMusic._id);
 
     console.log("agree");
     socket.emit("room_updated", room._id);
   }
 
-  async function clickRejectButton() {
+  function clickRejectButton() {
     increaseReject(currentMusic._id);
 
     if (currentMusic.reject > room.users.length / 2) {
@@ -120,7 +120,7 @@ export default function RoomInfo({ isHost }) {
     socket.emit("room_updated", room._id);
   }
 
-  async function musicFinished() {
+  function musicFinished() {
     addMusicInPlaylist(currentMusic._id, room.acceptPlaylist._id);
     console.log("music finished.");
   }
