@@ -99,7 +99,7 @@ export default function VoteComponent(props) {
         )}
         <div
           style={{
-            backgroundColor: "white",
+            backgroundColor: "lightgray",
             display: "flex",
             height: "14px",
             width: "350px",
