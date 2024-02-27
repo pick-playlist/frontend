@@ -17,6 +17,9 @@ import { createMusic } from "~/lib/api/music";
 import { addMusicInPlaylist } from "~/lib/api/playlist";
 import { updateRoom } from "~/lib/util/room";
 
+import io from "socket.io-client";
+const socket = io.connect("http://localhost:3000");
+
 const COLOR_LIST = ["#3C308C", "#332973", "#2F2359"];
 
 export default function RoomInfo({ isHost }) {
