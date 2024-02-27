@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import userIcon from "../../assets/user.png";
 import { persistor } from "~/store/store";
+import { Navbar } from "react-bootstrap";
+import { setIsLoggedInFalse } from "~/store/reducers/user";
 
 export default function NavBar() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const userObj = useSelector((state) => state.user.data);
-  const [user, setUser] = useState(null);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   const onClickLogOut = () => {
-    persistor.purge(["user"]); // 'user' 데이터 삭제
-    setUser(null);
+    const action = setIsLoggedInFalse();
+    dispatch(action);
     navigate("/");
   };
 
-  useEffect(() => {
-    setUser(userObj);
-  }, [userObj]);
+  useEffect(() => {}, [isLoggedIn]);
 
   return (
     <div
@@ -31,7 +32,7 @@ export default function NavBar() {
         justifyContent: "flex-end",
       }}
     >
-      {user ? (
+      {isLoggedIn ? (
         <>
           <div style={{ color: "white", display: "flex" }}>
             {userObj.nickname}님
@@ -66,7 +67,9 @@ export default function NavBar() {
           </div>
         </>
       ) : (
-        ""
+        <div style={{ color: "white", display: "flex", fontWeight: 700 }}>
+          PICKPL{" "}
+        </div>
       )}
     </div>
   );

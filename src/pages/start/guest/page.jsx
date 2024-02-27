@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ButtonInPages } from "~/components/styled/globalComponent";
-import { guestLogIn } from "~/store/reducers/user";
-import { useDispatch } from "react-redux";
+import {
+  FULFILLED,
+  PENDING,
+  REJECTED,
+  guestLogIn,
+  setIsLoggedInTrue,
+} from "~/store/reducers/user";
+import { useDispatch, useSelector } from "react-redux";
 import FloatingIconComponent from "~/components/musicIcon/musicicon";
 
 export default function GuestPage() {
@@ -11,15 +17,30 @@ export default function GuestPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const user = useSelector((state) => state.user.data);
+  const userLoading = useSelector((state) => state.user.loading);
+
   const onClickGuestLogIn = async () => {
     const action = guestLogIn({ nickname });
-    const resultAction = await dispatch(action);
-    if (guestLogIn.fulfilled.match(resultAction)) {
-      navigate("/main");
-    } else {
-      alert("로그인에 실패하였습니다. \n 닉네임 확인 후 다시 시도해주세요.");
-    }
+    await dispatch(action);
   };
+
+  useEffect(() => {
+    switch (userLoading) {
+      case FULFILLED:
+        const action = setIsLoggedInTrue();
+        dispatch(action);
+        navigate("/main");
+        break;
+      case PENDING:
+        break;
+      case REJECTED:
+        alert("로그인에 실패하였습니다. \n 닉네임 확인 후 다시 시도해주세요.");
+        break;
+      default:
+        break;
+    }
+  }, [user, userLoading]);
 
   return (
     <Container

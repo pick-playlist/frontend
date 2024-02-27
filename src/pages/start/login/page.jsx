@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ButtonInPages } from "~/components/styled/globalComponent";
-import { logIn } from "~/store/reducers/user";
-import { useDispatch } from "react-redux";
+import {
+  FULFILLED,
+  PENDING,
+  REJECTED,
+  logIn,
+  setIsLoggedInTrue,
+} from "~/store/reducers/user";
+import { useDispatch, useSelector } from "react-redux";
 import FloatingIconComponent from "~/components/musicIcon/musicicon";
 
 export default function LoginPage() {
@@ -13,18 +19,33 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const user = useSelector((state) => state.user.data);
+  const userLoading = useSelector((state) => state.user.loading);
+
   const onClickLogIn = async () => {
     const action = logIn({ email, password });
-    const resultAction = await dispatch(action);
-
-    if (logIn.fulfilled.match(resultAction)) {
-      navigate("/main");
-    } else {
-      alert(
-        "로그인에 실패하였습니다. \n 아이디, 비밀번호를 확인 후 다시 시도해주세요."
-      );
-    }
+    dispatch(action);
   };
+
+  useEffect(() => {
+    switch (userLoading) {
+      case FULFILLED:
+        const action = setIsLoggedInTrue();
+        dispatch(action);
+        navigate("/main");
+        break;
+      case PENDING:
+        break;
+      case REJECTED:
+        alert(
+          "로그인에 실패하였습니다. \n 아이디, 비밀번호를 확인 후 다시 시도해주세요."
+        );
+        break;
+      default:
+        break;
+    }
+  }, [user, userLoading]);
+
   return (
     <Container
       fluid

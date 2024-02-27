@@ -5,9 +5,15 @@ import {
   fetchSignUp,
   fetchUser,
 } from "~/lib/api/user";
+
+const FULFILLED = "fulfilled";
+const REJECTED = "rejected";
+const PENDING = "pending";
+
 const initialState = {
   isLoggedIn: false,
   data: null,
+  loading: "idle",
 };
 
 const signUp = createAsyncThunk(
@@ -47,7 +53,6 @@ const userSlice = createSlice({
   initialState: initialState,
   reducers: {
     setIsLoggedInTrue(state, action) {
-      console.log("true");
       state.isLoggedIn = true;
     },
     setIsLoggedInFalse(state, action) {
@@ -58,16 +63,19 @@ const userSlice = createSlice({
     builder.addCase(signUp.fulfilled, (state, action) => {
       console.log("fulfilled signup");
       console.log(action);
+      state.loading = FULFILLED;
     });
 
     builder
       .addCase(signUp.pending, (state, action) => {
         console.log("pending signup");
         console.log(action);
+        state.loading = PENDING;
       })
       .addCase(signUp.rejected, (state, action) => {
         console.log("rejected signup");
         console.log(action);
+        state.loading = REJECTED;
       });
 
     builder.addCase(logIn.fulfilled, (state, action) => {
@@ -75,16 +83,19 @@ const userSlice = createSlice({
       console.log(action);
 
       state.data = action.payload;
+      state.loading = FULFILLED;
     });
 
     builder
       .addCase(logIn.pending, (state, action) => {
         console.log("pending login");
         console.log(action);
+        state.loading = PENDING;
       })
       .addCase(logIn.rejected, (state, action) => {
         console.log("rejected login");
         console.log(action);
+        state.loading = REJECTED;
       });
 
     builder.addCase(guestLogIn.fulfilled, (state, action) => {
@@ -92,16 +103,19 @@ const userSlice = createSlice({
       console.log(action);
 
       state.data = action.payload;
+      state.loading = FULFILLED;
     });
 
     builder
       .addCase(guestLogIn.pending, (state, action) => {
         console.log("pending guestLogIn");
         console.log(action);
+        state.loading = PENDING;
       })
       .addCase(guestLogIn.rejected, (state, action) => {
         console.log("rejected guestLogIn");
         console.log(action);
+        state.loading = REJECTED;
       });
 
     builder.addCase(getUser.fulfilled, (state, action) => {
@@ -109,20 +123,23 @@ const userSlice = createSlice({
       console.log(action);
 
       state.data = action.payload;
+      state.loading = FULFILLED;
     });
 
     builder
       .addCase(getUser.pending, (state, action) => {
         console.log("pending getUser");
         console.log(action);
+        state.loading = PENDING;
       })
       .addCase(getUser.rejected, (state, action) => {
         console.log("rejected getUser");
         console.log(action);
+        state.loading = REJECTED;
       });
   },
 });
 
 export const { setIsLoggedInTrue, setIsLoggedInFalse } = userSlice.actions;
-export { signUp, logIn, guestLogIn, getUser };
+export { signUp, logIn, guestLogIn, getUser, FULFILLED, REJECTED, PENDING };
 export default userSlice.reducer;
