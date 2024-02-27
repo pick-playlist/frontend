@@ -18,6 +18,7 @@ import { addMusicInPlaylist, deleteMusicInPlaylist } from "~/lib/api/playlist";
 import { updateRoom } from "~/lib/util/room";
 
 import io from "socket.io-client";
+import { deleteUserInRoom } from "~/lib/api/room";
 const socket = io.connect("http://localhost:3000");
 
 const COLOR_LIST = ["#3C308C", "#332973", "#2F2359"];
@@ -37,6 +38,9 @@ export default function RoomInfo({ isHost }) {
   const [remainPlaylist, setRemainPlayList] = useState([]);
   const [isCodeOpen, setIsCodeOpen] = useState(false);
   const [currentMusic, setCurrentMusic] = useState("first");
+
+  //투표 현황
+  const [canVote, setCanVote] = useState(true);
 
   const playlist = room.remainPlaylist.musics;
 
@@ -99,15 +103,17 @@ export default function RoomInfo({ isHost }) {
     }
   }, [room]);
 
-  async function clickAgreeButton() {
+  function clickAgreeButton() {
     increaseAgree(currentMusic._id);
+    setCanVote(false);
 
     console.log("agree");
     socket.emit("room_updated", room._id);
   }
 
-  async function clickRejectButton() {
+  function clickRejectButton() {
     increaseReject(currentMusic._id);
+    setCanVote(false);
 
     if (currentMusic.reject > room.users.length / 2) {
       addMusicInPlaylist(currentMusic._id, room.rejectPlaylist._id);
@@ -118,9 +124,16 @@ export default function RoomInfo({ isHost }) {
     socket.emit("room_updated", room._id);
   }
 
-  async function musicFinished() {
+  function musicFinished() {
     addMusicInPlaylist(currentMusic._id, room.acceptPlaylist._id);
+    deleteMusicInPlaylist(currentMusic._id, room.remainPlaylist._id);
+    setCanVote(true);
+
     console.log("music finished.");
+  }
+
+  function exitRoom() {
+    deleteUserInRoom(user._id, room._id);
   }
 
   return (
