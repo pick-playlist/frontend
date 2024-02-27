@@ -5,6 +5,7 @@ import userIcon from "../../assets/user.png";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "~/lib/api/user";
 import { getUser } from "~/store/reducers/user";
+import PlaylistComponent from "~/components/roomInfo/playlistComponent";
 
 const EMPTY_PLAYLIST = "플레이리스트가 비어 있습니다.";
 
@@ -112,7 +113,7 @@ export default function ProfilePage() {
               fontFamily: "IBMPlexSansKR-Regular",
             }}
           >
-            {acceptRateOfMusic}%
+            {acceptRateOfMusic.toFixed(1)}%
           </span>
           <div
             style={{
@@ -173,67 +174,21 @@ export default function ProfilePage() {
               <Accordion.Header style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
                 수락된 플레이리스트
               </Accordion.Header>
-              <Accordion.Body style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
-                {acceptPlaylist.length == 0
-                  ? EMPTY_PLAYLIST
-                  : acceptPlaylist.map((music) => {
-                      return (
-                        <div
-                          key={music._id}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            width: "100%",
-                            height: "50px",
-                            borderBottom: "1px solid lightgray",
-                          }}
-                        >
-                          <img
-                            src={music.thumbnail}
-                            style={{
-                              width: "30px",
-                              height: "30px",
-                              marginRight: "10px",
-                            }}
-                          />
-                          {music.title}
-                        </div>
-                      );
-                    })}
-              </Accordion.Body>
+              {acceptPlaylist.length == 0
+                ? EMPTY_PLAYLIST
+                : acceptPlaylist.map((music) => {
+                    return <PlaylistComponent music={music} />;
+                  })}
             </Accordion.Item>
             <Accordion.Item eventKey="2">
               <Accordion.Header style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
                 거절된 플레이리스트
               </Accordion.Header>
-              <Accordion.Body style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
-                {rejectPlaylist.length == 0
-                  ? EMPTY_PLAYLIST
-                  : rejectPlaylist.map((music) => {
-                      return (
-                        <div
-                          key={music._id}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            width: "100%",
-                            height: "50px",
-                            borderBottom: "1px solid lightgray",
-                          }}
-                        >
-                          <img
-                            src={music.thumbnail}
-                            style={{
-                              width: "30px",
-                              height: "30px",
-                              marginRight: "10px",
-                            }}
-                          />
-                          {music.title}
-                        </div>
-                      );
-                    })}
-              </Accordion.Body>
+              {rejectPlaylist.length == 0
+                ? EMPTY_PLAYLIST
+                : rejectPlaylist.map((music) => {
+                    return <PlaylistComponent music={music} />;
+                  })}
             </Accordion.Item>
           </Accordion>
         </div>

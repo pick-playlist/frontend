@@ -21,6 +21,7 @@ import headphone from "../../assets/headphone-dynamic-gradient.png";
 
 import io from "socket.io-client";
 import { deleteUserInRoom, updateRoomTags } from "~/lib/api/room";
+import PlaylistComponent from "./playlistComponent";
 const socket = io.connect("http://localhost:3000");
 
 const COLOR_LIST = ["#3C308C", "#332973", "#2F2359"];
@@ -378,32 +379,33 @@ export default function RoomInfo(props) {
                 remainPlaylist.map((music) => {
                   return (
                     // TO DO : music 컴포넌트로 변경하기
-                    <Accordion.Body
-                      style={{
-                        fontFamily: "IBMPlexSansKR-Regular",
-                      }}
-                    >
-                      <div
-                        key={music._id}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          width: "100%",
-                          height: "100%",
-                          // maxHeight: "150px",
-                        }}
-                      >
-                        <img
-                          src={music.thumbnail}
-                          style={{
-                            width: "50px",
-                            height: "50px",
-                            marginRight: "10px",
-                          }}
-                        />
-                        {music.title}
-                      </div>
-                    </Accordion.Body>
+                    // <Accordion.Body
+                    //   style={{
+                    //     fontFamily: "IBMPlexSansKR-Regular",
+                    //   }}
+                    // >
+                    //   <div
+                    //     key={music._id}
+                    //     style={{
+                    //       display: "flex",
+                    //       alignItems: "center",
+                    //       width: "100%",
+                    //       height: "100%",
+                    //       // maxHeight: "150px",
+                    //     }}
+                    //   >
+                    //     <img
+                    //       src={music.thumbnail}
+                    //       style={{
+                    //         width: "50px",
+                    //         height: "50px",
+                    //         marginRight: "10px",
+                    //       }}
+                    //     />
+                    //     {music.title}
+                    //   </div>
+                    // </Accordion.Body>
+                    <PlaylistComponent music={music} />
                   );
                 })
               )}
