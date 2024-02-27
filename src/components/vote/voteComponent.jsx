@@ -4,9 +4,20 @@ import activeThumbDown from "../../assets/thumb-down-dynamic-color.png";
 import deactiveThumbUp from "../../assets/thumb-up-dynamic-clay.png";
 import deactiveThumbDown from "../../assets/thumb-down-dynamic-clay.png";
 import styled from "styled-components";
+import { fetchUser } from "~/lib/api/user";
+import { useEffect } from "react";
+import { Card } from "react-bootstrap";
 
-export default function VoteComponent() {
+export default function VoteComponent(props) {
   const [isActive, setIsActive] = useState(true);
+  const [proposer, setProposer] = useState("");
+  const getProposer = async () => {
+    const tmp = await fetchUser(props.currentMusic.proposer);
+    setProposer(tmp.nickname);
+  };
+  useEffect(() => {
+    getProposer();
+  }, []);
   return (
     <div
       style={{
@@ -18,7 +29,28 @@ export default function VoteComponent() {
         alignItems: "center",
       }}
     >
-      <div>비비 - 밤양갱 추가해줘요</div>
+      <div>
+        {/* <h5 style={{ fontFamily: "OAGothic-ExtraBold" }}>NOW</h5>
+        <span style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
+          {props.currentMusic.title}
+        </span>
+        <p style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
+          {proposer}님의 코멘트 : {props.currentMusic.comment}
+        </p> */}
+        <Card>
+          <Card.Body>
+            <Card.Title style={{ fontFamily: "OAGothic-ExtraBold" }}>
+              NOW...
+            </Card.Title>
+            <Card.Subtitle style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
+              {props.currentMusic.title}
+            </Card.Subtitle>
+            <Card.Text style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
+              {proposer}님의 코멘트 : {props.currentMusic.comment}
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      </div>
       <div
         style={{
           display: "flex",
@@ -31,7 +63,10 @@ export default function VoteComponent() {
         {isActive ? (
           <HoverableImage
             src={activeThumbUp}
-            onClick={() => setIsActive(false)}
+            onClick={() => {
+              props.clickAgreeButton();
+              setIsActive(false);
+            }}
           />
         ) : (
           <img
@@ -46,18 +81,44 @@ export default function VoteComponent() {
         <div
           style={{
             backgroundColor: "white",
+            display: "flex",
             height: "14px",
-            width: "320px",
+            width: "350px",
             position: "absolute",
-            border: "1px solid black",
             left: "50%",
             transform: "translateX(-50%)",
           }}
-        />
+        >
+          <div
+            style={{
+              height: "100%",
+              width: `${
+                (props.currentMusic.agree /
+                  (props.currentMusic.agree + props.currentMusic.reject)) *
+                100
+              }%`,
+              backgroundColor: "#1665DD",
+            }}
+          />
+          <div
+            style={{
+              height: "100%",
+              width: `${
+                (props.currentMusic.reject /
+                  (props.currentMusic.agree + props.currentMusic.reject)) *
+                100
+              }%`,
+              backgroundColor: "#FE4D58",
+            }}
+          />
+        </div>
         {isActive ? (
           <HoverableImage
             src={activeThumbDown}
-            onClick={() => setIsActive(false)}
+            onClick={() => {
+              props.clickRejectButton();
+              setIsActive(false);
+            }}
           />
         ) : (
           <img

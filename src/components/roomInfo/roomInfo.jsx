@@ -41,7 +41,7 @@ export default function RoomInfo({ isHost }) {
   const [currentMusic, setCurrentMusic] = useState("first");
 
   //투표 현황
-  const [canVote, setCanVote] = useState(true);
+  const [canVote, setCanVote] = useState(false);
 
   const playlist = room.remainPlaylist.musics;
 
@@ -50,11 +50,15 @@ export default function RoomInfo({ isHost }) {
       setCurrentMusic(playlist[0]);
     } else if (playlist.length == 0) {
       setCurrentMusic("first");
+      setCanVote(false);
     }
   }, [playlist]);
 
   useEffect(() => {
-    setCanVote(true);
+    if (playlist.length > 0) {
+      setCanVote(true);
+      console.log("make canVote true");
+    }
   }, [currentMusic]);
 
   const clickAddButton = async (link, playlistId) => {
@@ -112,7 +116,6 @@ export default function RoomInfo({ isHost }) {
 
   function clickAgreeButton() {
     increaseAgree(currentMusic._id);
-    setCanVote(false);
 
     console.log("agree");
     socket.emit("room_updated", room._id);
@@ -120,7 +123,6 @@ export default function RoomInfo({ isHost }) {
 
   function clickRejectButton() {
     increaseReject(currentMusic._id);
-    setCanVote(false);
 
     if (currentMusic.reject > room.users.length / 2) {
       addMusicInPlaylist(currentMusic._id, room.rejectPlaylist._id);
@@ -231,7 +233,13 @@ export default function RoomInfo({ isHost }) {
           </div>
         </StyledModalContent>
       ) : null}
-      <VoteComponent />
+      {canVote ? (
+        <VoteComponent
+          currentMusic={currentMusic}
+          clickAgreeButton={clickAgreeButton}
+          clickRejectButton={clickRejectButton}
+        />
+      ) : null}
       <span
         style={{
           alignSelf: "center",
