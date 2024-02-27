@@ -70,12 +70,13 @@ export default function RoomInfo({ isHost }) {
   }, []);
 
   useEffect(() => {
+    socket.emit("room_updated", room.room_id);
+  }, []);
+  useEffect(() => {
     if (user && room) {
       if (isHost) {
         setHostNickName(user.nickname);
       }
-
-      dispatch(updateRoom(room.code));
     }
   }, [room]);
   // room 정보가 업데이트 되면
@@ -86,8 +87,6 @@ export default function RoomInfo({ isHost }) {
       setUserList(room.users);
       setRemainPlayList(room.remainPlaylist.musics);
     }
-    console.log("userlist", userList);
-    console.log("remainPlaylist", remainPlaylist);
   }, [room]);
 
   async function clickGoodButton() {}
