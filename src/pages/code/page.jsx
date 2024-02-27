@@ -10,6 +10,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUserInRoom } from "~/lib/api/room";
 import { updateRoom } from "~/lib/util/room";
 
+import io from "socket.io-client";
+const socket = io.connect("http://localhost:3000");
+
 export default function CodePage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -30,6 +33,8 @@ export default function CodePage() {
           try {
             // 접속
             addUserInRoom(user._id, room._id);
+            // 소켓 이벤트 발생
+            socket.emit("room_updated", room._id);
             // 페이지 이동
             navigate(
               { pathname: "/room/party" },

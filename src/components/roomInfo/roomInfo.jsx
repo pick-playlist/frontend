@@ -48,17 +48,17 @@ export default function RoomInfo({ isHost }) {
 
     const playlistResp = await addMusicInPlaylist(createdMusicId, playlistId);
 
-    updateRoom(room.code, dispatch);
+    updateRoom(room.code);
     console.log("playlistResp: ", playlistResp);
 
-    socket.emit("room_updated", playlistId);
+    socket.emit("room_updated", room_id);
     return playlistResp;
   }
 
   useEffect(() => {
     socket.on("room_updated", (data) => {
       console.log("room_updated, data: ", data);
-      updateRoom();
+      updateRoom(room.code, dispatch);
     });
   }, []);
 
@@ -68,7 +68,7 @@ export default function RoomInfo({ isHost }) {
         setHostNickName(user.nickname);
       }
 
-      updateRoom(room.code, dispatch);
+      // updateRoom(room.code, dispatch);
     }
   }, [room]);
 
