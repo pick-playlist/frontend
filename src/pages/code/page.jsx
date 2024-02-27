@@ -50,6 +50,10 @@ export default function CodePage() {
       case FULFILLED:
         // 접속
         addUserInRoom(user._id, room._id);
+
+        //socket
+        socket.emit("room_updated", room._id);
+
         // 페이지 이동
         navigate(
           { pathname: "/room/party" },

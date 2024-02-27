@@ -13,8 +13,8 @@ import { ButtonInPages } from "~/components/styled/globalComponent";
 import styled, { keyframes } from "styled-components";
 import PartyUserIcon from "../partyUserIcon/partyUserIcon";
 import { getLinkInfo } from "~/lib/api/search";
-import { createMusic } from "~/lib/api/music";
-import { addMusicInPlaylist } from "~/lib/api/playlist";
+import { createMusic, increaseAgree, increaseReject } from "~/lib/api/music";
+import { addMusicInPlaylist, deleteMusicInPlaylist } from "~/lib/api/playlist";
 import { updateRoom } from "~/lib/util/room";
 
 import io from "socket.io-client";
@@ -36,6 +36,15 @@ export default function RoomInfo({ isHost }) {
   const [userList, setUserList] = useState([]);
   const [remainPlaylist, setRemainPlayList] = useState([]);
   const [isCodeOpen, setIsCodeOpen] = useState(false);
+  const [currentMusic, setCurrentMusic] = useState("first");
+
+  const playlist = room.remainPlaylist.musics;
+
+  useEffect(() => {
+    if (playlist && playlist.length > 0) {
+      setCurrentMusic(playlist[0]);
+    }
+  }, [playlist]);
 
   const clickAddButton = async (link, playlistId) => {
     const linkInfoResp = await getLinkInfo(link);
@@ -58,20 +67,23 @@ export default function RoomInfo({ isHost }) {
     updateRoom(room.code, dispatch);
     console.log("playlistResp: ", playlistResp);
 
-    socket.emit("room_updated", room.room_id);
+    socket.emit("room_updated", room._id);
     return playlistResp;
   };
 
   useEffect(() => {
     socket.on("room_updated", (data) => {
-      console.log("room_updated, data: ", data);
-      dispatch(updateRoom(room.code));
+      if (data === room._id) {
+        console.log("room_updated, data: ", data);
+        dispatch(updateRoom(room.code));
+      }
     });
   }, []);
 
   useEffect(() => {
-    socket.emit("room_updated", room.room_id);
+    dispatch(updateRoom(room.code));
   }, []);
+
   useEffect(() => {
     if (user && room) {
       setHostNickName(room.hostUser.nickname);
@@ -87,7 +99,29 @@ export default function RoomInfo({ isHost }) {
     }
   }, [room]);
 
-  async function clickGoodButton() {}
+  async function clickAgreeButton() {
+    increaseAgree(currentMusic._id);
+
+    console.log("agree");
+    socket.emit("room_updated", room._id);
+  }
+
+  async function clickRejectButton() {
+    increaseReject(currentMusic._id);
+
+    if (currentMusic.reject > room.users.length / 2) {
+      addMusicInPlaylist(currentMusic._id, room.rejectPlaylist._id);
+      deleteMusicInPlaylist(currentMusic._id, room.remainPlaylist._id);
+    }
+
+    console.log("reject");
+    socket.emit("room_updated", room._id);
+  }
+
+  async function musicFinished() {
+    addMusicInPlaylist(currentMusic._id, room.acceptPlaylist._id);
+    console.log("music finished.");
+  }
 
   return (
     <div
