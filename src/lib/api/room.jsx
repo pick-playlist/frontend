@@ -57,3 +57,12 @@ export async function updateRoomTags(roomId, tags) {
   }
   return response.data;
 }
+
+export async function deleteRoom(roomId) {
+  try {
+    const response = await axios.delete("/api/room/delete/" + roomId);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+}

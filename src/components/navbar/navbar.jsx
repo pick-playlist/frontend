@@ -5,13 +5,17 @@ import userIcon from "../../assets/user.png";
 import { persistor } from "~/store/store";
 import { Navbar } from "react-bootstrap";
 import { setInRoomFalse, setIsLoggedInFalse } from "~/store/reducers/user";
+import { exitRoom } from "~/lib/util/room";
 
 export default function NavBar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userObj = useSelector((state) => state.user.data);
+  const room = useSelector((state) => state.room.data);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const inRoom = useSelector((state) => state.user.inRoom);
+  const isHost = useSelector((state) => state.user.isHost);
+
   const exitRoomMsg = "방을 나가시겠습니까?";
 
   const confirmExitRoom = () => {
@@ -20,11 +24,12 @@ export default function NavBar() {
 
   const onClickLogOut = () => {
     if (inRoom) {
-      const exitRoom = confirmExitRoom(exitRoomMsg);
-      if (exitRoom) {
+      const exitRoomFlag = confirmExitRoom(exitRoomMsg);
+      if (exitRoomFlag) {
         const action = setIsLoggedInFalse();
         dispatch(action);
-        navigate("/");
+        exitRoom(isHost, room._id, userObj._id);
+        navigate("/visualization");
       }
     } else {
       const action = setIsLoggedInFalse();
@@ -33,14 +38,31 @@ export default function NavBar() {
     }
   };
 
+  const onClickProfile = () => {
+    if (userObj.isMember) {
+      if (inRoom) {
+        const exitRoomFlag = confirmExitRoom(exitRoomMsg);
+        if (exitRoomFlag) {
+          const action = setInRoomFalse();
+          dispatch(action);
+          exitRoom(isHost, room._id, userObj._id);
+          navigate("/visualization");
+        }
+      } else {
+        navigate("/profile");
+      }
+    }
+  };
+
   const onClickPickpl = () => {
     if (isLoggedIn) {
       if (inRoom) {
-        const exitRoom = confirmExitRoom(exitRoomMsg);
-        if (exitRoom) {
-          navigate("/main");
+        const exitRoomFlag = confirmExitRoom(exitRoomMsg);
+        if (exitRoomFlag) {
           const action = setInRoomFalse();
           dispatch(action);
+          exitRoom(isHost, room._id, userObj._id);
+          navigate("/visualization");
         }
       }
     } else navigate("/");
@@ -80,7 +102,7 @@ export default function NavBar() {
               display: "flex",
               cursor: `${userObj.isMember ? "pointer" : ""}`,
             }}
-            onClick={userObj.isMember ? () => navigate("/profile") : null}
+            onClick={() => onClickProfile()}
           >
             {userObj.nickname}님
           </div>
