@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Accordion } from "react-bootstrap";
-import { MusicNoteList, PlusCircleFill, XLg } from "react-bootstrap-icons";
+import {
+  MusicNoteList,
+  PlusCircleFill,
+  XLg,
+  DoorOpenFill,
+} from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Form } from "react-bootstrap";
 import { ButtonInPages } from "~/components/styled/globalComponent";
@@ -29,6 +34,7 @@ export default function RoomInfo({ isHost }) {
   const [hostNickName, setHostNickName] = useState("");
   const [userList, setUserList] = useState([]);
   const [remainPlaylist, setRemainPlayList] = useState([]);
+  const [isCodeOpen, setIsCodeOpen] = useState(false);
 
   const clickAddButton = async (link, playlistId) => {
     const linkInfoResp = await getLinkInfo(link);
@@ -155,12 +161,23 @@ export default function RoomInfo({ isHost }) {
           </div>
         </StyledModalContent>
       ) : null}
-      <h3 className="titleText">{hostNickName}님의 방 🎶</h3>
+      <span className="titleText">{hostNickName}님의 공유 플레이리스트</span>
       <div style={{ alignSelf: "flex-end" }}>
         {room ? (
-          <span style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
-            공유 코드 {room.code}
-          </span>
+          <SlideItem
+            isCodeOpen={isCodeOpen}
+            style={{
+              fontFamily: "IBMPlexSansKR-Regular",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <DoorOpenFill
+              style={{ cursor: "pointer", width: "50px" }}
+              onClick={() => setIsCodeOpen(!isCodeOpen)}
+            />
+            {room.code}
+          </SlideItem>
         ) : null}
       </div>
       <div>
@@ -267,6 +284,7 @@ const fadeIn = keyframes`
 const StyledModalContent = styled.div`
   maxwidth: 370px;
   width: 370px;
+  align-self: center;
   position: fixed;
   top: 30%;
   z-index: 5;
@@ -275,4 +293,19 @@ const StyledModalContent = styled.div`
   border: 3px solid #332973;
   background-color: white;
   animation: ${fadeIn} 0.5s forwards; // 모달이 나타날 때의 애니메이션
+`;
+const slideAnimation = (props) => keyframes`
+from {
+  transform: translateX(${props.isCodeOpen ? "0%" : "100%"});
+}
+to {
+  transform: translateX(${props.isCodeOpen ? "100%" : "0%"});
+}
+`;
+
+// 슬라이드 요소
+const SlideItem = styled.div`
+  width: 75%;
+  height: 100%;
+  animation: ${slideAnimation} 1s forwards; // 슬라이드 애니메이션 적용
 `;
