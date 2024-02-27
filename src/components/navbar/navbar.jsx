@@ -32,25 +32,29 @@ export default function NavBar() {
         justifyContent: "flex-end",
       }}
     >
+      <div
+        style={{
+          color: "white",
+          fontWeight: 700,
+          marginRight: "auto",
+          cursor: "pointer",
+        }}
+        onClick={() => navigate("/")}
+      >
+        PICKPL
+      </div>
+
       {isLoggedIn ? (
         <>
-          <div style={{ color: "white", display: "flex" }}>
+          <div
+            style={{
+              color: "white",
+              display: "flex",
+              cursor: `${userObj.isMember ? "pointer" : ""}`,
+            }}
+            onClick={userObj.isMember ? () => navigate("/profile") : null}
+          >
             {userObj.nickname}님
-            <img
-              src={userObj.profilePhoto ? userObj.profilePhoto : userIcon}
-              style={{
-                marginLeft: "5px",
-                width: "25px",
-                height: "25px",
-                backgroundColor: "white",
-                borderRadius: 100,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                cursor: `${userObj.isMember ? "pointer" : ""}`,
-              }}
-              onClick={userObj.isMember ? () => navigate("/profile") : null} // Conditional onClick
-            />
           </div>
 
           <div
@@ -58,7 +62,6 @@ export default function NavBar() {
               marginLeft: "10px",
               cursor: "pointer",
               color: "white",
-              fontSize: "17px",
               fontFamily: "IBMPlexSansKR-Regular",
             }}
             onClick={() => onClickLogOut()}
@@ -67,9 +70,7 @@ export default function NavBar() {
           </div>
         </>
       ) : (
-        <div style={{ color: "white", display: "flex", fontWeight: 700 }}>
-          PICKPL{" "}
-        </div>
+        ""
       )}
     </div>
   );
