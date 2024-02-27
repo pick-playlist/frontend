@@ -34,6 +34,8 @@ export default function RoomHostPage() {
   return (
     <div style={{ width: "100%" }}>
       {playlist.length === 0 ? (
+        // 플리에 music 없을 때
+
         <p>add music !!</p>
       ) : (
         <YoutubePlayer video={video} />
