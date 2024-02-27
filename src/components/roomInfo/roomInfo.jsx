@@ -73,14 +73,17 @@ export default function RoomInfo({ isHost }) {
 
   useEffect(() => {
     socket.on("room_updated", (data) => {
-      console.log("room_updated, data: ", data);
-      dispatch(updateRoom(room.code));
+      if (data === room._id) {
+        console.log("room_updated, data: ", data);
+        dispatch(updateRoom(room.code));
+      }
     });
   }, []);
 
-  useEffect(() => {
-    socket.emit("room_updated", room.room_id);
-  }, []);
+  // useEffect(() => {
+  //   socket.emit("room_updated", room.room_id);
+  // }, []);
+
   useEffect(() => {
     if (user && room) {
       if (isHost) {
