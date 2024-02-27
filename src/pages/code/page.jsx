@@ -27,13 +27,15 @@ export default function CodePage() {
   const room = useSelector((state) => state.room.data);
   const roomLoading = useSelector((state) => state.room.loading);
   const user = useSelector((state) => state.user.data);
+  const isHost = useSelector((state) => state.user.isHost);
+
   const [ready, setReady] = useState(false);
 
   const onClickReady = async () => {
     setReady(true);
-    if (location.state.isCreateRoom) {
+    if (isHost) {
       // 방장일 때
-      navigate({ pathname: "/room/host" }, { state: { isCreateRoom: true } });
+      navigate({ pathname: "/room/host" });
     } else {
       // 참여자일 때
       const action = getRoomInfoWithCode({ roomCode: code });
@@ -55,10 +57,7 @@ export default function CodePage() {
         socket.emit("room_updated", room._id);
 
         // 페이지 이동
-        navigate(
-          { pathname: "/room/party" },
-          { state: { isCreateRoom: false } }
-        );
+        navigate({ pathname: "/room/party" });
         break;
       case PENDING:
         break;
@@ -83,7 +82,7 @@ export default function CodePage() {
           alignItems: "center",
         }}
       >
-        {location.state.isCreateRoom ? (
+        {isHost ? (
           <div
             style={{
               display: "flex",
@@ -116,7 +115,7 @@ export default function CodePage() {
             height: "stretch",
           }}
         >
-          {location.state.isCreateRoom ? (
+          {isHost ? (
             <>
               <h3>참여코드를 공유해주세요!</h3>
               <ShowNumberCode setParentCode={setCode} />

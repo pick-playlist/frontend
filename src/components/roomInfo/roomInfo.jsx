@@ -25,7 +25,7 @@ const socket = io.connect("http://localhost:3000");
 
 const COLOR_LIST = ["#3C308C", "#332973", "#2F2359"];
 
-export default function RoomInfo({ isHost }) {
+export default function RoomInfo() {
   const user = useSelector((state) => state.user.data);
   const room = useSelector((state) => state.room.data);
   const roomLoading = useSelector((state) => state.room.loading);

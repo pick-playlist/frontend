@@ -15,6 +15,7 @@ const initialState = {
   data: null,
   loading: "idle",
   inRoom: false,
+  isHost: false,
 };
 
 const signUp = createAsyncThunk(
@@ -65,6 +66,12 @@ const userSlice = createSlice({
     },
     setInRoomFalse(state, action) {
       state.inRoom = false;
+    },
+    setIsHostTrue(state, action) {
+      state.isHost = true;
+    },
+    setIsHostFalse(state, action) {
+      state.isHost = false;
     },
   },
   extraReducers: (builder) => {
@@ -153,6 +160,8 @@ export const {
   setIsLoggedInFalse,
   setInRoomTrue,
   setInRoomFalse,
+  setIsHostTrue,
+  setIsHostFalse,
 } = userSlice.actions;
 export { signUp, logIn, guestLogIn, getUser, FULFILLED, REJECTED, PENDING };
 export default userSlice.reducer;
