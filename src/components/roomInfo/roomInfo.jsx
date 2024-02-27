@@ -5,7 +5,6 @@ import {
   PlusCircleFill,
   XLg,
   DoorOpenFill,
-  MusicPlayer,
   MusicPlayerFill,
 } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -197,11 +196,12 @@ export default function RoomInfo({ isHost }) {
               alignItems: "center",
               cursor: "pointer",
               marginRight: "3px",
+              color: "#3C308C",
             }}
             onClick={() => setIsCodeOpen(!isCodeOpen)}
           >
             {/* <DoorOpenFill /> */}
-            click to see code!
+            click!
           </div>
 
           {room.code}
@@ -321,16 +321,16 @@ const StyledModalContent = styled.div`
 `;
 const slideAnimation = (props) => keyframes`
 from {
-  transform: translateX(${props.isCodeOpen ? "100%" : "86%"});
+  transform: translateX(${props.isCodeOpen ? "100%" : "90%"});
 }
 to {
-  transform: translateX(${props.isCodeOpen ? "86%" : "100%"});
+  transform: translateX(${props.isCodeOpen ? "90%" : "100%"});
 }
 `;
 
 // 슬라이드 요소
 const SlideItem = styled.div`
-  width: 72%;
+  width: 92%;
   height: 100%;
   animation: ${slideAnimation} 1s forwards; // 슬라이드 애니메이션 적용
 `;
