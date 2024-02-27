@@ -120,6 +120,7 @@ export default function VoteComponent(props) {
                 100
               }%`,
               backgroundColor: "#1665DD",
+              transition: "width 1s ease-out",
             }}
           />
           <div
@@ -131,6 +132,7 @@ export default function VoteComponent(props) {
                 100
               }%`,
               backgroundColor: "#FE4D58",
+              transition: "width 1s ease-out",
             }}
           />
         </div>
