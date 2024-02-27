@@ -53,12 +53,12 @@ export default function RoomHostPage() {
             아직 플레이리스트에 음악이 없어요. 음악을 추가해주세요!
           </div>
 
-          <RoomInfo isHost={location.state.isCreateRoom} />
+          <RoomInfo isAnyMusic={false} />
         </div>
       ) : (
         <div style={{ alignSelf: "start" }}>
-          <YoutubePlayer video={video} />
-          <RoomInfo isHost={location.state.isCreateRoom} />
+          {/* <YoutubePlayer video={video} /> */}
+          <RoomInfo isAnyMusic={true} video={video} />
         </div>
       )}
     </>
