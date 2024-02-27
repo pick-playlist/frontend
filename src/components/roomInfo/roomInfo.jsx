@@ -237,6 +237,8 @@ export default function RoomInfo(props) {
               onClick={() => {
                 setIsPlusBtnClicked(false);
                 clickAddButton(link, room.remainPlaylist._id);
+                setComment("");
+                setLink("");
               }}
             >
               추가하기
@@ -327,7 +329,6 @@ export default function RoomInfo(props) {
               fontSize: "14px",
               padding: "5px 20px",
               borderRadius: "20px",
-              // border: "3px solid #3C308C",
               alignSelf: "flex-end",
             }}
           >
@@ -340,7 +341,20 @@ export default function RoomInfo(props) {
           marginTop: "10px",
         }}
       >
-        {props.isAnyMusic ? <YoutubePlayer video={props.video} /> : null}
+        {props.playlistLength > 0 ? (
+          <YoutubePlayer video={props.video} />
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: window.innerHeight * 0.45,
+            }}
+          >
+            아직 플레이리스트에 음악이 없어요. 음악을 추가해주세요!
+          </div>
+        )}
         {canVote ? (
           <Card className="mb-3">
             <Card.Body>
