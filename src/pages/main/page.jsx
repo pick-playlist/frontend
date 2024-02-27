@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import { List } from "react-bootstrap-icons";
-import Sidebar from "~/components/sidebar/Sidebar";
 import { useNavigate } from "react-router-dom";
 import { ButtonInPages } from "~/components/styled/globalComponent";
 import FloatingIconComponent from "~/components/musicIcon/musicicon";

@@ -155,9 +155,9 @@ export default function VoteComponent(props) {
           />
         )}
       </div>
-      <span>
+      <span style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
         {Math.ceil(props.usersLength / 2) - props.currentMusic.reject} 명 더
-        반대하면 다음 노래
+        반대하면 다음 노래로 !
       </span>
     </div>
   );
