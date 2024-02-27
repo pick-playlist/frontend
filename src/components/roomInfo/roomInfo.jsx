@@ -280,7 +280,7 @@ export default function RoomInfo({ isHost }) {
             return (
               <PartyUserIcon
                 key={u._id}
-                userNickName={u.nickname}
+                user={u}
                 color={COLOR_LIST[i % COLOR_LIST.length]}
                 index={i}
               />

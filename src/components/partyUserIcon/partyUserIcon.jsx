@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function PartyUserIcon({ userNickName, color, index }) {
+export default function PartyUserIcon({ user, color, index }) {
   return (
     <div
       className="partyUserIcon"
@@ -12,7 +12,21 @@ export default function PartyUserIcon({ userNickName, color, index }) {
         left: `${index * 30}px`,
       }}
     >
-      {userNickName ? userNickName[0] : "u"}
+      {user && user.profilePhoto ? (
+        <img
+          src={user.profilePhoto}
+          alt="Profile"
+          style={{
+            width: "100%",
+            height: "100%",
+            borderRadius: "50%",
+          }}
+        />
+      ) : user ? (
+        user.nickname[0]
+      ) : (
+        "u"
+      )}
     </div>
   );
 }
