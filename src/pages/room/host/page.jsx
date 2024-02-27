@@ -33,7 +33,7 @@ export default function RoomHostPage() {
 
   return (
     <>
-      {playlist.length === 0 ? (
+      {/* {playlist.length === 0 ? (
         <div
           style={{
             width: "100%",
@@ -57,10 +57,14 @@ export default function RoomHostPage() {
         </div>
       ) : (
         <div style={{ alignSelf: "start" }}>
-          {/* <YoutubePlayer video={video} /> */}
-          <RoomInfo isAnyMusic={true} video={video} />
+          <RoomInfo isAnyMusic={true} video={video} playlistLength={playlist.length}/>
         </div>
-      )}
+      )} */}
+      <RoomInfo
+        // isAnyMusic={true}
+        video={video}
+        playlistLength={playlist.length}
+      />
     </>
   );
 }
