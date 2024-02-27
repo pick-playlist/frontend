@@ -45,9 +45,28 @@ export default function VoteComponent(props) {
             <Card.Subtitle style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
               {props.currentMusic.title}
             </Card.Subtitle>
-            <Card.Text style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
+            {/* <Card.Text style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
               {proposer}님의 코멘트 : {props.currentMusic.comment}
-            </Card.Text>
+            </Card.Text> */}
+
+            <Card className="mt-3">
+              <Card.Body
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  fontFamily: "IBMPlexSansKR-Regular",
+                }}
+              >
+                {/* <blockquote className="blockquote mb-0">
+                  <p> {props.currentMusic.comment} </p>
+                  <footer className="blockquote-footer">{proposer}</footer>
+                </blockquote> */}
+                <span>{props.currentMusic.comment}</span>
+                <span style={{ alignSelf: "flex-end", fontSize: "small" }}>
+                  - {proposer} -
+                </span>
+              </Card.Body>
+            </Card>
           </Card.Body>
         </Card>
       </div>
