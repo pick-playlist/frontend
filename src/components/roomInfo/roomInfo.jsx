@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Accordion } from "react-bootstrap";
+import { Accordion, Card } from "react-bootstrap";
 import {
   MusicNoteList,
   PlusCircleFill,
@@ -234,11 +234,15 @@ export default function RoomInfo({ isHost }) {
         </StyledModalContent>
       ) : null}
       {canVote ? (
-        <VoteComponent
-          currentMusic={currentMusic}
-          clickAgreeButton={clickAgreeButton}
-          clickRejectButton={clickRejectButton}
-        />
+        <Card>
+          <Card.Body>
+            <VoteComponent
+              currentMusic={currentMusic}
+              clickAgreeButton={clickAgreeButton}
+              clickRejectButton={clickRejectButton}
+            />
+          </Card.Body>
+        </Card>
       ) : null}
       <span
         style={{
