@@ -16,6 +16,7 @@ import { getLinkInfo } from "~/lib/api/search";
 import { createMusic, increaseAgree, increaseReject } from "~/lib/api/music";
 import { addMusicInPlaylist, deleteMusicInPlaylist } from "~/lib/api/playlist";
 import { updateRoom } from "~/lib/util/room";
+import VoteComponent from "../vote/voteComponent";
 
 import io from "socket.io-client";
 import { deleteUserInRoom } from "~/lib/api/room";
@@ -230,6 +231,7 @@ export default function RoomInfo({ isHost }) {
           </div>
         </StyledModalContent>
       ) : null}
+      <VoteComponent />
       <span
         style={{
           alignSelf: "center",
@@ -310,7 +312,7 @@ export default function RoomInfo({ isHost }) {
           />
         </h3>
         <div style={{ marginTop: "10px", marginBottom: "50px" }}>
-          <Accordion>
+          <Accordion defaultActiveKey={["0"]} alwaysOpen>
             <Accordion.Item eventKey="0">
               <Accordion.Header style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
                 Playlist
