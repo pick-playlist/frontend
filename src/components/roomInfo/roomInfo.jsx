@@ -17,6 +17,8 @@ import { createMusic } from "~/lib/api/music";
 import { addMusicInPlaylist } from "~/lib/api/playlist";
 import { updateRoom } from "~/lib/util/room";
 
+import io from "socket.io-client";
+const socket = io.connect("http://localhost:3000");
 const COLOR_LIST = ["#3C308C", "#332973", "#2F2359"];
 
 export default function RoomInfo({ isHost }) {
@@ -67,12 +69,13 @@ export default function RoomInfo({ isHost }) {
   }, []);
 
   useEffect(() => {
+    socket.emit("room_updated", room.room_id);
+  }, []);
+  useEffect(() => {
     if (user && room) {
       if (isHost) {
         setHostNickName(user.nickname);
       }
-
-      dispatch(updateRoom(room.code));
     }
   }, [room]);
   // room 정보가 업데이트 되면
@@ -83,8 +86,6 @@ export default function RoomInfo({ isHost }) {
       setUserList(room.users);
       setRemainPlayList(room.remainPlaylist.musics);
     }
-    console.log("userlist", userList);
-    console.log("remainPlaylist", remainPlaylist);
   }, [room]);
 
   async function clickGoodButton() {}
