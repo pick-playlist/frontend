@@ -74,9 +74,7 @@ export default function RoomInfo({ isHost }) {
   }, []);
   useEffect(() => {
     if (user && room) {
-      if (isHost) {
-        setHostNickName(user.nickname);
-      }
+      setHostNickName(room.hostUser.nickname);
     }
   }, [room]);
   // room 정보가 업데이트 되면
