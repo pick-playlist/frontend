@@ -11,14 +11,14 @@ import {
   REHYDRATE,
 } from "redux-persist";
 
-import storage from "redux-persist/lib/storage";
+import storageSession from "redux-persist/lib/storage/session";
 import persistStore from "redux-persist/es/persistStore";
 import persistReducer from "redux-persist/es/persistReducer";
 
 const rootPersistConfig = {
   key: "root",
-  storage: storage,
-  whitelist: ["user"],
+  storage: storageSession,
+  whitelist: ["user", "room"],
 };
 
 const rootReducer = persistReducer(
