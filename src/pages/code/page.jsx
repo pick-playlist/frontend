@@ -190,14 +190,16 @@ const ShowNumberCode = ({ setParentCode }) => {
   const room = useSelector((state) => state.room.data);
 
   useEffect(() => {
-    if (user && !room) {
+    if (user) {
       const action = createRoom({ userId: user._id });
       console.log(action);
       dispatch(action);
-    } else if (room) {
-      setCode(room.code);
-      setParentCode(room.code);
     }
+  }, []);
+
+  useEffect(() => {
+    setCode(room.code);
+    setParentCode(room.code);
   }, [room]);
 
   return (
