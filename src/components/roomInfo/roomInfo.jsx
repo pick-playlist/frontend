@@ -5,6 +5,8 @@ import {
   PlusCircleFill,
   XLg,
   DoorOpenFill,
+  MusicPlayer,
+  MusicPlayerFill,
 } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Form } from "react-bootstrap";
@@ -110,7 +112,14 @@ export default function RoomInfo({ isHost }) {
                 height: "20px",
               }}
             />
-            <h3 style={{ alignSelf: "flex-start" }}>추가 할 유튜브 링크</h3>
+            <h3
+              style={{
+                alignSelf: "flex-start",
+                fontFamily: "IBMPlexSansKR-Regular",
+              }}
+            >
+              추가 할 유튜브 링크
+            </h3>
             <Form>
               <Form.Control
                 type="text"
@@ -131,7 +140,7 @@ export default function RoomInfo({ isHost }) {
               />
             </Form>
             <Form>
-              <h3>코멘트</h3>
+              <h3 style={{ fontFamily: "IBMPlexSansKR-Regular" }}>코멘트</h3>
               <Form.Control
                 type="text"
                 value={comment}
@@ -161,31 +170,46 @@ export default function RoomInfo({ isHost }) {
           </div>
         </StyledModalContent>
       ) : null}
-      <span className="titleText">{hostNickName}님의 공유 플레이리스트</span>
-      <div style={{ alignSelf: "flex-end" }}>
-        {room ? (
-          <SlideItem
-            isCodeOpen={isCodeOpen}
+      <span
+        style={{
+          alignSelf: "center",
+          fontFamily: "IBMPlexSansKR-Regular",
+          fontSize: "20px",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <MusicPlayerFill style={{ marginRight: "2px" }} />
+        {hostNickName}님의 공유 플레이리스트
+      </span>
+      {room ? (
+        <SlideItem
+          isCodeOpen={isCodeOpen}
+          style={{
+            fontFamily: "IBMPlexSansKR-Regular",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <div
             style={{
-              fontFamily: "IBMPlexSansKR-Regular",
               display: "flex",
               alignItems: "center",
+              cursor: "pointer",
+              marginRight: "3px",
             }}
+            onClick={() => setIsCodeOpen(!isCodeOpen)}
           >
-            <DoorOpenFill
-              style={{ cursor: "pointer", width: "50px" }}
-              onClick={() => setIsCodeOpen(!isCodeOpen)}
-            />
-            {room.code}
-          </SlideItem>
-        ) : null}
-      </div>
-      <div>
-        <h5>현재 재생중인 음악</h5>
-        <span>비비 - 밤양갱</span>
-      </div>
-      <div style={{ marginTop: "10px" }}>
-        <span>현재 {userList.length}명이 참여중 </span>
+            {/* <DoorOpenFill /> */}
+            click to see code!
+          </div>
+
+          {room.code}
+        </SlideItem>
+      ) : null}
+
+      <div style={{ marginTop: "10px", fontFamily: "IBMPlexSansKR-Regular" }}>
+        <span>현재 {userList.length}명이 참여중... </span>
         <div
           style={{
             display: "flex",
@@ -290,22 +314,23 @@ const StyledModalContent = styled.div`
   z-index: 5;
   border-radius: 20px;
   padding: 20px;
-  border: 3px solid #332973;
+  // border: 1px solid #332973;
   background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
   animation: ${fadeIn} 0.5s forwards; // 모달이 나타날 때의 애니메이션
 `;
 const slideAnimation = (props) => keyframes`
 from {
-  transform: translateX(${props.isCodeOpen ? "0%" : "100%"});
+  transform: translateX(${props.isCodeOpen ? "100%" : "86%"});
 }
 to {
-  transform: translateX(${props.isCodeOpen ? "100%" : "0%"});
+  transform: translateX(${props.isCodeOpen ? "86%" : "100%"});
 }
 `;
 
 // 슬라이드 요소
 const SlideItem = styled.div`
-  width: 75%;
+  width: 72%;
   height: 100%;
   animation: ${slideAnimation} 1s forwards; // 슬라이드 애니메이션 적용
 `;
