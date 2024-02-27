@@ -52,7 +52,7 @@ export default function RoomInfo({ isHost }) {
     updateRoom(room.code, dispatch);
     console.log("playlistResp: ", playlistResp);
 
-    socket.emit("room_updated", playlistId);
+    socket.emit("room_updated", room_id);
     return playlistResp;
   }
 
@@ -83,6 +83,8 @@ export default function RoomInfo({ isHost }) {
     console.log("userlist", userList);
     console.log("remainPlaylist", remainPlaylist);
   }, [room]);
+
+  async function clickGoodButton() {}
 
   return (
     <div
@@ -185,6 +187,7 @@ export default function RoomInfo({ isHost }) {
           {userList.map((u, i) => {
             return (
               <PartyUserIcon
+                key={u._id}
                 userNickName={u.nickname}
                 color={COLOR_LIST[i % COLOR_LIST.length]}
                 index={i}

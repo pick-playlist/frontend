@@ -16,6 +16,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUserInRoom } from "~/lib/api/room";
 import { updateRoom } from "~/lib/util/room";
 
+import io from "socket.io-client";
+const socket = io.connect("http://localhost:3000");
+
 export default function CodePage() {
   const location = useLocation();
   const navigate = useNavigate();
