@@ -145,8 +145,25 @@ export default function ProfilePage() {
                   ? EMPTY_PLAYLIST
                   : playlist.map((music) => {
                       return (
-                        <div key={music._id}>
-                          {music.title} - {music.artist}
+                        <div
+                          key={music._id}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            width: "100%",
+                            height: "50px",
+                            borderBottom: "1px solid lightgray",
+                          }}
+                        >
+                          <img
+                            src={music.thumbnail}
+                            style={{
+                              width: "30px",
+                              height: "30px",
+                              marginRight: "10px",
+                            }}
+                          />
+                          {music.title}
                         </div>
                       );
                     })}
@@ -161,8 +178,25 @@ export default function ProfilePage() {
                   ? EMPTY_PLAYLIST
                   : acceptPlaylist.map((music) => {
                       return (
-                        <div key={music._id}>
-                          {music.title} - {music.artist}
+                        <div
+                          key={music._id}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            width: "100%",
+                            height: "50px",
+                            borderBottom: "1px solid lightgray",
+                          }}
+                        >
+                          <img
+                            src={music.thumbnail}
+                            style={{
+                              width: "30px",
+                              height: "30px",
+                              marginRight: "10px",
+                            }}
+                          />
+                          {music.title}
                         </div>
                       );
                     })}
@@ -177,8 +211,25 @@ export default function ProfilePage() {
                   ? EMPTY_PLAYLIST
                   : rejectPlaylist.map((music) => {
                       return (
-                        <div key={music._id}>
-                          {music.title} - {music.artist}
+                        <div
+                          key={music._id}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            width: "100%",
+                            height: "50px",
+                            borderBottom: "1px solid lightgray",
+                          }}
+                        >
+                          <img
+                            src={music.thumbnail}
+                            style={{
+                              width: "30px",
+                              height: "30px",
+                              marginRight: "10px",
+                            }}
+                          />
+                          {music.title}
                         </div>
                       );
                     })}

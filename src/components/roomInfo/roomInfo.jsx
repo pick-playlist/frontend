@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Accordion } from "react-bootstrap";
-import { MusicNoteList, PlusCircleFill, XLg } from "react-bootstrap-icons";
+import {
+  MusicNoteList,
+  PlusCircleFill,
+  XLg,
+  DoorOpenFill,
+  MusicPlayerFill,
+} from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Form } from "react-bootstrap";
 import { ButtonInPages } from "~/components/styled/globalComponent";
@@ -10,9 +16,6 @@ import { getLinkInfo } from "~/lib/api/search";
 import { createMusic } from "~/lib/api/music";
 import { addMusicInPlaylist } from "~/lib/api/playlist";
 import { updateRoom } from "~/lib/util/room";
-
-import io from "socket.io-client";
-const socket = io.connect("http://localhost:3000");
 
 const COLOR_LIST = ["#3C308C", "#332973", "#2F2359"];
 
@@ -29,14 +32,14 @@ export default function RoomInfo({ isHost }) {
   const [hostNickName, setHostNickName] = useState("");
   const [userList, setUserList] = useState([]);
   const [remainPlaylist, setRemainPlayList] = useState([]);
+  const [isCodeOpen, setIsCodeOpen] = useState(false);
 
-  async function clickAddButton(link, playlistId) {
+  const clickAddButton = async (link, playlistId) => {
     const linkInfoResp = await getLinkInfo(link);
-
     const title = linkInfoResp.title;
     const thumbnail = linkInfoResp.thumbnails.default.url;
+    // 아래 넣어주세용
     const userId = user._id;
-
     const musicResp = await createMusic(
       title,
       thumbnail,
@@ -44,7 +47,7 @@ export default function RoomInfo({ isHost }) {
       userId,
       link
     );
-    console.log("musicResp: ", musicResp);
+
     const createdMusicId = musicResp._id;
 
     const playlistResp = await addMusicInPlaylist(createdMusicId, playlistId);
@@ -54,7 +57,7 @@ export default function RoomInfo({ isHost }) {
 
     socket.emit("room_updated", room.room_id);
     return playlistResp;
-  }
+  };
 
   useEffect(() => {
     socket.on("room_updated", (data) => {
@@ -90,7 +93,6 @@ export default function RoomInfo({ isHost }) {
     <div
       style={{
         display: "flex",
-        alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
         alignSelf: "flex-start",
@@ -117,7 +119,14 @@ export default function RoomInfo({ isHost }) {
                 height: "20px",
               }}
             />
-            <h3 style={{ alignSelf: "flex-start" }}>추가 할 유튜브 링크</h3>
+            <h3
+              style={{
+                alignSelf: "flex-start",
+                fontFamily: "IBMPlexSansKR-Regular",
+              }}
+            >
+              추가 할 유튜브 링크
+            </h3>
             <Form>
               <Form.Control
                 type="text"
@@ -138,7 +147,7 @@ export default function RoomInfo({ isHost }) {
               />
             </Form>
             <Form>
-              <h3>코멘트</h3>
+              <h3 style={{ fontFamily: "IBMPlexSansKR-Regular" }}>코멘트</h3>
               <Form.Control
                 type="text"
                 value={comment}
@@ -168,16 +177,47 @@ export default function RoomInfo({ isHost }) {
           </div>
         </StyledModalContent>
       ) : null}
-      <h3 className="titleText">{hostNickName}님의 잼 🎶</h3>
-      <div style={{ alignSelf: "flex-end" }}>
-        {room ? <span>공유 코드 {room.code}</span> : null}
-      </div>
-      <div>
-        <h5>현재 재생중인 음악</h5>
-        <span>비비 - 밤양갱</span>
-      </div>
-      <div style={{ marginTop: "10px" }}>
-        <span>현재 {userList.length}명이 참여중 </span>
+      <span
+        style={{
+          alignSelf: "center",
+          fontFamily: "IBMPlexSansKR-Regular",
+          fontSize: "20px",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <MusicPlayerFill style={{ marginRight: "2px" }} />
+        {hostNickName}님의 공유 플레이리스트
+      </span>
+      {room ? (
+        <SlideItem
+          isCodeOpen={isCodeOpen}
+          style={{
+            fontFamily: "IBMPlexSansKR-Regular",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              cursor: "pointer",
+              marginRight: "3px",
+              color: "#3C308C",
+            }}
+            onClick={() => setIsCodeOpen(!isCodeOpen)}
+          >
+            {/* <DoorOpenFill /> */}
+            click!
+          </div>
+
+          {room.code}
+        </SlideItem>
+      ) : null}
+
+      <div style={{ marginTop: "10px", fontFamily: "IBMPlexSansKR-Regular" }}>
+        <span>현재 {userList.length}명이 참여중... </span>
         <div
           style={{
             display: "flex",
@@ -205,9 +245,10 @@ export default function RoomInfo({ isHost }) {
           style={{
             display: "flex",
             alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
-          <div>
+          <div style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
             <MusicNoteList style={{ marginRight: "5px", width: "20px" }} />
             대기 중인 플레이리스트
           </div>
@@ -217,10 +258,10 @@ export default function RoomInfo({ isHost }) {
           />
         </h3>
         <div style={{ marginTop: "10px", marginBottom: "50px" }}>
-          <Accordion defaultActiveKey="0" alwaysOpen>
+          <Accordion>
             <Accordion.Item eventKey="0">
               <Accordion.Header style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
-                대기 중인 플레이리스트
+                Playlist
               </Accordion.Header>
 
               {remainPlaylist.length == 0 ? (
@@ -234,7 +275,25 @@ export default function RoomInfo({ isHost }) {
                     <Accordion.Body
                       style={{ fontFamily: "IBMPlexSansKR-Regular" }}
                     >
-                      {music.title} - {music.artist}
+                      <div
+                        key={music._id}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          width: "100%",
+                          height: "50px",
+                        }}
+                      >
+                        <img
+                          src={music.thumbnail}
+                          style={{
+                            width: "50px",
+                            height: "50px",
+                            marginRight: "10px",
+                          }}
+                        />
+                        {music.title}
+                      </div>
                     </Accordion.Body>
                   );
                 })
@@ -259,12 +318,29 @@ const fadeIn = keyframes`
 const StyledModalContent = styled.div`
   maxwidth: 370px;
   width: 370px;
+  align-self: center;
   position: fixed;
   top: 30%;
   z-index: 5;
   border-radius: 20px;
   padding: 20px;
-  border: 3px solid #332973;
+  // border: 1px solid #332973;
   background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
   animation: ${fadeIn} 0.5s forwards; // 모달이 나타날 때의 애니메이션
+`;
+const slideAnimation = (props) => keyframes`
+from {
+  transform: translateX(${props.isCodeOpen ? "100%" : "90%"});
+}
+to {
+  transform: translateX(${props.isCodeOpen ? "90%" : "100%"});
+}
+`;
+
+// 슬라이드 요소
+const SlideItem = styled.div`
+  width: 92%;
+  height: 100%;
+  animation: ${slideAnimation} 1s forwards; // 슬라이드 애니메이션 적용
 `;

@@ -32,7 +32,7 @@ export default function NavBar() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              cursor: "pointer",
+              cursor: `${userObj.isMember ? "pointer" : ""}`,
             }}
             onClick={userObj.isMember ? () => navigate("/profile") : null} // Conditional onClick
           />
