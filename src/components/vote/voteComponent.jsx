@@ -11,13 +11,16 @@ import { Card } from "react-bootstrap";
 export default function VoteComponent(props) {
   const [isActive, setIsActive] = useState(true);
   const [proposer, setProposer] = useState("");
+
   const getProposer = async () => {
     const tmp = await fetchUser(props.currentMusic.proposer);
     setProposer(tmp.nickname);
   };
+
   useEffect(() => {
     getProposer();
   }, []);
+
   return (
     <div
       style={{
@@ -150,6 +153,10 @@ export default function VoteComponent(props) {
           />
         )}
       </div>
+      <span>
+        {Math.ceil(props.usersLength / 2) - props.currentMusic.reject} 명 더
+        반대하면 다음 노래
+      </span>
     </div>
   );
 }
