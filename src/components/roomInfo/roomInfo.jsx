@@ -52,7 +52,7 @@ export default function RoomInfo({ isHost }) {
     updateRoom(room.code, dispatch);
     console.log("playlistResp: ", playlistResp);
 
-    socket.emit("room_updated", room_id);
+    socket.emit("room_updated", room.room_id);
     return playlistResp;
   }
 

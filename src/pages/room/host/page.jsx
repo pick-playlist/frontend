@@ -4,29 +4,36 @@ import "./styles.css";
 import { useLocation } from "react-router-dom";
 import RoomInfo from "~/components/roomInfo/roomInfo";
 import { useSelector } from "react-redux";
-import { getMusicInfo } from "~/lib/api/music";
+import { useEffect } from "react";
 
 export default function RoomHostPage() {
+  const [currentVideoKey, setCurrencVideoKey] = useState("first");
+
   const location = useLocation();
   const video = {
-    key: "MAhi-BPFjMc",
+    key: currentVideoKey,
   };
 
   const room = useSelector((state) => state.room.data);
   const playlist = room.remainPlaylist.musics;
 
-  if (playlist && playlist.length > 0) {
-    const currentMusicId = playlist[0];
-    const currentMusicInfo = getMusicInfo(currentMusicId);
-    console.log("currencmusicinfo: ", currentMusicInfo);
-  }
-
-  // const url = new URL(youtubeLink);
-  // const id = url.searchParams.get("v");
+  useEffect(() => {
+    if (playlist && playlist.length > 0) {
+      const currentMusic = playlist[0];
+      const url = new URL(currentMusic.link);
+      const id = url.searchParams.get("v");
+      setCurrencVideoKey(id);
+    }
+  }, [playlist]);
 
   return (
     <div>
-      <YoutubePlayer video={video} />
+      {currentVideoKey === "first" ? (
+        <p>add music !!</p>
+      ) : (
+        <YoutubePlayer video={video} />
+      )}
+
       <RoomInfo isHost={location.state.isCreateRoom} />
     </div>
   );
