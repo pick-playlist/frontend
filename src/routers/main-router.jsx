@@ -14,6 +14,7 @@ import FinishPage from "~/pages/room/finish/page";
 import ProfilePage from "~/pages/profile/page";
 import MainLayout from "~/pages/layout";
 import TestPage from "~/pages/test/page";
+import Visualization from "~/pages/visualization/page";
 
 export const mainRouter = [
   {
@@ -70,6 +71,11 @@ export const mainRouter = [
         path: "/profile",
         index: true,
         element: <ProfilePage />,
+      },
+      {
+        path: "/visualization",
+        index: true,
+        element: <Visualization />,
       },
       {
         path: "/test",
