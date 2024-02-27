@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import YouTube from "react-youtube";
+import { useSelector } from "react-redux";
+import { deleteMusicInPlaylist, addMusicInPlaylist } from "~/lib/api/playlist";
+
+import io from "socket.io-client";
+const socket = io.connect("http://localhost:3000");
 
 export default function YoutubePlayer({ video }) {
+  const room = useSelector((state) => state.room.data);
+  const currentMusicId = video.currentMusicId;
+
   return (
     <YouTube
       //videoId : https://www.youtube.com/watch?v={videoId} 유튜브 링크의 끝부분에 있는 고유한 아이디
@@ -21,6 +29,12 @@ export default function YoutubePlayer({ video }) {
       //이벤트 리스너
       onEnd={(e) => {
         e.target.stopVideo(0);
+
+        addMusicInPlaylist(currentMusicId, room.acceptPlaylist._id);
+        deleteMusicInPlaylist(currentMusicId, room.remainPlaylist._id);
+
+        socket.emit("room_updated", room._id);
+        console.log("end");
       }}
     />
   );
