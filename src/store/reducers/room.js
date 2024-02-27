@@ -6,7 +6,12 @@ import {
 
 const initialState = {
   data: null,
+  loading: "idle",
 };
+
+const FULFILLED = "fulfilled";
+const REJECTED = "rejected";
+const PENDING = "pending";
 
 const createRoom = createAsyncThunk(
   "room/createRoom",
@@ -33,35 +38,41 @@ const roomSlice = createSlice({
       console.log("fulfilled createRoom");
       console.log(action);
       state.data = action.payload;
+      state.loading = FULFILLED;
     });
 
     builder
       .addCase(createRoom.pending, (state, action) => {
         console.log("pending createRoom");
         console.log(action);
+        state.loading = PENDING;
       })
       .addCase(createRoom.rejected, (state, action) => {
         console.log("rejected createRoom");
         console.log(action);
+        state.loading = REJECTED;
       });
 
     builder.addCase(getRoomInfoWithCode.fulfilled, (state, action) => {
       console.log("fulfilled getRoomInfoWithCode");
       console.log(action);
       state.data = action.payload;
+      state.loading = FULFILLED;
     });
 
     builder
       .addCase(getRoomInfoWithCode.pending, (state, action) => {
         console.log("pending getRoomInfoWithCode");
         console.log(action);
+        state.loading = PENDING;
       })
       .addCase(getRoomInfoWithCode.rejected, (state, action) => {
         console.log("rejected getRoomInfoWithCode");
         console.log(action);
+        state.loading = REJECTED;
       });
   },
 });
 
-export { createRoom, getRoomInfoWithCode };
+export { createRoom, getRoomInfoWithCode, FULFILLED, REJECTED, PENDING };
 export default roomSlice.reducer;

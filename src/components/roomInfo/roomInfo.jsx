@@ -19,6 +19,7 @@ const COLOR_LIST = ["#3C308C", "#332973", "#2F2359"];
 export default function RoomInfo({ isHost }) {
   const user = useSelector((state) => state.user.data);
   const room = useSelector((state) => state.room.data);
+  const roomLoading = useSelector((state) => state.room.loading);
 
   const dispatch = useDispatch();
 
@@ -58,7 +59,7 @@ export default function RoomInfo({ isHost }) {
   useEffect(() => {
     socket.on("room_updated", (data) => {
       console.log("room_updated, data: ", data);
-      updateRoom();
+      dispatch(updateRoom(room.code));
     });
   }, []);
 
@@ -68,15 +69,19 @@ export default function RoomInfo({ isHost }) {
         setHostNickName(user.nickname);
       }
 
-      updateRoom(room.code, dispatch);
+      dispatch(updateRoom(room.code));
     }
   }, [room]);
+  // room 정보가 업데이트 되면
 
   useEffect(() => {
     if (room) {
+      // user list 업데이트
       setUserList(room.users);
       setRemainPlayList(room.remainPlaylist.musics);
     }
+    console.log("userlist", userList);
+    console.log("remainPlaylist", remainPlaylist);
   }, [room]);
 
   return (
