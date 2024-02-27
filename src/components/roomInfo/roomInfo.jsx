@@ -18,6 +18,7 @@ import { addMusicInPlaylist, deleteMusicInPlaylist } from "~/lib/api/playlist";
 import { updateRoom } from "~/lib/util/room";
 
 import io from "socket.io-client";
+import { deleteUserInRoom } from "~/lib/api/room";
 const socket = io.connect("http://localhost:3000");
 
 const COLOR_LIST = ["#3C308C", "#332973", "#2F2359"];
@@ -126,7 +127,9 @@ export default function RoomInfo({ isHost }) {
     console.log("music finished.");
   }
 
-  function exitRoom() {}
+  function exitRoom() {
+    deleteUserInRoom(user._id, room._id);
+  }
 
   return (
     <div
