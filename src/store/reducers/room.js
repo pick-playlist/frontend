@@ -32,7 +32,11 @@ const getRoomInfoWithCode = createAsyncThunk(
 const roomSlice = createSlice({
   name: "room",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    setRoomNull(state, action) {
+      state.data = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(createRoom.fulfilled, (state, action) => {
       console.log("fulfilled createRoom");
@@ -74,5 +78,6 @@ const roomSlice = createSlice({
   },
 });
 
+export const { setRoomNull } = roomSlice.actions;
 export { createRoom, getRoomInfoWithCode, FULFILLED, REJECTED, PENDING };
 export default roomSlice.reducer;
