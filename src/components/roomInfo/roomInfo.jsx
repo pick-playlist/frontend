@@ -62,7 +62,7 @@ export default function RoomInfo({ isHost }) {
   }, [currentMusic]);
 
   useEffect(() => {
-    if (currentMusic.reject > room.users.length / 2) {
+    if (currentMusic.reject >= Math.ceil(room.users.length / 2)) {
       addMusicInPlaylist(currentMusic._id, room.rejectPlaylist._id);
       addMusicInPlaylist(currentMusic._id, user.rejectPlaylist._id);
       deleteMusicInPlaylist(currentMusic._id, room.remainPlaylist._id);
@@ -240,6 +240,7 @@ export default function RoomInfo({ isHost }) {
         <Card className="mb-3">
           <Card.Body>
             <VoteComponent
+              usersLength={room.users.length}
               currentMusic={currentMusic}
               clickAgreeButton={clickAgreeButton}
               clickRejectButton={clickRejectButton}
