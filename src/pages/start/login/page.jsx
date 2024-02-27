@@ -79,17 +79,7 @@ export default function LoginPage() {
             }}
           />
         </Form>
-        <ButtonInPages onClick={() => onClickLogIn()}>LOGIN</ButtonInPages>
-        <p
-          style={{
-            textDecoration: "underline",
-            cursor: "pointer",
-            fontFamily: "IBMPlexSansKR-Regular",
-          }}
-          onClick={() => navigate("/signup")}
-        >
-          회원가입
-        </p>
+        <ButtonInPages onClick={() => onClickLogIn()}>로그인</ButtonInPages>
       </div>
     </Container>
   );

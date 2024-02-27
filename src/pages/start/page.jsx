@@ -25,13 +25,23 @@ export default function StartPage() {
         </span>
         <FloatingIconComponent />
 
-        {/* <ButtonInPages onClick={() => navigate("/login")}>로그인</ButtonInPages> */}
-        {/* <ButtonInPages onClick={() => navigate("/signup")}>
-          회원가입
-        </ButtonInPages> */}
+        <ButtonInPages onClick={() => navigate("/login")}>로그인</ButtonInPages>
         <ButtonInPages onClick={() => navigate("/guest")}>
-          비회원으로 이용하기
+          비회원 로그인
         </ButtonInPages>
+        <p>
+          아직 회원이 아니신가요?
+          <b
+            style={{
+              textDecoration: "underline",
+              cursor: "pointer",
+              fontFamily: "IBMPlexSansKR-Regular",
+            }}
+            onClick={() => navigate("/signup")}
+          >
+            회원 가입
+          </b>
+        </p>
       </div>
     </Container>
   );
