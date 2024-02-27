@@ -232,6 +232,8 @@ export default function RoomInfo(props) {
               onClick={() => {
                 setIsPlusBtnClicked(false);
                 clickAddButton(link, room.remainPlaylist._id);
+                setComment("");
+                setLink("");
               }}
             >
               추가하기
