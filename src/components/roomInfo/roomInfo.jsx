@@ -47,8 +47,14 @@ export default function RoomInfo({ isHost }) {
   useEffect(() => {
     if (playlist && playlist.length > 0) {
       setCurrentMusic(playlist[0]);
+    } else if (playlist.length == 0) {
+      setCurrentMusic("first");
     }
   }, [playlist]);
+
+  useEffect(() => {
+    setCanVote(true);
+  }, [currentMusic]);
 
   const clickAddButton = async (link, playlistId) => {
     const linkInfoResp = await getLinkInfo(link);
@@ -126,13 +132,13 @@ export default function RoomInfo({ isHost }) {
     socket.emit("room_updated", room._id);
   }
 
-  function musicFinished() {
-    addMusicInPlaylist(currentMusic._id, room.acceptPlaylist._id);
-    deleteMusicInPlaylist(currentMusic._id, room.remainPlaylist._id);
-    setCanVote(true);
+  // function musicFinished() {
+  //   addMusicInPlaylist(currentMusic._id, room.acceptPlaylist._id);
+  //   deleteMusicInPlaylist(currentMusic._id, room.remainPlaylist._id);
+  //   setCanVote(true);
 
-    console.log("music finished.");
-  }
+  //   console.log("music finished.");
+  // }
 
   function exitRoom() {
     deleteUserInRoom(user._id, room._id);
