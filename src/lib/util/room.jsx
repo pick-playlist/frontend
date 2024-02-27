@@ -1,9 +1,8 @@
-import { useDispatch } from "react-redux";
 import { getRoomInfoWithCode } from "~/store/reducers/room";
 
-const updateRoom = (code, dispatch) => {
+const updateRoom = (code) => {
   const action = getRoomInfoWithCode({ roomCode: code });
-  dispatch(action);
+  return action;
 };
 
 export { updateRoom };

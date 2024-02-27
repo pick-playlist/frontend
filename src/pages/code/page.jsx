@@ -5,7 +5,13 @@ import { ButtonInPages } from "~/components/styled/globalComponent";
 import girl from "~/assets/girl-dynamic-color.png";
 import boy from "~/assets/boy-dynamic-color.png";
 import chat from "~/assets/chat-bubble-dynamic-color.png";
-import { createRoom, getRoomInfoWithCode } from "~/store/reducers/room";
+import {
+  FULFILLED,
+  PENDING,
+  REJECTED,
+  createRoom,
+  getRoomInfoWithCode,
+} from "~/store/reducers/room";
 import { useDispatch, useSelector } from "react-redux";
 import { addUserInRoom } from "~/lib/api/room";
 import { updateRoom } from "~/lib/util/room";
@@ -16,38 +22,47 @@ export default function CodePage() {
   const dispatch = useDispatch();
   const [code, setCode] = useState();
   const room = useSelector((state) => state.room.data);
+  const roomLoading = useSelector((state) => state.room.loading);
   const user = useSelector((state) => state.user.data);
+  const [ready, setReady] = useState(false);
 
   const onClickReady = async () => {
+    setReady(true);
     if (location.state.isCreateRoom) {
+      // 방장일 때
       navigate({ pathname: "/room/host" }, { state: { isCreateRoom: true } });
     } else {
-      try {
-        const action = getRoomInfoWithCode({ roomCode: code });
-        console.log(action);
-        const resultAction = await dispatch(action);
-        if (getRoomInfoWithCode.fulfilled.match(resultAction)) {
-          try {
-            // 접속
-            addUserInRoom(user._id, room._id);
-            // 페이지 이동
-            navigate(
-              { pathname: "/room/party" },
-              { state: { isCreateRoom: false } }
-            );
-          } catch (error) {
-            console.error("Error while entering room info: ", error);
-            alert("접속에 실패했습니다. 다시 접속해주세요.");
-          }
-        } else {
-          alert("방을 찾을 수 없습니다. 다시 입력해주세요.");
-        }
-      } catch (error) {
-        console.error("Error while getting room info:", error);
-        alert("방을 찾는 중 오류가 발생했습니다. 다시 입력해주세요.");
-      }
+      // 참여자일 때
+      const action = getRoomInfoWithCode({ roomCode: code });
+      dispatch(action);
     }
   };
+
+  useEffect(() => {
+    if (!room || !ready) {
+      return;
+    }
+
+    switch (roomLoading) {
+      case FULFILLED:
+        // 접속
+        addUserInRoom(user._id, room._id);
+        // 페이지 이동
+        navigate(
+          { pathname: "/room/party" },
+          { state: { isCreateRoom: false } }
+        );
+        break;
+      case PENDING:
+        break;
+      case REJECTED:
+        alert("방을 찾을 수 없습니다. 다시 입력해주세요.");
+        setReady(false);
+        break;
+      default:
+        break;
+    }
+  }, [room, roomLoading]);
 
   return (
     <Container
