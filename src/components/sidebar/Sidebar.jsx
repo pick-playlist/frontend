@@ -23,7 +23,7 @@ export default function Sidebar(props) {
       setNickname(user.nickname);
       setPlaylist(user.playlist.data);
       setAcceptPlaylist(user.acceptPlaylist.data);
-      setRejectPlaylist(user.rejectPlaylist.data);
+      setRejectPlaylist(user.rejectPlaylist.musics);
     }
   }, []);
 
@@ -66,7 +66,7 @@ export default function Sidebar(props) {
           </div>
         </div>
         <Accordion className="mt-3" defaultActiveKey="0">
-          <Accordion.Item eventKey="0">
+          {/* <Accordion.Item eventKey="0">
             <Accordion.Header>나의 플레이리스트</Accordion.Header>
             <Accordion.Body>
               {playlist.length == 0
@@ -75,7 +75,7 @@ export default function Sidebar(props) {
                     return <div key={pl}>{pl}</div>;
                   })}
             </Accordion.Body>
-          </Accordion.Item>
+          </Accordion.Item> */}
           <Accordion.Item eventKey="1">
             <Accordion.Header>수락된 플레이리스트</Accordion.Header>
             <Accordion.Body>

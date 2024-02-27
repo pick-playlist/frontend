@@ -9,6 +9,7 @@ const socket = io.connect("http://localhost:3000");
 export default function YoutubePlayer({ video }) {
   const room = useSelector((state) => state.room.data);
   const currentMusicId = video.currentMusicId;
+  const user = useSelector((state) => state.user.data);
 
   return (
     <YouTube
@@ -31,6 +32,7 @@ export default function YoutubePlayer({ video }) {
         e.target.stopVideo(0);
 
         addMusicInPlaylist(currentMusicId, room.acceptPlaylist._id);
+        addMusicInPlaylist(currentMusicId, user.acceptPlaylist._id);
         deleteMusicInPlaylist(currentMusicId, room.remainPlaylist._id);
 
         socket.emit("room_updated", room._id);

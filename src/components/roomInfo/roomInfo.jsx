@@ -61,6 +61,14 @@ export default function RoomInfo({ isHost }) {
     }
   }, [currentMusic]);
 
+  useEffect(() => {
+    if (currentMusic.reject > room.users.length / 2) {
+      addMusicInPlaylist(currentMusic._id, room.rejectPlaylist._id);
+      addMusicInPlaylist(currentMusic._id, user.rejectPlaylist._id);
+      deleteMusicInPlaylist(currentMusic._id, room.remainPlaylist._id);
+    }
+  }, [currentMusic.reject]);
+
   const clickAddButton = async (link, playlistId) => {
     const linkInfoResp = await getLinkInfo(link);
     const title = linkInfoResp.title;
@@ -121,15 +129,10 @@ export default function RoomInfo({ isHost }) {
     socket.emit("room_updated", room._id);
   }
 
-  function clickRejectButton() {
-    increaseReject(currentMusic._id);
+  async function clickRejectButton() {
+    await increaseReject(currentMusic._id);
 
-    if (currentMusic.reject > room.users.length / 2) {
-      addMusicInPlaylist(currentMusic._id, room.rejectPlaylist._id);
-      deleteMusicInPlaylist(currentMusic._id, room.remainPlaylist._id);
-    }
-
-    console.log("reject");
+    console.log("reject, ");
     socket.emit("room_updated", room._id);
   }
 

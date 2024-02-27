@@ -136,7 +136,7 @@ export default function ProfilePage() {
         </div>
         <div style={{ width: "420px" }}>
           <Accordion defaultActiveKey="0">
-            <Accordion.Item eventKey="0">
+            {/* <Accordion.Item eventKey="0">
               <Accordion.Header style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
                 나의 플레이리스트
               </Accordion.Header>
@@ -168,7 +168,7 @@ export default function ProfilePage() {
                       );
                     })}
               </Accordion.Body>
-            </Accordion.Item>
+            </Accordion.Item> */}
             <Accordion.Item eventKey="1">
               <Accordion.Header style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
                 수락된 플레이리스트
