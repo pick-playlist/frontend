@@ -15,7 +15,6 @@ import PlaylistComponent from "~/components/roomInfo/playlistComponent";
 import styled, { keyframes } from "styled-components";
 import { Container } from "react-bootstrap";
 import { current } from "@reduxjs/toolkit";
-const socket = io.connect("http://localhost:3000");
 
 export default function Visualization() {
   const dispatch = useDispatch();
@@ -57,20 +56,22 @@ export default function Visualization() {
         allMusics.push(remainMusics[0]);
       }
 
-      if (allMusics.length > 0) {
-        allMusics.sort((a, b) => b.agree - a.agree);
+      const set = new Set(allMusics);
+      const uniqueArr = [...set];
+
+      if (uniqueArr.length > 0) {
+        uniqueArr.sort((a, b) => b.agree - a.agree);
 
         let rankDiv = [];
         let rank = 1;
-        let prevAgree = allMusics[0].agree;
+        let prevAgree = uniqueArr[0].agree;
         const divLimit = 5;
         let cnt = 0;
-        // console.log("prevAgree: ", prevAgree);
 
-        for (let i = 0; i < allMusics.length; i++) {
-          if (prevAgree > allMusics[i].agree) {
+        for (let i = 0; i < uniqueArr.length; i++) {
+          if (prevAgree > uniqueArr[i].agree) {
             rank++;
-            prevAgree = allMusics[i].agree;
+            prevAgree = uniqueArr[i].agree;
           }
 
           if (cnt >= divLimit) {
@@ -106,7 +107,7 @@ export default function Visualization() {
                     fontSize: "14px",
                   }}
                 >
-                  {allMusics[i].title}
+                  {uniqueArr[i].title}
                 </span>
               </AnimatedItem>
             </div>
