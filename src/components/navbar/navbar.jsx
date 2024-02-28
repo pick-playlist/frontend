@@ -33,6 +33,9 @@ export default function NavBar() {
         const action = setIsLoggedInFalse();
         dispatch(action);
         exitRoom(isHost, room._id, userObj._id);
+
+        socket.emit("room_updated", room._id);
+
         navigate("/visualization");
       }
     } else {
@@ -71,7 +74,7 @@ export default function NavBar() {
 
           navigate("/visualization");
         }
-      } else navigate("/");
+      } else navigate("/main");
     } else navigate("/");
   };
 

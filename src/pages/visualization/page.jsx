@@ -46,7 +46,6 @@ export default function Visualization() {
       const allMusics = await acceptMusics.concat(rejectMusics);
 
       let rankDiv = [];
-      console.log("all: ", allMusics);
 
       if (allMusics.length > 0) {
         allMusics.sort((a, b) => b.agree - a.agree);
@@ -113,13 +112,13 @@ export default function Visualization() {
   };
 
   const clickGoMainButton = async () => {
-    // 리둑스에서 room 삭제
+    if (user != null && room != null) {
+      deleteUserInRoom(user._id, room._id);
 
-    deleteUserInRoom(user._id, room._id);
-    socket.emit("room_updated", room._id);
+      const action = setRoomNull();
+      dispatch(action);
+    }
 
-    const action = setRoomNull();
-    dispatch(action);
     if (isLoggedIn) {
       navigate("/main");
     } else {
@@ -131,7 +130,15 @@ export default function Visualization() {
     <div style={{ alignSelf: "start" }}>
       <div className="mt-3">
         <h2>동의를 많이 받은 음악</h2>
-        {ranks}
+        {ranks ? (
+          ranks
+        ) : (
+          <p>
+            을 알려드리려고 했는데...
+            <br />
+            음악을 끝까지 듣지 않으셨군요 ^^;;
+          </p>
+        )}
       </div>
 
       <h2 style={{ fontFamily: "IBMPlexSansKR-Regular" }}>제안된 음악 태그</h2>
