@@ -67,8 +67,9 @@ export default function Visualization() {
           cnt++;
           rankDiv.push(
             <div key={allMusics[i]._id}>
-              <p>{allMusics[i].title}</p>
-              <p>{rank}</p>
+              <p>
+                [{rank}], {allMusics[i].title}
+              </p>
             </div>
           );
         }
