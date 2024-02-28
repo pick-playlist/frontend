@@ -14,6 +14,7 @@ import io from "socket.io-client";
 import PlaylistComponent from "~/components/roomInfo/playlistComponent";
 import styled, { keyframes } from "styled-components";
 import { Container } from "react-bootstrap";
+import { current } from "@reduxjs/toolkit";
 const socket = io.connect("http://localhost:3000");
 
 export default function Visualization() {
@@ -51,13 +52,15 @@ export default function Visualization() {
       const remainMusics = remainResp.musics;
 
       const allMusics = await acceptMusics.concat(rejectMusics);
-      allMusics.push(remainMusics[0]);
 
-      let rankDiv = [];
+      if (remainMusics && remainMusics.length > 0) {
+        allMusics.push(remainMusics[0]);
+      }
 
       if (allMusics.length > 0) {
         allMusics.sort((a, b) => b.agree - a.agree);
 
+        let rankDiv = [];
         let rank = 1;
         let prevAgree = allMusics[0].agree;
         const divLimit = 5;
@@ -70,41 +73,43 @@ export default function Visualization() {
             prevAgree = allMusics[i].agree;
           }
 
-          if (rank >= 4 || cnt >= divLimit) {
+          if (cnt >= divLimit) {
             break;
           }
 
           cnt++;
           rankDiv.push(
-            <AnimatedItem
-              style={{
-                animationDelay: `${0.5 * cnt}s`,
-                backgroundColor: colorCodes[cnt - 1],
-              }}
-            >
-              <div
+            <div>
+              <AnimatedItem
                 style={{
-                  flex: 1,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  fontSize: "20px",
+                  animationDelay: `${0.5 * cnt}s`,
+                  backgroundColor: colorCodes[cnt - 1],
                 }}
               >
-                {rank}등
-              </div>
-              <span
-                style={{
-                  flex: 9,
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  fontSize: "14px",
-                }}
-              >
-                {allMusics[i].title}
-              </span>
-            </AnimatedItem>
+                <div
+                  style={{
+                    flex: 1,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    fontSize: "20px",
+                  }}
+                >
+                  {rank}등
+                </div>
+                <span
+                  style={{
+                    flex: 9,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    fontSize: "14px",
+                  }}
+                >
+                  {allMusics[i].title}
+                </span>
+              </AnimatedItem>
+            </div>
           );
         }
 
