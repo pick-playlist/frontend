@@ -27,6 +27,7 @@ export default function Visualization() {
 
   const [words, setWords] = useState([]);
   const [ranks, setRanks] = useState();
+  const colorCodes = ["#ffdddd", "#ffeedd", "#ffffdd", "#ddffe5", "#ddf6ff"];
 
   useEffect(() => {
     makeRank(room);
@@ -71,7 +72,12 @@ export default function Visualization() {
 
           cnt++;
           rankDiv.push(
-            <AnimatedItem style={{ animationDelay: `${0.5 * cnt}s` }}>
+            <AnimatedItem
+              style={{
+                animationDelay: `${0.5 * cnt}s`,
+                backgroundColor: colorCodes[cnt - 1],
+              }}
+            >
               <div
                 style={{
                   flex: 1,
@@ -201,7 +207,6 @@ const floatAnimation = keyframes`
 `;
 
 const AnimatedItem = styled.div`
-  background-color: #bdcaf2;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   width: 400px;
   height: 50px;
@@ -210,6 +215,7 @@ const AnimatedItem = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 16px;
+  font-family: IBMPlexSansKR-Regular;
   animation: ${floatAnimation} 0.5s ease-in-out forwards;
   opacity: 0; /* 애니메이션이 시작될 때 요소를 투명하게 만듦 */
 `;
