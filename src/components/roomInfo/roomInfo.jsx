@@ -20,9 +20,10 @@ import YoutubePlayer from "../youtubePlayer/YoutubePlayer";
 import headphone from "../../assets/headphone-dynamic-gradient.png";
 import { Link45deg } from "react-bootstrap-icons";
 import { deleteUserInRoom, updateRoomTags } from "~/lib/api/room";
-import { setInRoomTrue } from "~/store/reducers/user";
+import { setInRoomFalse, setInRoomTrue } from "~/store/reducers/user";
 import PlaylistComponent from "./playlistComponent";
 import socket from "~/lib/util/socket";
+import { useNavigate } from "react-router-dom";
 
 const COLOR_LIST = ["#3C308C", "#332973", "#2F2359"];
 
@@ -33,6 +34,7 @@ export default function RoomInfo(props) {
   const isHost = useSelector((state) => state.user.isHost);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [link, setLink] = useState("");
   const [comment, setComment] = useState("");
@@ -42,7 +44,6 @@ export default function RoomInfo(props) {
   const [remainPlaylist, setRemainPlayList] = useState([]);
   const [isCodeOpen, setIsCodeOpen] = useState(false);
   const [currentMusic, setCurrentMusic] = useState("first");
-
   //투표 현황
   const [canVote, setCanVote] = useState(false);
 
@@ -110,6 +111,24 @@ export default function RoomInfo(props) {
       }
     });
 
+    socket.on("room_deleted", (data) => {
+      if (data === room._id) {
+        console.log(isHost);
+        if (!isHost) {
+          const result = alert(
+            "방이 종료되었습니다. \n 확인을 누르시면 시각화 페이지로 이동합니다."
+          );
+
+          if (!result) {
+            const action = setInRoomFalse();
+            dispatch(action);
+            navigate("/visualization");
+          }
+        }
+        console.log("room_deleted, data", data);
+      }
+    });
+
     // 방 안에 있는지
     const action = setInRoomTrue();
     dispatch(action);
@@ -147,18 +166,6 @@ export default function RoomInfo(props) {
     console.log("reject, ");
     socket.emit("room_updated", room._id);
   }
-
-  // function musicFinished() {
-  //   addMusicInPlaylist(currentMusic._id, room.acceptPlaylist._id);
-  //   deleteMusicInPlaylist(currentMusic._id, room.remainPlaylist._id);
-  //   setCanVote(true);
-
-  //   console.log("music finished.");
-  // }
-
-  // function exitRoom() {
-  //   deleteUserInRoom(user._id, room._id);
-  // }
 
   return (
     <div
