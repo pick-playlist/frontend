@@ -168,7 +168,11 @@ export default function Visualization() {
     >
       <div
         className="mt-3"
-        style={{ display: "flex", flexDirection: "column" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          marginBottom: ranks ? 0 : "80%",
+        }}
       >
         <h2
           style={{
@@ -177,19 +181,52 @@ export default function Visualization() {
         >
           오늘의 인기 음악 🔥
         </h2>
-        {ranks ? <div>{ranks}</div> : <div>음악이 재생되지 않았군요 😭</div>}
+        {ranks ? (
+          <div>{ranks}</div>
+        ) : (
+          <div
+            style={{
+              fontFamily: "IBMPlexSansKR-Regular",
+            }}
+          >
+            음악이 재생되지 않았군요 😭
+          </div>
+        )}
       </div>
 
-      <div className="mt-5">
-        <h2>제안된 음악 태그 👋</h2>
+      <div
+        className="mt-3"
+        style={{
+          alignSelf: "start",
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+        }}
+      >
+        <h2
+          style={{
+            fontFamily: "IBMPlexSansKR-Regular",
+          }}
+        >
+          제안된 음악 태그 👋
+        </h2>
         {words && words.length > 0 ? (
-          <div>
-            <div>
-              <ReactWordcloud words={words} />
-            </div>
+          <div
+            style={{
+              marginTop: "3px",
+              alignSelf: "center",
+            }}
+          >
+            <ReactWordcloud words={words} />
           </div>
         ) : (
-          <div>태그를 찾을 수 없어요 😭</div>
+          <div
+            style={{
+              fontFamily: "IBMPlexSansKR-Regular",
+            }}
+          >
+            태그를 찾을 수 없어요 😭
+          </div>
         )}
       </div>
 
@@ -198,6 +235,10 @@ export default function Visualization() {
           clickGoMainButton();
         }}
         className="mt-5"
+        style={{
+          position: "fixed",
+          bottom: "3%",
+        }}
       >
         메인으로
       </ButtonInPages>
@@ -228,5 +269,5 @@ const AnimatedItem = styled.div`
   margin-bottom: 16px;
   font-family: IBMPlexSansKR-Regular;
   animation: ${floatAnimation} 0.5s ease-in-out forwards;
-  opacity: 0; /* 애니메이션이 시작될 때 요소를 투명하게 만듦 */
+  opacity: 0;
 `;
