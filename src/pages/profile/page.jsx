@@ -26,36 +26,28 @@ export default function ProfilePage() {
   };
 
   useEffect(() => {
-    console.log("get user");
     const action = getUser({ userId: user._id });
-    console.log(action);
     dispatch(action);
   }, []);
 
   useEffect(() => {
     if (user) {
-      console.log("User data:", user);
-
       setProfilePhoto(user.profilePhoto);
       setEmail(user.email);
       setNickname(user.nickname);
       setPlaylist(user.playlist.musics);
       setAcceptPlaylist(user.acceptPlaylist.musics);
       setRejectPlaylist(user.rejectPlaylist.musics);
-
-      console.log(acceptPlaylist.length, rejectPlaylist.length);
-
       setAcceptRateOfMusic(
         calculateAcceptRateOfMusic(acceptPlaylist.length, rejectPlaylist.length)
       );
     }
-  }, [dispatch, user]);
+  }, [user]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       setPercentage((prevProgress) => {
         const nextProgress = prevProgress + 10;
-        console.log(nextProgress);
         return nextProgress;
       }); // 10씩 증가하며 100까지 증가
     }, 100); // 1초마다 업데이트
@@ -135,39 +127,6 @@ export default function ProfilePage() {
         </div>
         <div style={{ width: "420px" }}>
           <Accordion defaultActiveKey="0">
-            {/* <Accordion.Item eventKey="0">
-              <Accordion.Header style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
-                나의 플레이리스트
-              </Accordion.Header>
-              <Accordion.Body style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
-                {playlist.length == 0
-                  ? EMPTY_PLAYLIST
-                  : playlist.map((music) => {
-                      return (
-                        <div
-                          key={music._id}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            width: "100%",
-                            height: "50px",
-                            borderBottom: "1px solid lightgray",
-                          }}
-                        >
-                          <img
-                            src={music.thumbnail}
-                            style={{
-                              width: "30px",
-                              height: "30px",
-                              marginRight: "10px",
-                            }}
-                          />
-                          {music.title}
-                        </div>
-                      );
-                    })}
-              </Accordion.Body>
-            </Accordion.Item> */}
             <Accordion.Item eventKey="1">
               <Accordion.Header style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
                 수락된 플레이리스트
