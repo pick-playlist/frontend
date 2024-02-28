@@ -10,7 +10,6 @@ import socket from "~/lib/util/socket";
 
 import io from "socket.io-client";
 
-
 export default function NavBar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -53,6 +52,7 @@ export default function NavBar() {
           const action = setInRoomFalse();
           dispatch(action);
           exitRoom(isHost, room._id, userObj._id);
+          socket.emit("room_updated", room._id);
           navigate("/visualization");
         }
       } else {
