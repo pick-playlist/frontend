@@ -19,12 +19,10 @@ import VoteComponent from "../vote/voteComponent";
 import YoutubePlayer from "../youtubePlayer/YoutubePlayer";
 import headphone from "../../assets/headphone-dynamic-gradient.png";
 import { Link45deg } from "react-bootstrap-icons";
-
-import io from "socket.io-client";
 import { deleteUserInRoom, updateRoomTags } from "~/lib/api/room";
 import { setInRoomTrue } from "~/store/reducers/user";
 import PlaylistComponent from "./playlistComponent";
-const socket = io.connect("http://localhost:3000");
+import socket from "~/lib/util/socket";
 
 const COLOR_LIST = ["#3C308C", "#332973", "#2F2359"];
 
