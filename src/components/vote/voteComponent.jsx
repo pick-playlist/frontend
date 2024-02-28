@@ -144,7 +144,20 @@ export default function VoteComponent(props) {
               backgroundColor: "#1665DD",
               transition: "width 1s ease-out",
             }}
-          />
+          >
+            <span
+              style={{
+                position: "absolute",
+                left: "19%",
+                top: -2,
+                zIndex: 2,
+                fontSize: "12px",
+                color: "white",
+              }}
+            >
+              {props.currentMusic.agree}
+            </span>
+          </div>
           <div
             style={{
               height: "100%",
@@ -156,7 +169,20 @@ export default function VoteComponent(props) {
               backgroundColor: "#FE4D58",
               transition: "width 1s ease-out",
             }}
-          />
+          >
+            <span
+              style={{
+                position: "absolute",
+                right: "18%",
+                top: -2,
+                zIndex: 2,
+                fontSize: "12px",
+                color: "white",
+              }}
+            >
+              {props.currentMusic.reject}
+            </span>
+          </div>
         </div>
         {isActive ? (
           <HoverableImage
