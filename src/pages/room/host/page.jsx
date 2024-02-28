@@ -10,11 +10,13 @@ import { current } from "@reduxjs/toolkit";
 export default function RoomHostPage() {
   const [currentVideoKey, setCurrencVideoKey] = useState("first");
   const [currentMusicId, setCurrentMusicId] = useState("");
+  const [proposer, setProposer] = useState("");
 
   const location = useLocation();
   const video = {
     key: currentVideoKey,
     currentMusicId: currentMusicId,
+    proposer: proposer
   };
 
   const room = useSelector((state) => state.room.data);
@@ -24,6 +26,7 @@ export default function RoomHostPage() {
     if (playlist && playlist.length > 0) {
       const currentMusic = playlist[0];
       setCurrentMusicId(currentMusic._id);
+      setProposer(currentMusic.proposer);
 
       const url = new URL(currentMusic.link);
       const id = url.searchParams.get("v");

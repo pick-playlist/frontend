@@ -67,9 +67,10 @@ export default function RoomInfo(props) {
 
   useEffect(() => {
     if (currentMusic.reject >= Math.ceil(room.users.length / 2)) {
-      console.log("rejected, ", Math.ceil(room.users.length / 2));
-
-      addMusicInPlaylist(currentMusic._id, user.rejectPlaylist._id);
+      // console.log("rejected, ", Math.ceil(room.users.length / 2));      
+      // 제안된 사람이 유저일 때만 넣기
+      if (currentMusic.proposer === user._id)
+        addMusicInPlaylist(currentMusic._id, user.rejectPlaylist._id);
       if (isHost) {
         addMusicInPlaylist(currentMusic._id, room.rejectPlaylist._id);
         deleteMusicInPlaylist(currentMusic._id, room.remainPlaylist._id);
@@ -332,23 +333,6 @@ export default function RoomInfo(props) {
         </div>
 
         {room ? (
-          // <div
-          //   style={{
-          //     fontFamily: "IBMPlexSansKR-Regular",
-          //     display: "flex",
-          //     alignItems: "center",
-          //     justifyContent: "center",
-          //     border: "2px solid black",
-          //     maxWidth: "100px",
-          //     width: "100px",
-          //     height: "45px",
-          //     borderRadius: "50px",
-          //     padding: "5px",
-          //     marginLeft: "10px",
-          //   }}
-          // >
-          //   {room.code}
-          // </div>
           <div
             style={{
               fontSize: "14px",
@@ -431,33 +415,6 @@ export default function RoomInfo(props) {
               ) : (
                 remainPlaylist.map((music) => {
                   return (
-                    // TO DO : music 컴포넌트로 변경하기
-                    // <Accordion.Body
-                    //   style={{
-                    //     fontFamily: "IBMPlexSansKR-Regular",
-                    //   }}
-                    // >
-                    //   <div
-                    //     key={music._id}
-                    //     style={{
-                    //       display: "flex",
-                    //       alignItems: "center",
-                    //       width: "100%",
-                    //       height: "100%",
-                    //       // maxHeight: "150px",
-                    //     }}
-                    //   >
-                    //     <img
-                    //       src={music.thumbnail}
-                    //       style={{
-                    //         width: "50px",
-                    //         height: "50px",
-                    //         marginRight: "10px",
-                    //       }}
-                    //     />
-                    //     {music.title}
-                    //   </div>
-                    // </Accordion.Body>
                     <PlaylistComponent music={music} />
                   );
                 })
