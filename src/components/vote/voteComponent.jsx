@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { fetchUser } from "~/lib/api/user";
 import { useEffect } from "react";
 import { Card } from "react-bootstrap";
+import PlaylistComponent from "../roomInfo/playlistComponent";
 
 export default function VoteComponent(props) {
   const [isActive, setIsActive] = useState(true);
@@ -20,7 +21,7 @@ export default function VoteComponent(props) {
   useEffect(() => {
     getProposer();
   }, []);
-
+  console.log(props.currentMusic);
   return (
     <div
       style={{
@@ -46,7 +47,28 @@ export default function VoteComponent(props) {
               NOW...
             </Card.Title>
             <Card.Subtitle style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
-              {props.currentMusic.title}
+              {/* {props.currentMusic.title} */}
+              <div
+                key={props.currentMusic._id}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                  height: "100%",
+                  // maxHeight: "150px",
+                }}
+              >
+                <img
+                  src={props.currentMusic.thumbnail}
+                  style={{
+                    width: "50px",
+                    height: "50px",
+                    marginRight: "10px",
+                    objectFit: "cover",
+                  }}
+                />
+                {props.currentMusic.title}
+              </div>
             </Card.Subtitle>
             {/* <Card.Text style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
               {proposer}님의 코멘트 : {props.currentMusic.comment}
