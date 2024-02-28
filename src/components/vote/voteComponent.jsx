@@ -37,7 +37,7 @@ export default function VoteComponent(props) {
 
   useEffect(() => {
     getProposer();
-  }, []);
+  }, [props.currentMusic._id]);
   // console.log(props.currentMusic);
   return (
     <div
