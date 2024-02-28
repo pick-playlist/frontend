@@ -301,21 +301,24 @@ export default function RoomInfo(props) {
               position: "relative",
               maxWidth: "150px",
               width: "150px",
+              height: "40px",
               borderRadius: "50px",
-              padding: "5px 10px",
+              padding: "5px",
               backgroundColor: "#BDCAF2",
               alignSelf: "center",
             }}
           >
             {userList.map((u, i) => {
-              return (
-                <PartyUserIcon
-                  key={u._id}
-                  user={u}
-                  color={COLOR_LIST[i % COLOR_LIST.length]}
-                  index={i}
-                />
-              );
+              if (i < 6)
+                return (
+                  <PartyUserIcon
+                    key={u._id}
+                    user={u}
+                    color={COLOR_LIST[i % COLOR_LIST.length]}
+                    index={i}
+                  />
+                );
+              return;
             })}
           </div>
         </div>

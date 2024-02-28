@@ -11,6 +11,9 @@ import { deleteRoom, deleteUserInRoom } from "~/lib/api/room";
 import { setRoomNull } from "~/store/reducers/room";
 import { setIsLoggedInFalse } from "~/store/reducers/user";
 
+import io from "socket.io-client";
+const socket = io.connect("http://localhost:3000");
+
 export default function Visualization() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -111,9 +114,12 @@ export default function Visualization() {
 
   const clickGoMainButton = async () => {
     // 리둑스에서 room 삭제
+
+    deleteUserInRoom(user._id, room._id);
+    socket.emit("room_updated", room._id);
+
     const action = setRoomNull();
     dispatch(action);
-
     if (isLoggedIn) {
       navigate("/main");
     } else {

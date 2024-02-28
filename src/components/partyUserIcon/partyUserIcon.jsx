@@ -9,9 +9,9 @@ export default function PartyUserIcon({ user, color, index }) {
         height: "30px",
         zIndex: 2,
         backgroundColor: color,
-        position: index !== 0 ? "absolute" : "relative",
-        top: 0,
-        left: `${index * 30}px`,
+        position: "absolute",
+
+        left: `${10 + index * 20}px`,
       }}
     >
       {user && user.profilePhoto ? (

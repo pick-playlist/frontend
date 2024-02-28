@@ -6,6 +6,10 @@ import { persistor } from "~/store/store";
 import { Navbar } from "react-bootstrap";
 import { setInRoomFalse, setIsLoggedInFalse } from "~/store/reducers/user";
 import { exitRoom } from "~/lib/util/room";
+import { useLocation } from "react-router-dom";
+
+import io from "socket.io-client";
+const socket = io.connect("http://localhost:3000");
 
 export default function NavBar() {
   const navigate = useNavigate();
@@ -62,9 +66,12 @@ export default function NavBar() {
           const action = setInRoomFalse();
           dispatch(action);
           exitRoom(isHost, room._id, userObj._id);
+
+          socket.emit("room_updated", room._id);
+
           navigate("/visualization");
         }
-      }
+      } else navigate("/");
     } else navigate("/");
   };
 
