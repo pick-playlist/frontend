@@ -36,6 +36,7 @@ export default function Visualization() {
       const roomId = room._id;
       const acceptPlaylistId = room.acceptPlaylist._id;
       const rejectPlaylistId = room.rejectPlaylist._id;
+      const remainPlaylistId = room.remainPlaylist._id;
 
       const acceptResp = await getPlaylistInfo(acceptPlaylistId);
       const acceptMusics = acceptResp.musics;
@@ -43,7 +44,11 @@ export default function Visualization() {
       const rejectResp = await getPlaylistInfo(rejectPlaylistId);
       const rejectMusics = rejectResp.musics;
 
+      const remainResp = await getPlaylistInfo(remainPlaylistId);
+      const remainMusics = remainResp.musics;
+
       const allMusics = await acceptMusics.concat(rejectMusics);
+      allMusics.push(remainMusics[0]);
 
       let rankDiv = [];
 
