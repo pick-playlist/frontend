@@ -13,6 +13,10 @@ export default function VoteComponent(props) {
   const [isActive, setIsActive] = useState(true);
   const [proposer, setProposer] = useState("");
 
+  useEffect(() => {
+    setIsActive(true);
+  }, [props.currentMusic]);
+
   const getProposer = async () => {
     const tmp = await fetchUser(props.currentMusic.proposer);
     setProposer(tmp.nickname);
