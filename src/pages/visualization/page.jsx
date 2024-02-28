@@ -42,16 +42,16 @@ export default function Visualization() {
       const rejectPlaylistId = room.rejectPlaylist._id;
       const remainPlaylistId = room.remainPlaylist._id;
 
-      const acceptResp = await getPlaylistInfo(acceptPlaylistId);
+      const acceptResp = getPlaylistInfo(acceptPlaylistId);
       const acceptMusics = acceptResp.musics;
 
-      const rejectResp = await getPlaylistInfo(rejectPlaylistId);
+      const rejectResp = getPlaylistInfo(rejectPlaylistId);
       const rejectMusics = rejectResp.musics;
 
-      const remainResp = await getPlaylistInfo(remainPlaylistId);
+      const remainResp = getPlaylistInfo(remainPlaylistId);
       const remainMusics = remainResp.musics;
 
-      const allMusics = await acceptMusics.concat(rejectMusics);
+      const allMusics = acceptMusics.concat(rejectMusics);
 
       if (remainMusics && remainMusics.length > 0) {
         allMusics.push(remainMusics[0]);
@@ -246,7 +246,7 @@ export default function Visualization() {
       >
         메인으로
       </ButtonInPages>
-      <Container fluid className="py-4 white" />
+      <Container fluid className="py-4 bg-light" />
     </div>
   );
 }
