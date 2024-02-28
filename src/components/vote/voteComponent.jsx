@@ -15,12 +15,25 @@ export default function VoteComponent(props) {
 
   useEffect(() => {
     setIsActive(true);
-  }, [props.currentMusic]);
+  }, [props.currentMusic._id]);
 
   const getProposer = async () => {
     const tmp = await fetchUser(props.currentMusic.proposer);
     setProposer(tmp.nickname);
   };
+
+  const barColors = React.useMemo(() => {
+    if (props.currentMusic.agree + props.currentMusic.reject === 0) {
+      return [0, 0];
+    }
+    const total = (props.currentMusic.agree + props.currentMusic.reject) / 100;
+
+    return [
+      props.currentMusic.agree / total,
+      props.currentMusic.reject / total,
+    ];
+  }, [props.currentMusic]);
+  console.log(props.currentMusic);
 
   useEffect(() => {
     getProposer();
@@ -140,13 +153,9 @@ export default function VoteComponent(props) {
           <div
             style={{
               height: "100%",
-              width: `${
-                (props.currentMusic.agree /
-                  (props.currentMusic.agree + props.currentMusic.reject)) *
-                100
-              }%`,
+              width: `${barColors[0]}%`,
               backgroundColor: "#1665DD",
-              transition: "width 1s ease-out",
+              // transition: "width 1s ease-out",
             }}
           >
             <span
@@ -163,15 +172,18 @@ export default function VoteComponent(props) {
             </span>
           </div>
           <div
+            onTransitionEnd={(e) => {
+              console.log("반대 애니메이션");
+              if (e.target === e.currentTarget) {
+                // your logic here
+              }
+            }}
             style={{
               height: "100%",
-              width: `${
-                (props.currentMusic.reject /
-                  (props.currentMusic.agree + props.currentMusic.reject)) *
-                100
-              }%`,
+              width: `${barColors[1]}%`,
+
               backgroundColor: "#FE4D58",
-              transition: "width 1s ease-out",
+              // transition: "width 1s ease-out",
             }}
           >
             <span
