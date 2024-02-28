@@ -24,6 +24,7 @@ export default function PlaylistComponent({ music }) {
             width: "50px",
             height: "50px",
             marginRight: "10px",
+            objectFit: "cover",
           }}
         />
         {music.title}
