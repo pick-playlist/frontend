@@ -7,8 +7,6 @@ import { fetchUser } from "~/lib/api/user";
 import { getUser } from "~/store/reducers/user";
 import PlaylistComponent from "~/components/roomInfo/playlistComponent";
 
-const EMPTY_PLAYLIST = "플레이리스트가 비어 있습니다.";
-
 export default function ProfilePage() {
   const user = useSelector((state) => state.user.data);
   const dispatch = useDispatch();
@@ -174,21 +172,25 @@ export default function ProfilePage() {
               <Accordion.Header style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
                 수락된 플레이리스트
               </Accordion.Header>
-              {acceptPlaylist.length == 0
-                ? EMPTY_PLAYLIST
-                : acceptPlaylist.map((music) => {
-                    return <PlaylistComponent music={music} />;
-                  })}
+              {acceptPlaylist.length == 0 ? (
+                <PlaylistComponent />
+              ) : (
+                acceptPlaylist.map((music) => {
+                  return <PlaylistComponent music={music} />;
+                })
+              )}
             </Accordion.Item>
             <Accordion.Item eventKey="2">
               <Accordion.Header style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
                 거절된 플레이리스트
               </Accordion.Header>
-              {rejectPlaylist.length == 0
-                ? EMPTY_PLAYLIST
-                : rejectPlaylist.map((music) => {
-                    return <PlaylistComponent music={music} />;
-                  })}
+              {rejectPlaylist.length == 0 ? (
+                <PlaylistComponent />
+              ) : (
+                rejectPlaylist.map((music) => {
+                  return <PlaylistComponent music={music} />;
+                })
+              )}
             </Accordion.Item>
           </Accordion>
         </div>
