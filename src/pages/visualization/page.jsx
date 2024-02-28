@@ -12,6 +12,8 @@ import { setRoomNull } from "~/store/reducers/room";
 import { setIsLoggedInFalse } from "~/store/reducers/user";
 
 import io from "socket.io-client";
+import PlaylistComponent from "~/components/roomInfo/playlistComponent";
+import styled, { keyframes } from "styled-components";
 const socket = io.connect("http://localhost:3000");
 
 export default function Visualization() {
@@ -69,11 +71,30 @@ export default function Visualization() {
 
           cnt++;
           rankDiv.push(
-            <div key={allMusics[i]._id}>
-              <p>
-                [{rank}], {allMusics[i].title}
-              </p>
-            </div>
+            <AnimatedItem style={{ animationDelay: `${0.5 * cnt}s` }}>
+              <div
+                style={{
+                  flex: 1,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: "20px",
+                }}
+              >
+                {rank}등
+              </div>
+              <span
+                style={{
+                  flex: 9,
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  fontSize: "14px",
+                }}
+              >
+                {allMusics[i].title}
+              </span>
+            </AnimatedItem>
           );
         }
 
@@ -128,9 +149,25 @@ export default function Visualization() {
   };
 
   return (
-    <div style={{ alignSelf: "start" }}>
-      <div className="mt-3">
-        <h2>동의를 많이 받은 음악</h2>
+    <div
+      style={{
+        alignSelf: "start",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <div
+        className="mt-3"
+        style={{ display: "flex", flexDirection: "column" }}
+      >
+        <h2
+          style={{
+            fontFamily: "IBMPlexSansKR-Regular",
+          }}
+        >
+          동의를 많이 받은 음악
+        </h2>
         {ranks}
       </div>
 
@@ -150,3 +187,29 @@ export default function Visualization() {
     </div>
   );
 }
+
+// 각 요소에 적용될 애니메이션 정의
+const floatAnimation = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const AnimatedItem = styled.div`
+  background-color: #bdcaf2;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  height: 50px;
+  border-radius: 30px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  animation: ${floatAnimation} 0.5s ease-in-out forwards;
+  opacity: 0; /* 애니메이션이 시작될 때 요소를 투명하게 만듦 */
+`;
