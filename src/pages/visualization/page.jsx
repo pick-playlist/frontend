@@ -11,9 +11,6 @@ import { deleteRoom, deleteUserInRoom } from "~/lib/api/room";
 import { setRoomNull } from "~/store/reducers/room";
 import { setIsLoggedInFalse } from "~/store/reducers/user";
 
-import io from "socket.io-client";
-const socket = io.connect("http://localhost:3000");
-
 export default function Visualization() {
   const dispatch = useDispatch();
   const navigate = useNavigate();

@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import YouTube from "react-youtube";
 import { useSelector } from "react-redux";
 import { deleteMusicInPlaylist, addMusicInPlaylist } from "~/lib/api/playlist";
+import socket from "~/lib/util/socket";
 
-import io from "socket.io-client";
-const socket = io.connect("http://localhost:3000");
 
 export default function YoutubePlayer({ video }) {
   const room = useSelector((state) => state.room.data);
