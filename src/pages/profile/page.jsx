@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "~/lib/api/user";
 import { getUser } from "~/store/reducers/user";
 import PlaylistComponent from "~/components/roomInfo/playlistComponent";
+import defaultProfilePhoto from "~/assets/profile.png";
 
 export default function ProfilePage() {
   const user = useSelector((state) => state.user.data);
@@ -32,7 +33,9 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (user) {
-      setProfilePhoto(user.profilePhoto);
+      if (user.profilePhoto) setProfilePhoto(user.profilePhoto);
+      else setProfilePhoto(defaultProfilePhoto);
+
       setEmail(user.email);
       setNickname(user.nickname);
       setPlaylist(user.playlist.musics);
