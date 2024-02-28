@@ -246,7 +246,7 @@ export default function Visualization() {
       >
         메인으로
       </ButtonInPages>
-      <Container fluid className="py-4 bg-light" />
+      <Container fluid className="py-4 white" />
     </div>
   );
 }
