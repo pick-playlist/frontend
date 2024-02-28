@@ -13,6 +13,7 @@ import { setIsLoggedInFalse } from "~/store/reducers/user";
 import io from "socket.io-client";
 import PlaylistComponent from "~/components/roomInfo/playlistComponent";
 import styled, { keyframes } from "styled-components";
+import { Container } from "react-bootstrap";
 const socket = io.connect("http://localhost:3000");
 
 export default function Visualization() {
@@ -193,7 +194,6 @@ export default function Visualization() {
           </div>
         )}
       </div>
-
       <div
         className="mt-3"
         style={{
@@ -236,12 +236,12 @@ export default function Visualization() {
         }}
         className="mt-5"
         style={{
-          position: "fixed",
           bottom: "3%",
         }}
       >
         메인으로
       </ButtonInPages>
+      <Container fluid className="py-4 bg-light" />
     </div>
   );
 }
