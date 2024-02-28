@@ -18,6 +18,7 @@ import { updateRoom } from "~/lib/util/room";
 import VoteComponent from "../vote/voteComponent";
 import YoutubePlayer from "../youtubePlayer/YoutubePlayer";
 import headphone from "../../assets/headphone-dynamic-gradient.png";
+import { Link45deg } from "react-bootstrap-icons";
 
 import io from "socket.io-client";
 import { deleteUserInRoom, updateRoomTags } from "~/lib/api/room";
@@ -193,8 +194,10 @@ export default function RoomInfo(props) {
               style={{
                 alignSelf: "flex-start",
                 fontFamily: "IBMPlexSansKR-Regular",
+                fontSize: "20px",
               }}
             >
+              <Link45deg style={{ width: "25px", height: "25px" }} />
               추가 할 유튜브 링크
             </h3>
             <Form>
@@ -217,14 +220,21 @@ export default function RoomInfo(props) {
               />
             </Form>
             <Form>
-              <h3 style={{ fontFamily: "IBMPlexSansKR-Regular" }}>코멘트</h3>
+              <h3
+                style={{
+                  fontFamily: "IBMPlexSansKR-Regular",
+                  fontSize: "20px",
+                }}
+              >
+                코멘트
+              </h3>
               <Form.Control
                 type="text"
                 value={comment}
                 onChange={(e) => {
                   setComment(e.target.value);
                 }}
-                placeholder="코멘트를 입력해주세요."
+                placeholder="제안한 음악이 수락될 수 있게 코멘트를 적어주세요!"
                 style={{
                   fontSize: "13px",
                   fontFamily: "IBMPlexSansKR-Regular",
@@ -349,13 +359,18 @@ export default function RoomInfo(props) {
         ) : (
           <div
             style={{
+              backgroundColor: "black",
+              color: "white",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               height: window.innerHeight * 0.45,
+              fontFamily: "IBMPlexSansKR-Regular",
+              textAlign: "center",
             }}
           >
-            아직 플레이리스트에 음악이 없어요. 음악을 추가해주세요!
+            아직 플레이리스트에 음악이 없어요. <br />
+            음악을 추가해주세요!
           </div>
         )}
         {canVote ? (
@@ -375,9 +390,10 @@ export default function RoomInfo(props) {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            marginTop: "12px",
           }}
         >
-          <div className="mt-3" style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
+          <div style={{ fontFamily: "IBMPlexSansKR-Regular" }}>
             <MusicNoteList style={{ marginRight: "5px", width: "20px" }} />
             대기 중인 플레이리스트
           </div>
@@ -460,5 +476,5 @@ const StyledModalContent = styled.div`
   // border: 1px solid #332973;
   background-color: white;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
-  animation: ${fadeIn} 0.5s forwards; // 모달이 나타날 때의 애니메이션
+  animation: ${fadeIn} 0.5s forwards;
 `;
