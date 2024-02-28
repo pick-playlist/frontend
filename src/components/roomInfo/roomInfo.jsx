@@ -32,6 +32,7 @@ export default function RoomInfo(props) {
   const user = useSelector((state) => state.user.data);
   const room = useSelector((state) => state.room.data);
   const roomLoading = useSelector((state) => state.room.loading);
+  const isHost = useSelector((state) => state.user.isHost);
 
   const dispatch = useDispatch();
 
@@ -156,9 +157,9 @@ export default function RoomInfo(props) {
   //   console.log("music finished.");
   // }
 
-  function exitRoom() {
-    deleteUserInRoom(user._id, room._id);
-  }
+  // function exitRoom() {
+  //   deleteUserInRoom(user._id, room._id);
+  // }
 
   return (
     <div
@@ -354,25 +355,28 @@ export default function RoomInfo(props) {
           marginTop: "10px",
         }}
       >
-        {props.playlistLength > 0 ? (
-          <YoutubePlayer video={props.video} />
-        ) : (
-          <div
-            style={{
-              backgroundColor: "black",
-              color: "white",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: window.innerHeight * 0.45,
-              fontFamily: "IBMPlexSansKR-Regular",
-              textAlign: "center",
-            }}
-          >
-            아직 플레이리스트에 음악이 없어요. <br />
-            음악을 추가해주세요!
-          </div>
-        )}
+        {isHost ? (
+          props.playlistLength > 0 ? (
+            <YoutubePlayer video={props.video} />
+          ) : (
+            <div
+              style={{
+                backgroundColor: "black",
+                color: "white",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: window.innerHeight * 0.45,
+                fontFamily: "IBMPlexSansKR-Regular",
+                textAlign: "center",
+              }}
+            >
+              아직 플레이리스트에 음악이 없어요. <br />
+              음악을 추가해주세요!
+            </div>
+          )
+        ) : null}
+
         {canVote ? (
           <Card className="mb-3">
             <Card.Body>
