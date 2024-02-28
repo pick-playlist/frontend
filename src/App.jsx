@@ -3,9 +3,6 @@ import mainRoutes from "./routers/main-router";
 import store from "./store";
 import { Provider } from "react-redux";
 import "./styles/globalStyle.css";
-import io from "socket.io-client";
-
-const socket = io.connect("http://localhost:3000");
 
 function App() {
   return (

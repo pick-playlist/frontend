@@ -1,7 +1,6 @@
 import React from "react";
-import io from "socket.io-client";
 import { useEffect } from "react";
-const socket = io.connect("http://localhost:3000");
+import socket from "~/lib/util/socket";
 import { getLinkInfo } from "~/lib/api/search";
 
 export default function page() {

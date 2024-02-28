@@ -10,7 +10,6 @@ import { getPlaylistInfo } from "~/lib/api/playlist";
 import { deleteRoom, deleteUserInRoom } from "~/lib/api/room";
 import { setRoomNull } from "~/store/reducers/room";
 import { setIsLoggedInFalse } from "~/store/reducers/user";
-
 import io from "socket.io-client";
 import PlaylistComponent from "~/components/roomInfo/playlistComponent";
 import styled, { keyframes } from "styled-components";
@@ -39,6 +38,7 @@ export default function Visualization() {
       const roomId = room._id;
       const acceptPlaylistId = room.acceptPlaylist._id;
       const rejectPlaylistId = room.rejectPlaylist._id;
+      const remainPlaylistId = room.remainPlaylist._id;
 
       const acceptResp = await getPlaylistInfo(acceptPlaylistId);
       const acceptMusics = acceptResp.musics;
@@ -46,10 +46,13 @@ export default function Visualization() {
       const rejectResp = await getPlaylistInfo(rejectPlaylistId);
       const rejectMusics = rejectResp.musics;
 
+      const remainResp = await getPlaylistInfo(remainPlaylistId);
+      const remainMusics = remainResp.musics;
+
       const allMusics = await acceptMusics.concat(rejectMusics);
+      allMusics.push(remainMusics[0]);
 
       let rankDiv = [];
-      console.log("all: ", allMusics);
 
       if (allMusics.length > 0) {
         allMusics.sort((a, b) => b.agree - a.agree);
@@ -140,13 +143,13 @@ export default function Visualization() {
   };
 
   const clickGoMainButton = async () => {
-    // 리둑스에서 room 삭제
+    if (user != null && room != null) {
+      deleteUserInRoom(user._id, room._id);
 
-    deleteUserInRoom(user._id, room._id);
-    socket.emit("room_updated", room._id);
+      const action = setRoomNull();
+      dispatch(action);
+    }
 
-    const action = setRoomNull();
-    dispatch(action);
     if (isLoggedIn) {
       navigate("/main");
     } else {
@@ -172,14 +175,22 @@ export default function Visualization() {
             fontFamily: "IBMPlexSansKR-Regular",
           }}
         >
-          동의를 많이 받은 음악
+          오늘의 인기 음악 🔥
         </h2>
-        {ranks}
+        {ranks ? <div>{ranks}</div> : <div>음악이 재생되지 않았군요 😭</div>}
       </div>
 
-      <h2 style={{ fontFamily: "IBMPlexSansKR-Regular" }}>제안된 음악 태그</h2>
-      <div>
-        <ReactWordcloud words={words} />
+      <div className="mt-5">
+        <h2>제안된 음악 태그 👋</h2>
+        {words && words.length > 0 ? (
+          <div>
+            <div>
+              <ReactWordcloud words={words} />
+            </div>
+          </div>
+        ) : (
+          <div>태그를 찾을 수 없어요 😭</div>
+        )}
       </div>
 
       <ButtonInPages
