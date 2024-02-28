@@ -79,7 +79,7 @@ export default function Visualization() {
 
           cnt++;
           rankDiv.push(
-            <div>
+            <div key={i}>
               <AnimatedItem
                 style={{
                   animationDelay: `${0.5 * cnt}s`,
