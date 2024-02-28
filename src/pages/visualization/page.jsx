@@ -132,23 +132,23 @@ export default function Visualization() {
   };
 
   return (
-    <div style={{ alignSelf: "start" }}>
-      <div className="mt-3">
-        <h2>동의를 많이 받은 음악</h2>
-        {ranks ? (
-          ranks
-        ) : (
-          <p>
-            을 알려드리려고 했는데...
-            <br />
-            음악을 끝까지 듣지 않으셨군요 ^^;;
-          </p>
-        )}
+    <div style={{ alignSelf: "start", fontFamily: "IBMPlexSansKR-Regular" }}>
+      <div className="mt-4">
+        <h2>오늘의 인기 음악 🔥</h2>
+        {ranks ? <div>{ranks}</div> : <div>음악이 재생되지 않았군요 😭</div>}
       </div>
 
-      <h2 style={{ fontFamily: "IBMPlexSansKR-Regular" }}>제안된 음악 태그</h2>
-      <div>
-        <ReactWordcloud words={words} />
+      <div className="mt-5">
+        <h2>제안된 음악 태그 👋</h2>
+        {words && words.length > 0 ? (
+          <div>
+            <div>
+              <ReactWordcloud words={words} />
+            </div>
+          </div>
+        ) : (
+          <div>태그를 찾을 수 없어요 😭</div>
+        )}
       </div>
 
       <ButtonInPages
