@@ -18,7 +18,7 @@ import { updateRoom } from "~/lib/util/room";
 import VoteComponent from "../vote/voteComponent";
 import YoutubePlayer from "../youtubePlayer/YoutubePlayer";
 import headphone from "../../assets/headphone-dynamic-gradient.png";
-import music from "../../assets/music-dynamic-color.png";
+import { Link45deg } from "react-bootstrap-icons";
 
 import io from "socket.io-client";
 import { deleteUserInRoom, updateRoomTags } from "~/lib/api/room";
@@ -191,8 +191,10 @@ export default function RoomInfo(props) {
               style={{
                 alignSelf: "flex-start",
                 fontFamily: "IBMPlexSansKR-Regular",
+                fontSize: "20px",
               }}
             >
+              <Link45deg style={{ width: "25px", height: "25px" }} />
               추가 할 유튜브 링크
             </h3>
             <Form>
@@ -215,14 +217,21 @@ export default function RoomInfo(props) {
               />
             </Form>
             <Form>
-              <h3 style={{ fontFamily: "IBMPlexSansKR-Regular" }}>코멘트</h3>
+              <h3
+                style={{
+                  fontFamily: "IBMPlexSansKR-Regular",
+                  fontSize: "20px",
+                }}
+              >
+                코멘트
+              </h3>
               <Form.Control
                 type="text"
                 value={comment}
                 onChange={(e) => {
                   setComment(e.target.value);
                 }}
-                placeholder="코멘트를 입력해주세요."
+                placeholder="제안한 음악이 수락될 수 있게 코멘트를 적어주세요!"
                 style={{
                   fontSize: "13px",
                   fontFamily: "IBMPlexSansKR-Regular",
