@@ -41,11 +41,14 @@ export default function ProfilePage() {
       setPlaylist(user.playlist.musics);
       setAcceptPlaylist(user.acceptPlaylist.musics);
       setRejectPlaylist(user.rejectPlaylist.musics);
-      setAcceptRateOfMusic(
-        calculateAcceptRateOfMusic(acceptPlaylist.length, rejectPlaylist.length)
-      );
     }
   }, [user]);
+
+  useEffect(() => {
+    setAcceptRateOfMusic(
+      calculateAcceptRateOfMusic(acceptPlaylist.length, rejectPlaylist.length)
+    );
+  }, [acceptPlaylist, rejectPlaylist]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {

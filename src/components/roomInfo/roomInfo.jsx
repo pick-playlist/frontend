@@ -20,7 +20,11 @@ import YoutubePlayer from "../youtubePlayer/YoutubePlayer";
 import headphone from "../../assets/headphone-dynamic-gradient.png";
 import { Link45deg } from "react-bootstrap-icons";
 import { deleteUserInRoom, updateRoomTags } from "~/lib/api/room";
-import { setInRoomFalse, setInRoomTrue } from "~/store/reducers/user";
+import {
+  setInRoomFalse,
+  setInRoomTrue,
+  setUserData,
+} from "~/store/reducers/user";
 import PlaylistComponent from "./playlistComponent";
 import socket from "~/lib/util/socket";
 import { useNavigate } from "react-router-dom";
@@ -67,10 +71,13 @@ export default function RoomInfo(props) {
 
   useEffect(() => {
     if (currentMusic.reject >= Math.ceil(room.users.length / 2)) {
-      // console.log("rejected, ", Math.ceil(room.users.length / 2));      
+      // console.log("rejected, ", Math.ceil(room.users.length / 2));
       // 제안된 사람이 유저일 때만 넣기
-      if (currentMusic.proposer === user._id)
+      if (currentMusic.proposer === user._id) {
         addMusicInPlaylist(currentMusic._id, user.rejectPlaylist._id);
+        const action = setUserData(user);
+        dispatch(action);
+      }
       if (isHost) {
         addMusicInPlaylist(currentMusic._id, room.rejectPlaylist._id);
         deleteMusicInPlaylist(currentMusic._id, room.remainPlaylist._id);
@@ -414,9 +421,7 @@ export default function RoomInfo(props) {
                 </Accordion.Body>
               ) : (
                 remainPlaylist.map((music) => {
-                  return (
-                    <PlaylistComponent music={music} />
-                  );
+                  return <PlaylistComponent music={music} />;
                 })
               )}
             </Accordion.Item>

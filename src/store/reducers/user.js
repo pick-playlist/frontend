@@ -73,6 +73,9 @@ const userSlice = createSlice({
     setIsHostFalse(state, action) {
       state.isHost = false;
     },
+    setUserData(state, action) {
+      state.data = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(signUp.fulfilled, (state, action) => {
@@ -162,6 +165,7 @@ export const {
   setInRoomFalse,
   setIsHostTrue,
   setIsHostFalse,
+  setUserData,
 } = userSlice.actions;
 export { signUp, logIn, guestLogIn, getUser, FULFILLED, REJECTED, PENDING };
 export default userSlice.reducer;

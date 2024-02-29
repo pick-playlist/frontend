@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import YouTube from "react-youtube";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteMusicInPlaylist, addMusicInPlaylist } from "~/lib/api/playlist";
 import socket from "~/lib/util/socket";
-
+import { setUserData } from "~/store/reducers/user";
 
 export default function YoutubePlayer({ video }) {
   const room = useSelector((state) => state.room.data);
   const currentMusicId = video.currentMusicId;
   const user = useSelector((state) => state.user.data);
   const isHost = useSelector((state) => state.user.isHost);
+  const dispatch = useDispatch();
 
   return (
     <YouTube
@@ -21,7 +22,7 @@ export default function YoutubePlayer({ video }) {
         playerVars: {
           mute: 1,
           autoplay: 1, //자동재생 O
-          rel: 0, //관련 동영상 표시하지 않음 
+          rel: 0, //관련 동영상 표시하지 않음
           modestbranding: 1, // 컨트롤 바에 youtube 로고를 표시하지 않음
         },
       }}
@@ -34,10 +35,13 @@ export default function YoutubePlayer({ video }) {
           addMusicInPlaylist(currentMusicId, room.acceptPlaylist._id);
           deleteMusicInPlaylist(currentMusicId, room.remainPlaylist._id);
         }
-        
+
         // 제안된 사람일 때만 넣기
-        if (video.proposer === user._id)
+        if (video.proposer === user._id) {
           addMusicInPlaylist(currentMusicId, user.acceptPlaylist._id);
+          const action = setUserData(user);
+          dispatch(action);
+        }
 
         socket.emit("room_updated", room._id);
         console.log("end");
